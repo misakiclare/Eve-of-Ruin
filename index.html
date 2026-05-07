@@ -59,35 +59,24 @@
     .spell-dropdown-section select { background: rgba(20, 15, 40, 0.7); border: 1px solid rgba(140, 120, 220, 0.4); color: #e8e0ff; padding: 0.4rem; border-radius: 0.3rem; font-family: inherit; font-size: 0.8rem; width: 100%; max-width: 400px; cursor: pointer; }
     .spell-dropdown-section select option { background: #1a1530; color: #e8e0ff; padding: 0.3rem; }
     .spell-info-popup { margin-top: 0.4rem; padding: 0.6rem; background: rgba(25, 18, 45, 0.8); border: 1px solid rgba(140, 120, 220, 0.5); border-radius: 0.4rem; color: #c0b8e8; font-size: 0.8rem; display: none; }
+    .current-spell-item { cursor: pointer; transition: background 0.2s; }
+    .current-spell-item:hover { background: rgba(120, 100, 180, 0.15) !important; }
+    .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; margin-left: 0.3rem; }
     .change-log { max-height: 180px; overflow-y: auto; font-size: 0.75rem; }
     .change-log .log-entry { padding: 0.2rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #a098d0; }
     .session-note-card { border: 2px solid rgba(140, 160, 200, 0.3); border-radius: 0.6rem; padding: 0.6rem; margin: 0.5rem 0; background: linear-gradient(135deg, rgba(20, 25, 45, 0.7) 0%, rgba(12, 15, 30, 0.8) 100%); }
-    .session-note-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; border-bottom: 1px solid rgba(140, 160, 200, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.4rem; }
-    .session-date { color: #b8c8e0; font-size: 0.7rem; background: rgba(60, 80, 140, 0.4); padding: 0.15rem 0.4rem; border-radius: 0.4rem; }
     .char-note-card { border: 1px solid rgba(120, 140, 180, 0.3); border-radius: 0.5rem; padding: 0.5rem; margin: 0.3rem 0; background: rgba(20, 22, 40, 0.6); }
-    .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; margin-left: 0.3rem; }
     @media (max-width: 768px) { .grimoire { padding: 0.8rem; } .tab-btn { font-size: 0.7rem; padding: 0.35rem 0.7rem; } }
   </style>
 </head>
 <body>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script>
-  firebase.initializeApp({
-    apiKey: "AIzaSyB4U_qIlk-DRJ1qtt2WWGeJ8jXG4w3d1hc",
-    authDomain: "eve-of-ruin-71419.firebaseapp.com",
-    databaseURL: "https://eve-of-ruin-71419-default-rtdb.firebaseio.com/",
-    projectId: "eve-of-ruin-71419",
-    storageBucket: "eve-of-ruin-71419.firebasestorage.app",
-    messagingSenderId: "671973346909",
-    appId: "1:671973346909:web:71bdc854b05ad20e3607b4",
-  });
+  firebase.initializeApp({ apiKey: "AIzaSyB4U_qIlk-DRJ1qtt2WWGeJ8jXG4w3d1hc", authDomain: "eve-of-ruin-71419.firebaseapp.com", databaseURL: "https://eve-of-ruin-71419-default-rtdb.firebaseio.com/", projectId: "eve-of-ruin-71419", storageBucket: "eve-of-ruin-71419.firebasestorage.app", messagingSenderId: "671973346909", appId: "1:671973346909:web:71bdc854b05ad20e3607b4" });
   window._db = firebase.database();
 </script>
-
-<div class="grimoire">
-  <h1>✦ Eve of Ruin · Stellar Archive ✦</h1>
+<div class="grimoire"><h1>✦ Eve of Ruin · Stellar Archive ✦</h1>
   <div class="tab-bar">
     <button class="tab-btn active" id="tabDmpc">🗺️ Syv</button>
     <button class="tab-btn" id="tabDrunken">🍶 Kaelen</button>
@@ -98,457 +87,450 @@
   </div>
   <div class="content-panel" id="contentPanel"></div>
 </div>
-
 <script>
-  (function() {
-    const db = window._db; const DM_PIN = "8968";
-    let currentTab = 'dmpc', dmAuthenticated = false;
-    const contentPanel = document.getElementById('contentPanel');
-    const autoSaveTimers = {}; let changeLog = [], sessionNotes = [], characterNotes = {};
+(function() {
+  const db = window._db, DM_PIN = "8968";
+  let currentTab = 'dmpc', dmAuthenticated = false;
+  const contentPanel = document.getElementById('contentPanel');
+  const autoSaveTimers = {}; let changeLog = [], sessionNotes = [];
 
-    // ─── SPELL DATABASE WITH LEVELS ──────────────────────
-    const spellDatabase = {
-      "Goodberry": { level: 1, school: "Transmutation", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Up to 10 berries appear. Each berry heals 1 HP and provides enough nourishment for a day." },
-      "Hunter's Mark": { level: 1, school: "Divination", castingTime: "1 bonus action", range: "90 ft", duration: "Conc., up to 1 hour", desc: "Mark a target. You deal +1d6 damage and have advantage on Survival checks to track it." },
-      "Absorb Elements": { level: 1, school: "Abjuration", castingTime: "1 reaction", range: "Self", duration: "1 round", desc: "Gain resistance to triggering damage type. Next melee attack deals +1d6 of that type." },
-      "Entangle": { level: 1, school: "Conjuration", castingTime: "1 action", range: "90 ft (20-ft square)", duration: "Conc., up to 1 minute", desc: "Grasping plants restrain creatures in area (STR save). Difficult terrain." },
-      "Pass Without Trace": { level: 2, school: "Abjuration", castingTime: "1 action", range: "Self (30-ft radius)", duration: "Conc., up to 1 hour", desc: "+10 bonus to Stealth checks for you and allies within 30 ft. Can't be tracked except by magical means." },
-      "Rope Trick": { level: 2, school: "Transmutation", castingTime: "1 action", range: "Touch", duration: "1 hour", desc: "Rope rises to extradimensional space that holds 8 Medium creatures. Safe short rest." },
-      "Speak with Animals": { level: 1, school: "Divination", castingTime: "1 action", range: "Self", duration: "10 minutes", desc: "Gain ability to communicate with beasts." },
-      "Beast Sense": { level: 2, school: "Divination", castingTime: "1 action", range: "Touch", duration: "Conc., up to 1 hour", desc: "See and hear through a willing beast's senses." },
-      "Cure Wounds": { level: 1, school: "Evocation", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Heal 1d8 + WIS mod HP." },
-      "Zephyr Strike": { level: 1, school: "Transmutation", castingTime: "1 bonus action", range: "Self", duration: "Conc., up to 1 minute", desc: "No opportunity attacks for the round. Advantage on one weapon attack, +1d8 force damage, +30 ft speed." },
-      "Silence": { level: 2, school: "Illusion", castingTime: "1 action", range: "120 ft (20-ft sphere)", duration: "Conc., up to 10 minutes", desc: "No sound can be created within or pass through the sphere." },
-      "Spike Growth": { level: 2, school: "Transmutation", castingTime: "1 action", range: "150 ft (20-ft radius)", duration: "Conc., up to 10 minutes", desc: "Ground grows spikes. 2d4 piercing per 5 ft. Perception check to notice." },
-      "Lesser Restoration": { level: 2, school: "Abjuration", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "End one disease or condition (blinded, deafened, paralyzed, poisoned)." },
-      "Darkvision": { level: 2, school: "Transmutation", castingTime: "1 action", range: "Touch", duration: "8 hours", desc: "Target gains 60 ft darkvision." },
-      "Bless": { level: 1, school: "Enchantment", castingTime: "1 action", range: "30 ft", duration: "Conc., up to 1 minute", desc: "Up to 3 creatures add 1d4 to attack rolls and saving throws." },
-      "Healing Word": { level: 1, school: "Evocation", castingTime: "1 bonus action", range: "60 ft", duration: "Instantaneous", desc: "Heal 1d4 + WIS mod HP." },
-      "Spirit Guardians": { level: 3, school: "Conjuration", castingTime: "1 action", range: "Self (15-ft radius)", duration: "Conc., up to 10 minutes", desc: "Spirits deal 3d8 radiant/necrotic to enemies. Half speed in area." },
-      "Spiritual Weapon": { level: 2, school: "Evocation", castingTime: "1 bonus action", range: "60 ft", duration: "1 minute", desc: "Floating weapon deals 1d8 + WIS force damage as bonus action." },
-      "Death Ward": { level: 4, school: "Abjuration", castingTime: "1 action", range: "Touch", duration: "8 hours", desc: "Target drops to 1 HP instead of 0. Negates instant-death effects." },
-      "Banishment": { level: 4, school: "Abjuration", castingTime: "1 action", range: "60 ft", duration: "Conc., up to 1 minute", desc: "Target banished to harmless demiplane (CHA save). Extraplanar creatures sent home." },
-      "Greater Restoration": { level: 5, school: "Abjuration", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "End petrification, curses, ability/HP reduction, or exhaustion." },
-      "Scrying": { level: 5, school: "Divination", castingTime: "10 minutes", range: "Self", duration: "Conc., up to 10 minutes", desc: "See and hear a creature on any plane (WIS save)." },
-      "Shield": { level: 1, school: "Abjuration", castingTime: "1 reaction", range: "Self", duration: "1 round", desc: "+5 AC until next turn. Negates Magic Missile." },
-      "Misty Step": { level: 2, school: "Conjuration", castingTime: "1 bonus action", range: "Self", duration: "Instantaneous", desc: "Teleport 30 ft." },
-      "Counterspell": { level: 3, school: "Abjuration", castingTime: "1 reaction", range: "60 ft", duration: "Instantaneous", desc: "Interrupt a spell. Auto-success if spell is 3rd or lower." },
-      "Haste": { level: 3, school: "Transmutation", castingTime: "1 action", range: "30 ft", duration: "Conc., up to 1 minute", desc: "Double speed, +2 AC, extra action (Attack/Dash/Disengage/Hide)." },
-      "Slow": { level: 3, school: "Transmutation", castingTime: "1 action", range: "120 ft (40-ft cube)", duration: "Conc., up to 1 minute", desc: "Up to 6 targets: -2 AC, DEX save penalty, limited actions." },
-      "Dimension Door": { level: 4, school: "Conjuration", castingTime: "1 action", range: "500 ft", duration: "Instantaneous", desc: "Teleport yourself and one willing creature up to 500 ft." },
-      "Wall of Force": { level: 5, school: "Evocation", castingTime: "1 action", range: "120 ft", duration: "Conc., up to 10 minutes", desc: "Invisible, impenetrable wall. Nothing can physically pass through." },
-      "Gift of Alacrity": { level: 1, school: "Divination", castingTime: "1 minute", range: "Touch", duration: "8 hours", desc: "Target adds 1d8 to initiative rolls." },
-      "Fortune's Favor": { level: 2, school: "Divination", castingTime: "1 minute", range: "60 ft", duration: "1 hour", desc: "Target can reroll one attack/check/save and use either result." },
-      "Temporal Shunt": { level: 5, school: "Transmutation", castingTime: "1 reaction", range: "120 ft", duration: "1 round", desc: "Target vanishes to another time. Returns at end of its next turn." },
-      "Stunning Strike": { level: "Ki", school: "Monk", desc: "Spend 1 ki on hit: target CON save or stunned until end of next turn." },
-      "Flurry of Blows": { level: "Ki", school: "Monk", desc: "Spend 1 ki: two unarmed strikes as bonus action." },
-      "Psionic Strike": { level: "Psi", school: "Psi Warrior", desc: "Once/turn: add 1d8+INT force damage to a weapon hit (costs 1 Psionic Die)." },
-      "Protective Field": { level: "Psi", school: "Psi Warrior", desc: "Reaction: reduce damage to self/ally within 30 ft by 1d8+INT (costs 1 die)." },
-      "Telekinetic Movement": { level: "Psi", school: "Psi Warrior", desc: "Action: move object/creature up to 30 ft (costs 1 die)." },
-    };
+  // ─── SPELL DATABASE ───────────────────────────────────
+  const spellDatabase = {
+    "Goodberry": { level: 1, school: "Transmutation", classes: ["ranger","druid"], castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Up to 10 berries appear. Each berry heals 1 HP and provides enough nourishment for a day." },
+    "Hunter's Mark": { level: 1, school: "Divination", classes: ["ranger"], castingTime: "1 bonus action", range: "90 ft", duration: "Conc., up to 1 hour", desc: "Mark a target. You deal +1d6 damage and have advantage on Survival checks to track it." },
+    "Absorb Elements": { level: 1, school: "Abjuration", classes: ["ranger","druid","wizard","sorcerer"], castingTime: "1 reaction", range: "Self", duration: "1 round", desc: "Gain resistance to triggering damage type. Next melee attack deals +1d6 of that type." },
+    "Entangle": { level: 1, school: "Conjuration", classes: ["ranger","druid"], castingTime: "1 action", range: "90 ft (20-ft square)", duration: "Conc., up to 1 minute", desc: "Grasping plants restrain creatures in area (STR save). Difficult terrain." },
+    "Pass Without Trace": { level: 2, school: "Abjuration", classes: ["ranger","druid"], castingTime: "1 action", range: "Self (30-ft radius)", duration: "Conc., up to 1 hour", desc: "+10 bonus to Stealth checks for you and allies within 30 ft." },
+    "Rope Trick": { level: 2, school: "Transmutation", classes: ["wizard","ranger"], castingTime: "1 action", range: "Touch", duration: "1 hour", desc: "Rope rises to extradimensional space holding 8 Medium creatures. Safe short rest." },
+    "Zephyr Strike": { level: 1, school: "Transmutation", classes: ["ranger"], castingTime: "1 bonus action", range: "Self", duration: "Conc., up to 1 minute", desc: "No opportunity attacks. Advantage on one attack, +1d8 force, +30 ft speed." },
+    "Silence": { level: 2, school: "Illusion", classes: ["cleric","bard","ranger"], castingTime: "1 action", range: "120 ft (20-ft sphere)", duration: "Conc., up to 10 minutes", desc: "No sound within or passing through the sphere." },
+    "Spike Growth": { level: 2, school: "Transmutation", classes: ["ranger","druid"], castingTime: "1 action", range: "150 ft (20-ft radius)", duration: "Conc., up to 10 minutes", desc: "Ground grows spikes. 2d4 piercing per 5 ft. Perception check to notice." },
+    "Lesser Restoration": { level: 2, school: "Abjuration", classes: ["cleric","paladin","ranger","druid"], castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "End one disease or condition (blinded, deafened, paralyzed, poisoned)." },
+    "Conjure Animals": { level: 3, school: "Conjuration", classes: ["ranger","druid"], castingTime: "1 action", range: "60 ft", duration: "Conc., up to 1 hour", desc: "Summon fey spirits taking beast forms (CR 2 or lower)." },
+    "Lightning Arrow": { level: 3, school: "Transmutation", classes: ["ranger"], castingTime: "1 bonus action", range: "Self", duration: "Conc., up to 1 minute", desc: "Next arrow deals 4d8 lightning to target and 2d8 to creatures within 10 ft." },
+    "Guardian of Nature": { level: 4, school: "Transmutation", classes: ["ranger","druid"], castingTime: "1 bonus action", range: "Self", duration: "Conc., up to 1 minute", desc: "Great Tree: advantage on DEX/CON saves, ground is difficult for enemies. Primal Beast: advantage on STR attacks, +1d6 force, darkvision 120 ft." },
+    "Steel Wind Strike": { level: 5, school: "Conjuration", classes: ["ranger","wizard"], castingTime: "1 action", range: "30 ft", duration: "Instantaneous", desc: "Teleport to up to 5 creatures and make melee spell attack (6d10 force) against each." },
+    "Cure Wounds": { level: 1, school: "Evocation", classes: ["cleric","paladin","ranger","druid"], castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Heal 1d8 + WIS mod HP." },
+    "Bless": { level: 1, school: "Enchantment", classes: ["cleric","paladin"], castingTime: "1 action", range: "30 ft", duration: "Conc., up to 1 minute", desc: "Up to 3 creatures add 1d4 to attack rolls and saving throws." },
+    "Healing Word": { level: 1, school: "Evocation", classes: ["cleric","druid","bard"], castingTime: "1 bonus action", range: "60 ft", duration: "Instantaneous", desc: "Heal 1d4 + WIS mod HP." },
+    "Spirit Guardians": { level: 3, school: "Conjuration", classes: ["cleric"], castingTime: "1 action", range: "Self (15-ft radius)", duration: "Conc., up to 10 minutes", desc: "Spirits deal 3d8 radiant/necrotic to enemies. Half speed." },
+    "Spiritual Weapon": { level: 2, school: "Evocation", classes: ["cleric"], castingTime: "1 bonus action", range: "60 ft", duration: "1 minute", desc: "Floating weapon deals 1d8 + WIS force damage as bonus action." },
+    "Death Ward": { level: 4, school: "Abjuration", classes: ["cleric","paladin"], castingTime: "1 action", range: "Touch", duration: "8 hours", desc: "Target drops to 1 HP instead of 0. Negates instant-death effects." },
+    "Banishment": { level: 4, school: "Abjuration", classes: ["cleric","paladin","wizard","sorcerer"], castingTime: "1 action", range: "60 ft", duration: "Conc., up to 1 minute", desc: "Target banished to harmless demiplane (CHA save). Extraplanar sent home." },
+    "Greater Restoration": { level: 5, school: "Abjuration", classes: ["cleric","druid"], castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "End petrification, curses, ability/HP reduction, or exhaustion." },
+    "Scrying": { level: 5, school: "Divination", classes: ["cleric","wizard","druid"], castingTime: "10 minutes", range: "Self", duration: "Conc., up to 10 minutes", desc: "See and hear a creature on any plane (WIS save)." },
+    "Revivify": { level: 3, school: "Necromancy", classes: ["cleric","paladin"], castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Revive creature that died within 1 minute." },
+    "Shield": { level: 1, school: "Abjuration", classes: ["wizard","sorcerer"], castingTime: "1 reaction", range: "Self", duration: "1 round", desc: "+5 AC until next turn. Negates Magic Missile." },
+    "Misty Step": { level: 2, school: "Conjuration", classes: ["wizard","sorcerer","ranger"], castingTime: "1 bonus action", range: "Self", duration: "Instantaneous", desc: "Teleport 30 ft." },
+    "Counterspell": { level: 3, school: "Abjuration", classes: ["wizard","sorcerer"], castingTime: "1 reaction", range: "60 ft", duration: "Instantaneous", desc: "Interrupt a spell. Auto-success if spell is 3rd or lower." },
+    "Haste": { level: 3, school: "Transmutation", classes: ["wizard","sorcerer"], castingTime: "1 action", range: "30 ft", duration: "Conc., up to 1 minute", desc: "Double speed, +2 AC, extra action (Attack/Dash/Disengage/Hide)." },
+    "Slow": { level: 3, school: "Transmutation", classes: ["wizard","sorcerer"], castingTime: "1 action", range: "120 ft (40-ft cube)", duration: "Conc., up to 1 minute", desc: "Up to 6 targets: -2 AC, DEX save penalty, limited actions." },
+    "Dimension Door": { level: 4, school: "Conjuration", classes: ["wizard","sorcerer"], castingTime: "1 action", range: "500 ft", duration: "Instantaneous", desc: "Teleport yourself and one willing creature up to 500 ft." },
+    "Wall of Force": { level: 5, school: "Evocation", classes: ["wizard"], castingTime: "1 action", range: "120 ft", duration: "Conc., up to 10 minutes", desc: "Invisible, impenetrable wall. Nothing can physically pass through." },
+    "Gift of Alacrity": { level: 1, school: "Divination", classes: ["wizard"], castingTime: "1 minute", range: "Touch", duration: "8 hours", desc: "Target adds 1d8 to initiative rolls." },
+    "Fortune's Favor": { level: 2, school: "Divination", classes: ["wizard"], castingTime: "1 minute", range: "60 ft", duration: "1 hour", desc: "Target can reroll one attack/check/save." },
+    "Temporal Shunt": { level: 5, school: "Transmutation", classes: ["wizard"], castingTime: "1 reaction", range: "120 ft", duration: "1 round", desc: "Target vanishes to another time. Returns at end of next turn." },
+    "Fireball": { level: 3, school: "Evocation", classes: ["wizard","sorcerer"], castingTime: "1 action", range: "150 ft (20-ft radius)", duration: "Instantaneous", desc: "8d6 fire damage to all creatures in area (DEX save for half)." },
+    "Hold Person": { level: 2, school: "Enchantment", classes: ["cleric","wizard","sorcerer"], castingTime: "1 action", range: "60 ft", duration: "Conc., up to 1 minute", desc: "Target paralyzed (WIS save). Repeat save each turn." },
+    "Stunning Strike": { level: "Ki", school: "Monk", classes: ["monk"], desc: "Spend 1 ki on hit: target CON save or stunned until end of next turn." },
+    "Flurry of Blows": { level: "Ki", school: "Monk", classes: ["monk"], desc: "Spend 1 ki: two unarmed strikes as bonus action." },
+    "Patient Defense": { level: "Ki", school: "Monk", classes: ["monk"], desc: "Spend 1 ki: Dodge as bonus action." },
+    "Step of the Wind": { level: "Ki", school: "Monk", classes: ["monk"], desc: "Spend 1 ki: Dash/Disengage as bonus action." },
+    "Psionic Strike": { level: "Psi", school: "Psi Warrior", classes: ["psiwarrior"], desc: "Once/turn: add 1d8+INT force damage to a weapon hit (costs 1 Psionic Die)." },
+    "Protective Field": { level: "Psi", school: "Psi Warrior", classes: ["psiwarrior"], desc: "Reaction: reduce damage to self/ally within 30 ft by 1d8+INT (1 die)." },
+    "Telekinetic Movement": { level: "Psi", school: "Psi Warrior", classes: ["psiwarrior"], desc: "Action: move object/creature up to 30 ft (costs 1 die)." },
+    "Telekinetic Shove": { level: "Psi", school: "Psi Warrior", classes: ["psiwarrior"], desc: "Bonus action: shove creature 5 ft or prone (STR DC 14)." },
+  };
 
-    // ─── CHARACTER DATA ───────────────────────────────────
-    const characterData = {
-      dmpc: {
-        name: "Sylvara 'Syv' Mosswood", classLevel: "Ranger (Gloom Stalker) 5 / Rogue (Scout) 5", race: "Wood Elf", background: "Planar Cartographer", alignment: "Neutral Good", playerName: "DM (DMPC)", campaign: "Eve of Ruin",
-        appearance: "Sylvara has ash-gray skin and silver-white hair pulled into a tight braid. Her eyes are pale violet.",
-        personality: ['"I\'ve mapped planes that have since been unmade."', '"I don\'t trust magic I can\'t see. Traps are poetry."', '"The Rod doesn\'t break reality. It smudges it."'],
-        ideal: "A map is a promise that somewhere exists.", bond: "The party is the first thing in 300 years that feels real.", flaw: "I sometimes forget which timeline we're in.",
-        stats: { STR: { score: 10, mod: 0, save: 4 }, DEX: { score: 20, mod: 5, save: 9 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 12, mod: 1, save: 5 }, WIS: { score: 14, mod: 2, save: 6 }, CHA: { score: 8, mod: -1, save: 3 } },
-        combat: { ac: 17, hp: 85, speed: 35, initiative: 7, hitDice: "5d10+5d8", proficiency: 4 },
-        attacks: [{ name: "Longbow", bonus: "+11", damage: "1d8+5 piercing", notes: "150/600 ft" }, { name: "Longbow + Hunter's Mark", bonus: "+11", damage: "1d8+5+1d6", notes: "Bonus action" }, { name: "Dread Ambusher (turn 1)", bonus: "+11", damage: "extra +1d8", notes: "+10 ft speed" }],
-        skills: { Stealth: 13, Perception: 10, Investigation: 5, "Thieves' Tools": 9, Survival: 6, Acrobatics: 9 },
-        features: [{ name: "Sneak Attack (+3d6)", desc: "Once per turn with advantage or ally adjacent.", cost: "Free", uses: 0, resetOn: "none" }, { name: "Dread Ambusher", desc: "+WIS to init. First turn: +10 ft speed, extra attack +1d8.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Favored Foe", desc: "Bonus action: mark target, +1d4 damage once/turn.", cost: "PB/long rest", uses: 4, resetOn: "long" }],
-        spellSlots: { "1st": 4, "2nd": 2 }, spells: ["Goodberry", "Hunter's Mark", "Pass Without Trace", "Rope Trick"],
-        equipment: ["Studded leather", "Longbow", "40 arrows", "Thieves' tools", "Cartographer's tools", "Broken compass", "Journal", "20 gp"],
-        backstory: "I was a cartographer for the Wind Dukes. Then the Rod was tested. I woke up with half my memories erased. The Raven Queen found me: 'Guide the ones who will find the Rod.'"
-      },
-      drunken: {
-        name: "Kaelen 'Kettle' Morrow", classLevel: "Monk (Drunken Master) 10", race: "Human (Variant)", background: "Last of the Unremembered Path", alignment: "Chaotic Good", playerName: "__________________", campaign: "Eve of Ruin",
-        appearance: "Wind-chapped skin, unkempt hair, stained robes, smells of rice wine.",
-        stats: { STR: { score: 10, mod: 0, save: 4 }, DEX: { score: 20, mod: 5, save: 9 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 8, mod: -1, save: 3 }, WIS: { score: 18, mod: 4, save: 8 }, CHA: { score: 10, mod: 0, save: 4 } },
-        combat: { ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4 },
-        attacks: [{ name: "Unarmed Strike", bonus: "+9", damage: "1d6+5", notes: "Magical" }],
-        skills: { Acrobatics: 9, Insight: 8, Stealth: 9 },
-        features: [{ name: "Ki (10 pts)", desc: "10 ki, recharge short rest. DC 16.", cost: "10/short", uses: 10, resetOn: "short" }, { name: "Stunning Strike", desc: "1 ki on hit: CON save or stunned.", cost: "1 ki", uses: 10, resetOn: "short" }],
-        spells: [], equipment: ["Quarterstaff", "10 darts", "Worn flask", "10 gp"],
-        backstory: "The Monastery of the Unremembered Path was erased by a Rod fragment. Kaelen is the only survivor."
-      },
-      chronurgy: {
-        name: "Vesper Aldric", classLevel: "Wizard (Chronurgy) 10", race: "Variant Human", background: "Temporal Archivist", alignment: "True Neutral", playerName: "__________________", campaign: "Eve of Ruin",
-        appearance: "Robes with temporal threads. Weary eyes.",
-        stats: { STR: { score: 8, mod: -1, save: 3 }, DEX: { score: 14, mod: 2, save: 6 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 20, mod: 5, save: 9 }, WIS: { score: 12, mod: 1, save: 5 }, CHA: { score: 10, mod: 0, save: 4 } },
-        combat: { ac: 15, hp: 62, speed: 30, initiative: 5, hitDice: "10d6", proficiency: 4 },
-        attacks: [{ name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" }],
-        skills: { Arcana: 9, History: 9, Investigation: 9 },
-        features: [{ name: "Chronal Shift", desc: "Reaction: force reroll within 30 ft.", cost: "2/long", uses: 2, resetOn: "long" }, { name: "Arcane Abeyance", desc: "Store spell in bead 1 hour.", cost: "1/short", uses: 1, resetOn: "short" }],
-        spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 }, spells: ["Shield", "Misty Step", "Counterspell", "Haste", "Wall of Force"],
-        equipment: ["Spellbook", "Component pouch", "Hourglass pendant", "15 gp"],
-        backstory: "Vesper saw the end — the Rod assembled and the multiverse collapsing."
-      },
-      grave: {
-        name: "Morwen", classLevel: "Cleric (Grave) 10", race: "Reborn", background: "Debt Collector of the Raven Queen", alignment: "Lawful Neutral", playerName: "__________________", campaign: "Eve of Ruin",
-        appearance: "Stillness of a grave. Quiet voice.",
-        stats: { STR: { score: 8, mod: -1, save: 3 }, DEX: { score: 12, mod: 1, save: 5 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 10, mod: 0, save: 4 }, WIS: { score: 20, mod: 5, save: 9 }, CHA: { score: 16, mod: 3, save: 7 } },
-        combat: { ac: 15, hp: 82, speed: 30, initiative: 1, hitDice: "10d8", proficiency: 4 },
-        attacks: [{ name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic", notes: "Wis save" }],
-        skills: { Persuasion: 7, Intimidation: 7, Insight: 9 },
-        features: [{ name: "Path to the Grave", desc: "Curse: next attack double damage.", cost: "CD", uses: 2, resetOn: "short" }, { name: "Sentinel at Death's Door", desc: "Reaction: cancel crit.", cost: "Reaction", uses: "∞", resetOn: "none" }],
-        spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 }, spells: ["Bless", "Spiritual Weapon", "Spirit Guardians", "Death Ward", "Greater Restoration"],
-        equipment: ["Breastplate", "Holy symbol", "Mace", "Prayer book", "15 gp"],
-        backstory: "You died. The Raven Queen saved you. You serve her now."
-      },
-      psi: {
-        name: "Zor-Ashkev's Vessel", classLevel: "Fighter (Psi Warrior) 10", race: "Aasimar (Fallen)", background: "Wind Duke Sleeper Agent", alignment: "Lawful Neutral", playerName: "__________________", campaign: "Eve of Ruin",
-        appearance: "Unnerving stillness. Pale silver eyes.",
-        stats: { STR: { score: 17, mod: 3, save: 7 }, DEX: { score: 10, mod: 0, save: 4 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 15, mod: 2, save: 6 }, WIS: { score: 10, mod: 0, save: 4 }, CHA: { score: 8, mod: -1, save: 3 } },
-        combat: { ac: 19, hp: 84, speed: 30, initiative: 0, hitDice: "10d10", proficiency: 4 },
-        attacks: [{ name: "Longsword", bonus: "+7", damage: "1d8+5", notes: "+2 Dueling" }],
-        skills: { Athletics: 7, Perception: 4, History: 6 },
-        features: [{ name: "Psionic Power (6 dice)", desc: "6 Psionic dice (d8), recharge long.", cost: "6/long", uses: 6, resetOn: "long" }, { name: "Action Surge", desc: "Extra action.", cost: "1/short", uses: 1, resetOn: "short" }],
-        spells: [], equipment: ["Plate armor", "Longsword", "Heavy crossbow", "Silver cube", "15 gp"],
-        backstory: "Six months ago: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.' carved into your arm."
-      }
-    };
+  // Class-to-spell-key mapping
+  const classSpellMap = {
+    dmpc: ["ranger"],
+    drunken: ["monk"],
+    chronurgy: ["wizard"],
+    grave: ["cleric"],
+    psi: ["psiwarrior"]
+  };
 
-    const dmSecrets = {
-      dmpc: "Syv's memories were taken by the Raven Queen. She knows where the final Rod piece is. She was Zor-Ashkev's lover.",
-      drunken: "The Monastery was erased by a Rod fragment. Kaelen is the only survivor.",
-      chronurgy: "Vesper's future self is assembling the Rod.",
-      grave: "You were a Wind Duke scholar who helped design the Rod.",
-      psi: "You are a sleeper agent for Zor-Ashkev. Syv was his lover."
-    };
-
-    // Session Zero entry
-    const sessionZero = {
-      date: "Session 0",
-      title: "✦ The Gathering at the Crossroads Inn ✦",
-      notes: "The party converges at the Crossroads Inn, a waystation between planes where reality runs thin. Each arrives following their own thread of fate — Kaelen chasing a memory of a monastery that never was, Vesper tracking temporal anomalies, Morwen answering a summons from the Raven Queen, and the Vessel drawn by the hum of the silver cube. Sylvara watches from the shadows, recognizing each face from her erased maps. The innkeeper, an old tiefling named Rusk, serves drinks that taste like home — whatever home means to the drinker. Over the course of the evening, the strangers compare notes and discover they all seek fragments of the same artifact: the Rod of Seven Parts. The first piece lies in a forgotten temple in the Shadowfell. The party agrees to travel together. Syv reveals herself and offers to guide them through the planar cracks."
-    };
-
-    // ─── HELPERS ──────────────────────────────────────────
-    function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    function makeEditable(value, fieldKey, charKey) {
-      return `<span class="editable-text" contenteditable="true" data-field="${fieldKey}" data-char="${charKey}" oninput="scheduleAutoSave('${charKey}')" onblur="saveFieldImmediate('${charKey}','${fieldKey}',this)">${escapeHtml(String(value))}</span>`;
+  // ─── COMPLETE CHARACTER DATA ──────────────────────────
+  const characterData = {
+    dmpc: {
+      name: "Sylvara 'Syv' Mosswood", classLevel: "Ranger (Gloom Stalker) 5 / Rogue (Scout) 5", race: "Wood Elf", background: "Planar Cartographer (Wind Duke Archivist)", alignment: "Neutral Good", playerName: "DM (DMPC)", campaign: "Eve of Ruin",
+      appearance: "Sylvara has ash-gray skin and silver-white hair pulled into a tight braid. Her eyes are pale violet and never seem to focus on the present — she's always looking at something slightly out of phase. A faded tattoo of a star chart covers her left forearm, but parts of it are blurred, as if erased. She moves with absolute silence, even on gravel. She carries a longbow carved from a tree that no longer exists in any timeline.",
+      personality: ['"I\'ve mapped planes that have since been unmade. Don\'t ask me to prove it — I can\'t."', '"I don\'t trust magic I can\'t see. Traps are poetry. Chaos is noise."', '"The Rod doesn\'t break reality. It smudges it. I carry the eraser."'],
+      ideal: "A map is a promise that somewhere exists. I will finish my atlas of the lost planes.", bond: "The party is the first thing in 300 years that feels real. I'll die before I let them be erased.", flaw: 'I sometimes forget which timeline we\'re in. I\'ve called the Fighter by the wrong name three times. He doesn\'t notice. That worries me.',
+      stats: { STR: { score: 10, mod: 0, save: 4 }, DEX: { score: 20, mod: 5, save: 9 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 12, mod: 1, save: 5 }, WIS: { score: 14, mod: 2, save: 6 }, CHA: { score: 8, mod: -1, save: 3 } },
+      combat: { ac: 17, hp: 85, speed: 35, initiative: 7, hitDice: "5d10+5d8", proficiency: 4, passivePerception: 20, passiveInvestigation: 15, passiveInsight: 16 },
+      attacks: [{ name: "Longbow", bonus: "+11", damage: "1d8+5", notes: "150/600 ft" }, { name: "Longbow + Hunter's Mark", bonus: "+11", damage: "1d8+5+1d6", notes: "Bonus action" }, { name: "Dread Ambusher", bonus: "+11", damage: "extra +1d8", notes: "Turn 1, +10 ft spd" }],
+      skills: { Stealth: 13, Perception: 10, Investigation: 5, "Thieves' Tools": 9, Survival: 6, Acrobatics: 9, Nature: 5, Insight: 6 },
+      tools: "Thieves' Tools, Cartographer's Tools, Navigator's Tools",
+      languages: "Common, Elvish, Primordial (Wind Duke), Sylvan",
+      features: [{ name: "Sneak Attack (+3d6)", desc: "Once per turn with advantage or ally within 5 ft.", cost: "Free", uses: 0, resetOn: "none" }, { name: "Cunning Action", desc: "Bonus: Dash, Disengage, or Hide.", cost: "Bonus", uses: 0, resetOn: "none" }, { name: "Steady Aim", desc: "Bonus: advantage on next attack (no move).", cost: "Bonus", uses: 0, resetOn: "none" }, { name: "Uncanny Dodge", desc: "Reaction: halve attack damage.", cost: "Reaction", uses: 0, resetOn: "none" }, { name: "Skirmisher", desc: "Reaction: move half speed when enemy ends turn within 5 ft.", cost: "Reaction", uses: 0, resetOn: "none" }, { name: "Dread Ambusher", desc: "+WIS to init. Turn 1: +10 ft speed, extra attack +1d8.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Umbral Sight", desc: "Invisible to darkvision while in darkness.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Favored Foe", desc: "Bonus action: mark target, +1d4 once/turn (scales to 1d6).", cost: "PB/long rest", uses: 4, resetOn: "long" }, { name: "Mask of the Wild", desc: "Hide when lightly obscured by natural phenomena.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Fey Ancestry", desc: "Advantage vs charm, immune to magical sleep.", cost: "Passive", uses: 0, resetOn: "none" }],
+      spellSlots: { "1st": 4, "2nd": 2 }, spells: ["Goodberry", "Hunter's Mark", "Absorb Elements", "Pass Without Trace", "Rope Trick", "Zephyr Strike"],
+      equipment: ["Studded leather armor", "Longbow", "Quiver with 40 arrows", "Thieves' tools", "Cartographer's tools", "Broken compass (points toward Rod pieces)", "Journal with partial maps of erased planes", "Explorer's pack", "Belt pouch with 20 gp"],
+      backstory: "I was a cartographer for the Wind Dukes. Not a warrior — a mapmaker. I drew the edges of reality before they were fixed. I mapped the space between the Abyss and Mechanus, the forgotten pathways that only the Rod can travel. Then the Rod was tested. A shockwave tore through the In-Between. I woke up with half my memories erased and a broken compass in my hand. My maps — three hundred years of work — were gone. But the tattoo on my arm remains. It shows a place that doesn't exist yet. The Raven Queen found me. She said: 'Guide the ones who will find the Rod. Keep them alive. And when they succeed, you may draw the final map.' I don't know what that means. But I know I'm the only one who can navigate the cracks where the Rod pieces hide."
+    },
+    drunken: {
+      name: "Kaelen 'Kettle' Morrow", classLevel: "Monk (Way of the Drunken Master) - Level 10", race: "Human (Variant)", background: "The Last of the Unremembered Path", alignment: "Chaotic Good", playerName: "__________________", campaign: "Eve of Ruin",
+      appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine. He moves with a deceptive grace — stumbling one moment, flowing like water the next. His hands are calloused but surprisingly steady when he's holding a bottle.",
+      personality: ['"I measure time in drinks, not hours."', '"If I\'m standing, I\'m not that drunk yet."', '"I remember things that never happened. Don\'t ask."'],
+      ideal: "Memory is a cage. Forgetting is freedom — but only if you choose it, not if it's stolen.", bond: "The party is my new monastery. I'll die before I let them be erased like the last one.", flaw: "Sometimes I call my friends by names from my lost order. They don't exist anymore.",
+      stats: { STR: { score: 10, mod: 0, save: 4 }, DEX: { score: 20, mod: 5, save: 9 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 8, mod: -1, save: 3 }, WIS: { score: 18, mod: 4, save: 8 }, CHA: { score: 10, mod: 0, save: 4 } },
+      combat: { ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4, passivePerception: 18, passiveInsight: 18 },
+      attacks: [{ name: "Unarmed Strike", bonus: "+9", damage: "1d6+5", notes: "Magical" }, { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 ×2", notes: "1 ki" }, { name: "Quarterstaff", bonus: "+9", damage: "1d6+5 (1d8+5 vers.)", notes: "Monk weapon" }],
+      skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9, "Sleight of Hand": 9, Athletics: 4 },
+      tools: "Brewer's supplies",
+      languages: "Common, Primordial",
+      features: [{ name: "Martial Arts (1d6)", desc: "Unarmed/monk weapons deal 1d6. Bonus unarmed strike after Attack.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Ki (10 points)", desc: "10 ki, recharge short rest. DC 16.", cost: "10/short", uses: 10, resetOn: "short" }, { name: "Flurry of Blows", desc: "1 ki: two unarmed strikes as bonus.", cost: "1 ki", uses: 10, resetOn: "short" }, { name: "Patient Defense", desc: "1 ki: Dodge as bonus action.", cost: "1 ki", uses: 10, resetOn: "short" }, { name: "Step of the Wind", desc: "1 ki: Dash/Disengage as bonus.", cost: "1 ki", uses: 10, resetOn: "short" }, { name: "Stunning Strike", desc: "1 ki on hit: CON save or stunned.", cost: "1 ki", uses: 10, resetOn: "short" }, { name: "Drunken Technique", desc: "With Flurry: free Disengage +10 ft movement.", cost: "Free", uses: 0, resetOn: "none" }, { name: "Tipsy Sway", desc: "Reaction: redirect missed attack to creature within 5 ft (1 ki).", cost: "1 ki", uses: 10, resetOn: "short" }, { name: "Evasion", desc: "DEX save half → 0 on success.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Purity of Body", desc: "Immune to disease/poison.", cost: "Passive", uses: 0, resetOn: "none" }],
+      spells: [], equipment: ["Quarterstaff", "10 darts", "Explorer's pack", "Broken ceramic bottle", "Worn flask", "Common clothes", "Belt pouch with 10 gp"],
+      backstory: "The Monastery of the Unremembered Path stood on a mountain that no longer exists, in a valley that never was. Your order believed in perfect emptiness — not void, but absence so complete it becomes presence. You trained for forty years to achieve it. You failed. You still felt joy. Still felt grief. Still loved your tea-brewing master, old Lin Wei, who called you 'Little Kettle' because you always boiled over. Then the event happened. A crack in time — caused by someone testing a piece of the Rod of Seven Parts. Your monastery didn't burn. Didn't fall. It un-happened. Lin Wei didn't die. He was never born. The mountain didn't crumble. It was never there. You survived because you were in a cave below the mountain, drunk on stolen rice wine — your first and only act of rebellion. You stumbled out to find... a different mountain. Different sky. Different gods. No one remembers your order. No one can. Now you drink to forget — but forgetting is exactly what they took from you."
+    },
+    chronurgy: {
+      name: "Vesper Aldric", classLevel: "Wizard (School of Chronurgy) - Level 10", race: "Variant Human / Custom Lineage", background: "Temporal Archivist", alignment: "True Neutral", playerName: "__________________", campaign: "Eve of Ruin",
+      appearance: "Vesper carries the weight of futures that may never come. His robes are enchanted with temporal threads that shift slightly in color. His eyes hold the weariness of someone who has seen too many timelines collapse.",
+      personality: ['"Time is a river, and I\'ve learned to swim upstream."', '"I always keep a backup plan. And a backup for the backup."', '"Punctuality is the highest form of respect."'],
+      ideal: "Knowledge is the only true currency across timelines.", bond: "I've seen the end of this story. I'm here to rewrite it.", flaw: "I sometimes respond to things that haven't happened yet. People find it unsettling.",
+      stats: { STR: { score: 8, mod: -1, save: 3 }, DEX: { score: 14, mod: 2, save: 6 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 20, mod: 5, save: 9 }, WIS: { score: 12, mod: 1, save: 5 }, CHA: { score: 10, mod: 0, save: 4 } },
+      combat: { ac: 15, hp: 62, speed: 30, initiative: 5, hitDice: "10d6", proficiency: 4, passivePerception: 15, passiveInvestigation: 19, passiveArcana: 19 },
+      attacks: [{ name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" }, { name: "Fire Bolt", bonus: "+9", damage: "2d10 fire", notes: "Ranged" }],
+      skills: { Arcana: 9, History: 9, Investigation: 9, Insight: 5, Perception: 5 },
+      tools: "Calligrapher's supplies",
+      languages: "Common, Draconic, Primordial, Celestial",
+      features: [{ name: "Chronal Shift", desc: "Reaction: force reroll of attack/check/save within 30 ft.", cost: "2/long rest", uses: 2, resetOn: "long" }, { name: "Temporal Awareness", desc: "Add INT mod (+5) to initiative.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Momentary Stasis", desc: "Action: Large-or-smaller creature CON save or incapacitated (speed 0).", cost: "PB/long", uses: 4, resetOn: "long" }, { name: "Arcane Abeyance", desc: "Store 4th-or-lower spell in a bead for 1 hour.", cost: "1/short", uses: 1, resetOn: "short" }, { name: "Spellcasting", desc: "10th-level wizard. DC 17, attack +9.", cost: "See slots", uses: 0, resetOn: "none" }],
+      spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 }, spells: ["Shield", "Misty Step", "Counterspell", "Haste", "Slow", "Dimension Door", "Wall of Force", "Gift of Alacrity"],
+      equipment: ["Spellbook bound in temporal leather", "Component pouch", "Arcane focus (hourglass pendant)", "Scholar's pack", "A small hourglass that runs backwards", "Ink and quill", "15 gp"],
+      backstory: "Vesper was always out of step with time. As a child, he would answer questions before they were asked. The Chronurgy Academy found him and trained him to stabilize temporal anomalies. But during a routine calibration of a temporal anchor, he caught a glimpse of the end — the Rod of Seven Parts fully assembled, and the multiverse collapsing into a single, frozen moment. He's been trying to prevent that future ever since, even if it means breaking every rule of chronomancy."
+    },
+    grave: {
+      name: "Morwen", classLevel: "Cleric (Grave Domain) - Level 10", race: "Reborn", background: "Debt Collector of the Raven Queen", alignment: "Lawful Neutral", playerName: "__________________", campaign: "Eve of Ruin",
+      appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side. Your voice is quiet — death doesn't need to shout. When you speak, people listen. Not because you're charming, but because you sound like you already know how their story ends.",
+      personality: ['"I speak to the dead. They\'re better listeners than the living."', '"Death doesn\'t frighten me. What comes after? That\'s another matter."', '"I keep a list of everyone I\'ve buried. I\'ve never needed a second page."'],
+      ideal: "Death is a door, not a wall. My job is to make sure no one kicks it down before their time.", bond: "The Raven Queen saved me. I don't know why. I intend to find out — and maybe earn my freedom.", flaw: "I have no fear of death. This makes me reckless — and unnerving to my allies.",
+      stats: { STR: { score: 8, mod: -1, save: 3 }, DEX: { score: 12, mod: 1, save: 5 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 10, mod: 0, save: 4 }, WIS: { score: 20, mod: 5, save: 9 }, CHA: { score: 16, mod: 3, save: 7 } },
+      combat: { ac: 15, hp: 82, speed: 30, initiative: 1, hitDice: "10d8", proficiency: 4, passivePerception: 19, passiveInsight: 19, passiveMedicine: 19 },
+      attacks: [{ name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic", notes: "Wis save" }, { name: "Sacred Flame", bonus: "DC 17", damage: "2d8 radiant", notes: "Ignores cover" }],
+      skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9, Perception: 9, Religion: 4 },
+      tools: "Herbalism Kit, Calligrapher's Supplies",
+      languages: "Common, Primordial",
+      features: [{ name: "Circle of Mortality", desc: "Healing at 0 HP uses max dice.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Eyes of the Grave", desc: "Action: detect undead within 60 ft.", cost: "PB/long", uses: 4, resetOn: "long" }, { name: "Path to the Grave", desc: "Bonus: curse target, next attack double damage.", cost: "CD", uses: 2, resetOn: "short" }, { name: "Sentinel at Death's Door", desc: "Reaction: cancel crit within 30 ft.", cost: "Reaction", uses: "∞", resetOn: "none" }, { name: "Divine Strike", desc: "Once/turn: +1d8 necrotic on weapon hit.", cost: "Free", uses: 0, resetOn: "none" }, { name: "Deathless Nature", desc: "Advantage on death saves, no eat/drink/breathe, disease resist.", cost: "Passive", uses: 0, resetOn: "none" }],
+      spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 }, spells: ["Bless", "Healing Word", "Spiritual Weapon", "Spirit Guardians", "Death Ward", "Banishment", "Greater Restoration", "Scrying", "Revivify"],
+      equipment: ["Breastplate", "Holy symbol (silver raven skull)", "Mace", "Shield (optional)", "Explorer's pack", "Prayer book of the Raven Queen", "Small bell for funeral rites", "Black feather quill", "Belt pouch with 15 gp"],
+      backstory: "You remember dying. Cold. Quiet. A long hallway with a door at the end. You were walking toward it when a hand — skeletal, elegant, impossibly old — touched your shoulder and said: 'Not yet. I have use for you.' You woke up on a stone table in a fortress made of frozen shadows. The Raven Queen stood over you. She didn't explain. She simply said: 'You will keep the balance. You will ensure things die when they should. And you will stop the Wolf-Spider from unmaking the grave itself.' That was years ago. You've served her since — traveling the planes, burying the dead, slaying the undead. Now you've heard whispers of the Rod of Seven Parts. If reassembled, it could unravel death itself. The Raven Queen hasn't commanded you to stop it. She doesn't need to. You owe her. And you intend to pay your debt."
+    },
+    psi: {
+      name: "Zor-Ashkev's Vessel", classLevel: "Fighter (Psi Warrior) - Level 10", race: "Aasimar (Fallen, reflavored)", background: "Wind Duke Sleeper Agent", alignment: "Lawful Neutral (sliding toward... something)", playerName: "__________________", campaign: "Eve of Ruin",
+      appearance: "You have an unnerving stillness. Your eyes are a pale silver that sometimes flicker when you concentrate. You move with precision that seems almost rehearsed, as if your body knows where to be before you decide. When the Wind Duke ghost stirs, your pupils become faceted — like cut gemstones.",
+      personality: ['"I don\'t remember learning half of what I know. I just... know it."', '"I count things. Steps. Arrows. Lies. I don\'t know why."', '"Sometimes I speak in a language I\'ve never heard."'],
+      ideal: "Order is a tool, not a master. (But the ghost inside disagrees.)", bond: "The party is my unit. I will not sacrifice them — yet.", flaw: 'When stressed, I speak in the Wind Duke\'s voice without realizing.',
+      stats: { STR: { score: 17, mod: 3, save: 7 }, DEX: { score: 10, mod: 0, save: 4 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 15, mod: 2, save: 6 }, WIS: { score: 10, mod: 0, save: 4 }, CHA: { score: 8, mod: -1, save: 3 } },
+      combat: { ac: 19, hp: 84, speed: 30, initiative: 0, hitDice: "10d10", proficiency: 4, passivePerception: 14, passiveInvestigation: 16 },
+      attacks: [{ name: "Longsword (1H)", bonus: "+7", damage: "1d8+5", notes: "+2 Dueling" }, { name: "Longsword + Psionic Strike", bonus: "+7", damage: "1d8+5+1d8+2", notes: "1 Die" }, { name: "Heavy Crossbow", bonus: "+4", damage: "1d10", notes: "100/400" }],
+      skills: { Athletics: 7, Perception: 4, History: 6, Investigation: 6, Insight: 4 },
+      tools: "Calligrapher's tools",
+      languages: "Common, Primordial (Wind Duke)",
+      features: [{ name: "Psionic Power (6 dice)", desc: "6 Psionic dice (d8+2), recharge long rest.", cost: "6/long", uses: 6, resetOn: "long" }, { name: "Protective Field", desc: "Reaction: reduce damage to self/ally within 30 ft by 1d8+2.", cost: "1 die", uses: 6, resetOn: "long" }, { name: "Psionic Strike", desc: "Once/turn: +1d8+2 force on weapon hit.", cost: "1 die", uses: 6, resetOn: "long" }, { name: "Telekinetic Movement", desc: "Action: move object/creature up to 30 ft.", cost: "1 die", uses: 6, resetOn: "long" }, { name: "Guarded Mind", desc: "Immune to psychic damage, charmed, frightened.", cost: "Passive", uses: 0, resetOn: "none" }, { name: "Action Surge", desc: "Extra action on your turn.", cost: "1/short", uses: 1, resetOn: "short" }, { name: "Second Wind", desc: "Bonus: regain 1d10+10 HP.", cost: "1/short", uses: 1, resetOn: "short" }],
+      spells: [], equipment: ["Plate armor (AC 19)", "Longsword", "Heavy crossbow (20 bolts)", "Dungeoneer's pack", "Small silver cube (humms near Rod)", "Journal (geometric symbols)", "Belt pouch with 15 gp"],
+      backstory: "You don't remember your childhood clearly. Not trauma — absence. You remember a field, a blue sky, and suddenly knowing how to arrange stones into a perfect geometric ward. You were seven. As you grew, so did the hum. You became a mercenary famous for impossible tactics — predicting ambushes, drawing perfect maps of places you'd never seen, knowing which soldier would desert before they knew themselves. Your comrades called you 'the Compass.' Six months ago, you woke up with seven words carved into your forearm in a script you'd never seen but immediately understood: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.' You've been hunting pieces of the Rod of Seven Parts ever since."
     }
-    function renderUsageBoxes(charKey, featIdx, uses) {
-      if (uses === "∞" || !uses || uses === 0) return '';
-      const num = parseInt(uses); if (isNaN(num) || num > 20) return '';
-      const key = `uses-${charKey}-feat-${featIdx}`;
-      let used = parseInt(localStorage.getItem(key) || '0');
-      let boxes = '';
-      for (let i = 0; i < num; i++) boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this,'${key}',${num})"></span>`;
-      return `<div style="margin-top:0.15rem;display:flex;align-items:center;gap:0.2rem;"><span style="font-size:0.55rem;color:#9088c0;">Used:</span>${boxes}<button class="btn-sm" onclick="resetOneUsage('${key}',this)">↺</button></div>`;
-    }
-    window.toggleUsage = function(el, key, num) {
-      const all = el.parentElement.querySelectorAll('.usage-checkbox'), idx = Array.from(all).indexOf(el);
-      if (el.classList.contains('used')) { for (let i = all.length-1; i >= idx; i--) all[i].classList.remove('used'); }
-      else { for (let i = 0; i <= idx; i++) all[i].classList.add('used'); }
-      let count = 0; all.forEach(b => { if (b.classList.contains('used')) count++; });
-      localStorage.setItem(key, count);
-    };
-    window.resetOneUsage = function(key, btn) { localStorage.setItem(key, '0'); btn.parentElement.querySelectorAll('.usage-checkbox').forEach(b => b.classList.remove('used')); };
-    window.resetAllByType = function(charKey, type) {
-      characterData[charKey]?.features?.forEach((f, i) => { if (f.resetOn === type || type === 'long') localStorage.setItem(`uses-${charKey}-feat-${i}`, '0'); });
-      switchTab(charKey);
-    };
-    function scheduleAutoSave(charKey) {
-      if (autoSaveTimers[charKey]) clearTimeout(autoSaveTimers[charKey]);
-      autoSaveTimers[charKey] = setTimeout(() => saveAllEdits(charKey), 3000);
-    }
-    window.saveFieldImmediate = function(charKey, field, el) {
-      db.ref(`characters/${charKey}/${field}`).set(el.textContent.trim());
-      addToChangeLog(charKey, field, el.textContent.trim());
-    };
-    function saveAllEdits(charKey) {
-      const edits = {};
-      document.querySelectorAll(`[data-char="${charKey}"]`).forEach(el => edits[el.getAttribute('data-field')] = el.textContent.trim());
-      Object.entries(edits).forEach(([f, v]) => { db.ref(`characters/${charKey}/${f}`).set(v); });
-    }
-    function addToChangeLog(charKey, field, value) {
-      changeLog.unshift({ time: new Date().toLocaleTimeString(), char: characterData[charKey]?.name || charKey, field, value: value.substring(0, 50) });
-      if (changeLog.length > 10) changeLog = changeLog.slice(0, 10);
-      db.ref('changeLog').set(changeLog);
-    }
+  };
 
-    // ─── DYNAMIC SPELL DROPDOWN ──────────────────────────
-    window.showSpellInfo = function(charKey) {
-      const select = document.getElementById(`spellSelect-${charKey}`), info = document.getElementById(`spellInfo-${charKey}`);
-      if (!select || !info) return;
-      const spellName = select.value;
-      if (!spellName) { info.style.display = 'none'; return; }
-      const spell = spellDatabase[spellName];
-      if (!spell) { info.style.display = 'block'; info.innerHTML = '<p style="color:#a098d0;">No description available.</p>'; return; }
-      info.style.display = 'block';
-      info.innerHTML = `<strong style="color:#d4c8ff;">${spellName}</strong><span class="spell-level-badge">${spell.level}</span> · ${spell.school || ''}${spell.castingTime ? `<div><span style="color:#9088c0;">Cast:</span> ${spell.castingTime} | <span style="color:#9088c0;">Range:</span> ${spell.range} | <span style="color:#9088c0;">Dur:</span> ${spell.duration}</div>` : ''}<div style="margin-top:0.3rem;color:#c0b8e8;">${spell.desc}</div>`;
-    };
-    window.addSpellFromDropdown = function(charKey) {
-      const select = document.getElementById(`spellSelect-${charKey}`);
-      if (!select?.value) return;
-      const name = select.value;
-      db.ref(`characters/${charKey}/spells`).once('value').then(s => {
-        const cur = s.val() || [];
-        if (!cur.includes(name)) { cur.push(name); return db.ref(`characters/${charKey}/spells`).set(cur); }
-      }).then(() => { addToChangeLog(charKey, 'spells', `Added: ${name}`); loadDynamicLists(charKey); select.value = ''; document.getElementById(`spellInfo-${charKey}`).style.display = 'none'; });
-    };
-    window.addSpell = function(charKey) {
-      const input = document.getElementById(`newSpell-${charKey}`);
-      if (!input?.value.trim()) return;
-      const name = input.value.trim();
-      db.ref(`characters/${charKey}/spells`).once('value').then(s => {
-        const cur = s.val() || []; cur.push(name); return db.ref(`characters/${charKey}/spells`).set(cur);
-      }).then(() => { addToChangeLog(charKey, 'spells', `Added: ${name}`); loadDynamicLists(charKey); input.value = ''; });
-    };
-    window.addEquipment = function(charKey) {
-      const input = document.getElementById(`newEquip-${charKey}`);
-      if (!input?.value.trim()) return;
-      const name = input.value.trim();
-      db.ref(`characters/${charKey}/equipment`).once('value').then(s => {
-        const cur = s.val() || []; cur.push(name); return db.ref(`characters/${charKey}/equipment`).set(cur);
-      }).then(() => { addToChangeLog(charKey, 'equipment', `Added: ${name}`); loadDynamicLists(charKey); input.value = ''; });
-    };
-    window.addFeature = function(charKey) {
-      const n = document.getElementById(`newFeatName-${charKey}`), d = document.getElementById(`newFeatDesc-${charKey}`), u = document.getElementById(`newFeatUses-${charKey}`);
-      if (!n?.value.trim()) return;
-      const feat = { name: n.value.trim(), desc: d.value.trim() || 'New', cost: u.value.trim() || 'Passive', uses: u.value.trim() || 0, resetOn: 'none' };
-      db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => {
-        const cur = s.val() || []; cur.push(feat); return db.ref(`characters/${charKey}/customFeatures`).set(cur);
-      }).then(() => { addToChangeLog(charKey, 'features', `Added: ${feat.name}`); loadDynamicLists(charKey); n.value = ''; d.value = ''; u.value = ''; });
-    };
-    window.removeItem = function(btn, charKey, category, name) {
-      if (!confirm('Remove?')) return;
-      db.ref(`characters/${charKey}/${category}`).once('value').then(s => {
-        const items = s.val() || [];
-        return db.ref(`characters/${charKey}/${category}`).set(items.filter(i => (typeof i === 'string' ? i !== name : i.name !== name)));
-      }).then(() => { addToChangeLog(charKey, category, `Removed: ${name}`); btn.closest('div, li').remove(); });
-    };
+  const dmSecrets = {
+    dmpc: "Syv's missing memories were taken by the Raven Queen. She knows where the final Rod piece is hidden but can't remember until the right moment. She was the lover of the Psi Warrior's original Wind Duke host (Zor-Ashkev). If she dies, her tattoo creates a map to the nearest Rod piece.",
+    drunken: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor. Old Lin Wei's spirit sometimes watches over him, invisible to all but the Raven Queen.",
+    chronurgy: "Vesper's future self is the one assembling the Rod — believing that freezing the multiverse is the only way to prevent a greater catastrophe. Vesper will have to face himself before the campaign ends.",
+    grave: "In your previous life, you were a minor Wind Duke scholar who helped design the Rod of Seven Parts. The Raven Queen erased those memories. She doesn't want the Rod destroyed — she wants it reassembled to control death across all planes. Your killer is still alive and hunting you.",
+    psi: "Embedded in your psyche is General Zor-Ashkev, a Wind Duke who died fighting Miska. You are a sleeper agent. The seven words are a psychic trigger. Syv was his lover. At the climax, you can choose to suppress the ghost — losing all psionic powers but keeping your soul."
+  };
 
-    // ─── CHARACTER NOTES ──────────────────────────────────
-    window.addCharNote = function(charKey) {
-      const input = document.getElementById(`charNoteInput-${charKey}`);
-      if (!input?.value.trim()) return;
-      const note = { id: Date.now(), text: input.value.trim(), time: new Date().toLocaleString() };
-      db.ref(`characterNotes/${charKey}`).once('value').then(s => {
-        const notes = s.val() || [];
-        notes.unshift(note);
-        return db.ref(`characterNotes/${charKey}`).set(notes);
-      }).then(() => { loadCharNotes(charKey); input.value = ''; });
-    };
-    window.removeCharNote = function(charKey, noteId) {
-      db.ref(`characterNotes/${charKey}`).once('value').then(s => {
-        const notes = s.val() || [];
-        return db.ref(`characterNotes/${charKey}`).set(notes.filter(n => n.id !== noteId));
-      }).then(() => loadCharNotes(charKey));
-    };
-    function loadCharNotes(charKey) {
-      db.ref(`characterNotes/${charKey}`).once('value').then(s => {
-        const notes = s.val() || [];
-        const container = document.getElementById(`charNotes-${charKey}`);
-        if (!container) return;
-        container.innerHTML = notes.length === 0 ? '<p style="color:#9088c0;font-size:0.75rem;">No notes yet.</p>' : notes.map(n => `<div class="char-note-card"><div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:#c0c8e8;font-size:0.8rem;">${escapeHtml(n.text)}</span><button class="btn-remove" onclick="removeCharNote('${charKey}',${n.id})">✕</button></div><div style="color:#9088c0;font-size:0.65rem;">${n.time}</div></div>`).join('');
-      });
-    }
+  const sessionZero = {
+    id: "session0",
+    date: "Session 0",
+    title: "✦ The Gathering at the Crossroads Inn ✦",
+    notes: "The party converges at the Crossroads Inn, a waystation between planes where reality runs thin.\n• Kaelen arrives first, chasing a fragment of memory — a monastery that never was, following the scent of rice wine that tastes like home.\n• Vesper materializes from a temporal rift, his hourglass spinning backwards, tracking anomalies that all point to the same location.\n• Morwen walks through the door exactly at midnight, sent by the Raven Queen with instructions to 'find the ones who seek the shattered cage.'\n• The Vessel is already there — has been for three days. The silver cube hummed so loudly he couldn't leave. He doesn't know why he's waiting.\n• Sylvara watches from the corner booth, recognizing each face from maps she drew centuries ago but can no longer remember drawing.\n• The innkeeper, an old tiefling named Rusk, serves drinks that taste like home — whatever home means to each drinker.\n• Over the course of the evening, the strangers compare notes and discover they all seek fragments of the same artifact: The Rod of Seven Parts.\n• Syv reveals herself and offers to guide them through the planar cracks. 'I can't remember the way,' she says, 'but my feet do.'\n• The first piece lies in a forgotten temple in the Shadowfell. The party agrees to travel together at dawn."
+  };
 
-    // ─── SESSION NOTES ────────────────────────────────────
-    window.addSessionNote = function() {
-      const dt = document.getElementById('sessionDate'), ti = document.getElementById('sessionTitle'), nt = document.getElementById('sessionNotes');
-      if (!ti?.value.trim()) return;
-      const note = { id: Date.now(), date: dt?.value || new Date().toISOString().split('T')[0], title: ti.value.trim(), notes: nt?.value.trim() || '' };
-      db.ref('sessionNotes').once('value').then(s => {
-        const notes = s.val() || []; notes.push(note); return db.ref('sessionNotes').set(notes);
-      }).then(() => { sessionNotes.push(note); renderSessionNotes(); dt.value = ''; ti.value = ''; nt.value = ''; });
-    };
-    window.addBulletToForm = function() {
-      const nt = document.getElementById('sessionNotes'); if (!nt) return;
-      const pos = nt.selectionStart; nt.value = nt.value.substring(0, pos) + '\n• ' + nt.value.substring(pos);
-      nt.focus(); nt.selectionStart = nt.selectionEnd = pos + 3;
-    };
-    window.removeSessionNote = function(id) {
-      if (!confirm('Delete?')) return;
-      db.ref('sessionNotes').once('value').then(s => {
-        const notes = s.val() || [];
-        return db.ref('sessionNotes').set(notes.filter(n => n.id !== id));
-      }).then(() => { sessionNotes = sessionNotes.filter(n => n.id !== id); renderSessionNotes(); });
-    };
-    function renderSessionNotes() {
-      const container = document.getElementById('sessionNotesContainer');
+  // ─── HELPERS ──────────────────────────────────────────
+  function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function makeEditable(value, fieldKey, charKey) {
+    return `<span class="editable-text" contenteditable="true" data-field="${fieldKey}" data-char="${charKey}" oninput="scheduleAutoSave('${charKey}')" onblur="saveFieldImmediate('${charKey}','${fieldKey}',this)">${escapeHtml(String(value))}</span>`;
+  }
+  function renderUsageBoxes(charKey, featIdx, uses) {
+    if (uses === "∞" || !uses || uses === 0) return '';
+    const num = parseInt(uses); if (isNaN(num) || num > 20) return '';
+    const key = `uses-${charKey}-feat-${featIdx}`;
+    let used = parseInt(localStorage.getItem(key) || '0');
+    let boxes = '';
+    for (let i = 0; i < num; i++) boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this,'${key}',${num})"></span>`;
+    return `<div style="margin-top:0.15rem;display:flex;align-items:center;gap:0.2rem;"><span style="font-size:0.55rem;color:#9088c0;">Used:</span>${boxes}<button class="btn-sm" onclick="resetOneUsage('${key}',this)">↺</button></div>`;
+  }
+  window.toggleUsage = function(el, key, num) {
+    const all = el.parentElement.querySelectorAll('.usage-checkbox'), idx = Array.from(all).indexOf(el);
+    if (el.classList.contains('used')) { for (let i = all.length-1; i >= idx; i--) all[i].classList.remove('used'); }
+    else { for (let i = 0; i <= idx; i++) all[i].classList.add('used'); }
+    let count = 0; all.forEach(b => { if (b.classList.contains('used')) count++; });
+    localStorage.setItem(key, count);
+  };
+  window.resetOneUsage = function(key, btn) { localStorage.setItem(key, '0'); btn.parentElement.querySelectorAll('.usage-checkbox').forEach(b => b.classList.remove('used')); };
+  window.resetAllByType = function(charKey, type) {
+    characterData[charKey]?.features?.forEach((f, i) => { if (f.resetOn === type || type === 'long') localStorage.setItem(`uses-${charKey}-feat-${i}`, '0'); });
+    switchTab(charKey);
+  };
+  function scheduleAutoSave(charKey) {
+    if (autoSaveTimers[charKey]) clearTimeout(autoSaveTimers[charKey]);
+    autoSaveTimers[charKey] = setTimeout(() => saveAllEdits(charKey), 3000);
+  }
+  window.saveFieldImmediate = function(charKey, field, el) {
+    db.ref(`characters/${charKey}/${field}`).set(el.textContent.trim());
+    addToChangeLog(charKey, field, el.textContent.trim());
+  };
+  function saveAllEdits(charKey) {
+    const edits = {};
+    document.querySelectorAll(`[data-char="${charKey}"]`).forEach(el => edits[el.getAttribute('data-field')] = el.textContent.trim());
+    Object.entries(edits).forEach(([f, v]) => { db.ref(`characters/${charKey}/${f}`).set(v); });
+  }
+  function addToChangeLog(charKey, field, value) {
+    changeLog.unshift({ time: new Date().toLocaleTimeString(), char: characterData[charKey]?.name || charKey, field, value: value.substring(0, 50) });
+    if (changeLog.length > 10) changeLog = changeLog.slice(0, 10);
+    db.ref('changeLog').set(changeLog);
+  }
+
+  // ─── CLICKABLE CURRENT SPELLS ─────────────────────────
+  window.showCurrentSpellInfo = function(spellName, charKey) {
+    const infoDiv = document.getElementById(`spellInfo-${charKey}`);
+    if (!infoDiv) return;
+    const spell = spellDatabase[spellName];
+    if (!spell) { infoDiv.style.display = 'block'; infoDiv.innerHTML = '<p style="color:#a098d0;">No description available.</p>'; return; }
+    infoDiv.style.display = 'block';
+    infoDiv.innerHTML = `<strong style="color:#d4c8ff;">${spellName}</strong><span class="spell-level-badge">Level ${spell.level}</span> · ${spell.school || ''}${spell.castingTime ? `<div><span style="color:#9088c0;">Cast:</span> ${spell.castingTime} | <span style="color:#9088c0;">Range:</span> ${spell.range} | <span style="color:#9088c0;">Dur:</span> ${spell.duration}</div>` : ''}<div style="margin-top:0.3rem;color:#c0b8e8;">${spell.desc}</div>`;
+  };
+
+  // ─── FILTERED DROPDOWN ────────────────────────────────
+  function getFilteredSpellOptions(charKey) {
+    const allowedClasses = classSpellMap[charKey] || [];
+    const entries = Object.entries(spellDatabase).filter(([name, data]) => {
+      return data.classes && data.classes.some(c => allowedClasses.includes(c));
+    });
+    // Sort by level (numeric first, then special like Ki/Psi)
+    entries.sort((a, b) => {
+      const la = typeof a[1].level === 'number' ? a[1].level : 99;
+      const lb = typeof b[1].level === 'number' ? b[1].level : 99;
+      return la - lb || a[0].localeCompare(b[0]);
+    });
+    return entries.map(([name, data]) => `<option value="${name}">Level ${data.level} — ${name}</option>`).join('');
+  }
+
+  window.showSpellInfo = function(charKey) {
+    const select = document.getElementById(`spellSelect-${charKey}`), info = document.getElementById(`spellInfo-${charKey}`);
+    if (!select || !info) return;
+    const spellName = select.value;
+    if (!spellName) { info.style.display = 'none'; return; }
+    window.showCurrentSpellInfo(spellName, charKey);
+  };
+  window.addSpellFromDropdown = function(charKey) {
+    const select = document.getElementById(`spellSelect-${charKey}`);
+    if (!select?.value) return;
+    const name = select.value;
+    db.ref(`characters/${charKey}/spells`).once('value').then(s => {
+      const cur = s.val() || [];
+      if (!cur.includes(name)) { cur.push(name); return db.ref(`characters/${charKey}/spells`).set(cur); }
+    }).then(() => { addToChangeLog(charKey, 'spells', `Added: ${name}`); loadDynamicLists(charKey); select.value = ''; document.getElementById(`spellInfo-${charKey}`).style.display = 'none'; });
+  };
+
+  // ─── ADD/REMOVE ──────────────────────────────────────
+  window.addSpell = function(charKey) {
+    const input = document.getElementById(`newSpell-${charKey}`);
+    if (!input?.value.trim()) return;
+    const name = input.value.trim();
+    db.ref(`characters/${charKey}/spells`).once('value').then(s => { const cur = s.val() || []; cur.push(name); return db.ref(`characters/${charKey}/spells`).set(cur); }).then(() => { addToChangeLog(charKey, 'spells', `Added: ${name}`); loadDynamicLists(charKey); input.value = ''; });
+  };
+  window.addEquipment = function(charKey) {
+    const input = document.getElementById(`newEquip-${charKey}`);
+    if (!input?.value.trim()) return;
+    const name = input.value.trim();
+    db.ref(`characters/${charKey}/equipment`).once('value').then(s => { const cur = s.val() || []; cur.push(name); return db.ref(`characters/${charKey}/equipment`).set(cur); }).then(() => { addToChangeLog(charKey, 'equipment', `Added: ${name}`); loadDynamicLists(charKey); input.value = ''; });
+  };
+  window.addFeature = function(charKey) {
+    const n = document.getElementById(`newFeatName-${charKey}`), d = document.getElementById(`newFeatDesc-${charKey}`), u = document.getElementById(`newFeatUses-${charKey}`);
+    if (!n?.value.trim()) return;
+    const feat = { name: n.value.trim(), desc: d.value.trim() || 'New', cost: u.value.trim() || 'Passive', uses: u.value.trim() || 0, resetOn: 'none' };
+    db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => { const cur = s.val() || []; cur.push(feat); return db.ref(`characters/${charKey}/customFeatures`).set(cur); }).then(() => { addToChangeLog(charKey, 'features', `Added: ${feat.name}`); loadDynamicLists(charKey); n.value = ''; d.value = ''; u.value = ''; });
+  };
+  window.removeItem = function(btn, charKey, category, name) {
+    if (!confirm('Remove?')) return;
+    db.ref(`characters/${charKey}/${category}`).once('value').then(s => { const items = s.val() || []; return db.ref(`characters/${charKey}/${category}`).set(items.filter(i => (typeof i === 'string' ? i !== name : i.name !== name))); }).then(() => { addToChangeLog(charKey, category, `Removed: ${name}`); btn.closest('div, li').remove(); });
+  };
+
+  // ─── CHARACTER NOTES ──────────────────────────────────
+  window.addCharNote = function(charKey) {
+    const input = document.getElementById(`charNoteInput-${charKey}`);
+    if (!input?.value.trim()) return;
+    const note = { id: Date.now(), text: input.value.trim(), time: new Date().toLocaleString() };
+    db.ref(`characterNotes/${charKey}`).once('value').then(s => { const notes = s.val() || []; notes.unshift(note); return db.ref(`characterNotes/${charKey}`).set(notes); }).then(() => { loadCharNotes(charKey); input.value = ''; });
+  };
+  window.removeCharNote = function(charKey, noteId) {
+    db.ref(`characterNotes/${charKey}`).once('value').then(s => { const notes = s.val() || []; return db.ref(`characterNotes/${charKey}`).set(notes.filter(n => n.id !== noteId)); }).then(() => loadCharNotes(charKey));
+  };
+  function loadCharNotes(charKey) {
+    db.ref(`characterNotes/${charKey}`).once('value').then(s => {
+      const notes = s.val() || [];
+      const container = document.getElementById(`charNotes-${charKey}`);
       if (!container) return;
-      let allNotes = [...sessionNotes];
-      // Always include session zero if not already present
-      if (!allNotes.find(n => n.id === 'session0')) allNotes.unshift({ ...sessionZero, id: 'session0' });
-      container.innerHTML = allNotes.sort((a,b) => new Date(b.date) - new Date(a.date)).map(note => {
-        const bullets = note.notes ? note.notes.split('\n').filter(l => l.trim()) : [];
-        return `<div class="session-note-card"><div class="session-note-header"><span class="session-date">📅 ${note.date}</span><span style="color:#d4d8ff;font-weight:bold;">${escapeHtml(note.title)}</span>${note.id !== 'session0' ? `<button class="btn-remove" onclick="removeSessionNote(${note.id})">✕</button>` : ''}</div>${bullets.length ? '<ul style="list-style:none;padding:0;">'+bullets.map(b => `<li style="padding:0.15rem 0;color:#c0c8e8;font-size:0.8rem;">• ${escapeHtml(b.replace(/^•\s*/,''))}</li>`).join('')+'</ul>' : '<p style="color:#9088c0;font-size:0.75rem;">No details.</p>'}</div>`;
-      }).join('');
-    }
+      container.innerHTML = notes.length === 0 ? '<p style="color:#9088c0;font-size:0.75rem;">No notes yet.</p>' : notes.map(n => `<div class="char-note-card"><div style="display:flex;justify-content:space-between;"><span style="color:#c0c8e8;font-size:0.8rem;">${escapeHtml(n.text)}</span><button class="btn-remove" onclick="removeCharNote('${charKey}',${n.id})">✕</button></div><div style="color:#9088c0;font-size:0.65rem;">${n.time}</div></div>`).join('');
+    });
+  }
 
-    // ─── LOAD DYNAMIC LISTS ──────────────────────────────
-    function loadDynamicLists(charKey) {
-      const c = characterData[charKey]; if (!c) return;
-      db.ref(`characters/${charKey}/spells`).once('value').then(s => {
-        const spells = s.val() || c.spells || [];
-        if (!s.val()) db.ref(`characters/${charKey}/spells`).set(c.spells || []);
-        renderList(charKey, 'spellsList', spells, false);
-      });
-      db.ref(`characters/${charKey}/equipment`).once('value').then(s => {
-        const equip = s.val() || c.equipment || [];
-        if (!s.val()) db.ref(`characters/${charKey}/equipment`).set(c.equipment || []);
-        renderList(charKey, 'equipList', equip, true);
-      });
-      db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => {
-        const feats = s.val(); if (feats && Array.isArray(feats)) renderCustomFeats(charKey, feats);
-      });
-      loadCharNotes(charKey);
-    }
-    function renderList(charKey, containerId, items, isEquip) {
-      const container = document.getElementById(`${containerId}-${charKey}`);
-      if (!container) return;
-      const addForm = container.querySelector('.add-form'), dropdown = container.querySelector('.spell-dropdown-section');
-      container.innerHTML = '';
-      items.forEach(item => {
-        const spellInfo = spellDatabase[item];
-        const levelBadge = spellInfo ? `<span class="spell-level-badge">${spellInfo.level}</span>` : '';
-        const el = document.createElement(isEquip ? 'li' : 'div');
-        el.style.cssText = 'display:flex;align-items:center;gap:0.3rem;padding:0.2rem 0;border-bottom:1px solid rgba(100,80,160,0.2);font-size:0.8rem;';
-        el.innerHTML = `${isEquip ? '✦ ' : ''}<span class="editable-text" contenteditable="true">${escapeHtml(item)}</span>${levelBadge}<button class="btn-remove" onclick="removeItem(this,'${charKey}','${isEquip ? 'equipment' : 'spells'}','${escapeHtml(item)}')">✕</button>`;
-        container.appendChild(el);
-      });
-      if (dropdown) container.appendChild(dropdown);
-      if (addForm) container.appendChild(addForm);
-    }
-    function renderCustomFeats(charKey, feats) {
-      const container = document.getElementById(`featList-${charKey}`);
-      if (!container) return;
-      container.querySelectorAll('.custom-feature').forEach(el => el.remove());
-      feats.forEach((f, i) => {
-        const div = document.createElement('div'); div.className = 'ability-card custom-feature';
-        div.innerHTML = `<div class="ability-name"><span class="editable-text" contenteditable="true">${escapeHtml(f.name)}</span>${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}<button class="btn-remove" onclick="removeItem(this,'${charKey}','customFeatures','${escapeHtml(f.name)}')">✕</button></div><div class="ability-desc"><span class="editable-text" contenteditable="true">${escapeHtml(f.desc)}</span></div>${renderUsageBoxes(charKey, `custom-${i}`, f.uses)}`;
-        container.appendChild(div);
-      });
-    }
+  // ─── SESSION NOTES ────────────────────────────────────
+  window.addSessionNote = function() {
+    const dt = document.getElementById('sessionDate'), ti = document.getElementById('sessionTitle'), nt = document.getElementById('sessionNotes');
+    if (!ti?.value.trim()) return;
+    const note = { id: Date.now(), date: dt?.value || new Date().toISOString().split('T')[0], title: ti.value.trim(), notes: nt?.value.trim() || '' };
+    db.ref('sessionNotes').once('value').then(s => { const notes = s.val() || []; notes.push(note); return db.ref('sessionNotes').set(notes); }).then(() => { sessionNotes.push(note); renderSessionNotes(); dt.value = ''; ti.value = ''; nt.value = ''; });
+  };
+  window.addBulletToForm = function() {
+    const nt = document.getElementById('sessionNotes'); if (!nt) return;
+    const pos = nt.selectionStart; nt.value = nt.value.substring(0, pos) + '\n• ' + nt.value.substring(pos); nt.focus(); nt.selectionStart = nt.selectionEnd = pos + 3;
+  };
+  window.removeSessionNote = function(id) {
+    if (!confirm('Delete?')) return;
+    db.ref('sessionNotes').once('value').then(s => { const notes = s.val() || []; return db.ref('sessionNotes').set(notes.filter(n => n.id !== id)); }).then(() => { sessionNotes = sessionNotes.filter(n => n.id !== id); renderSessionNotes(); });
+  };
+  function renderSessionNotes() {
+    const container = document.getElementById('sessionNotesContainer'); if (!container) return;
+    let allNotes = [...sessionNotes];
+    if (!allNotes.find(n => n.id === 'session0')) allNotes.unshift(sessionZero);
+    container.innerHTML = allNotes.sort((a,b) => new Date(b.date) - new Date(a.date)).map(note => {
+      const bullets = note.notes ? note.notes.split('\n').filter(l => l.trim()) : [];
+      return `<div class="session-note-card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;border-bottom:1px solid rgba(140,160,200,0.3);padding-bottom:0.3rem;margin-bottom:0.4rem;"><span style="color:#b8c8e0;font-size:0.7rem;background:rgba(60,80,140,0.4);padding:0.15rem 0.4rem;border-radius:0.4rem;">📅 ${note.date}</span><span style="color:#d4d8ff;font-weight:bold;">${escapeHtml(note.title)}</span>${note.id !== 'session0' ? `<button class="btn-remove" onclick="removeSessionNote(${note.id})">✕</button>` : ''}</div>${bullets.length ? '<ul style="list-style:none;padding:0;">'+bullets.map(b => `<li style="padding:0.15rem 0;color:#c0c8e8;font-size:0.8rem;">• ${escapeHtml(b.replace(/^•\s*/,''))}</li>`).join('')+'</ul>' : '<p style="color:#9088c0;font-size:0.75rem;">No details.</p>'}</div>`;
+    }).join('');
+  }
 
-    // ─── RENDER CHARACTER ────────────────────────────────
-    function renderCharacterSheet(charKey) {
-      const c = characterData[charKey]; if (!c) return '<p>Not found</p>';
-      const isDMPC = charKey === 'dmpc';
-      const statsHtml = Object.entries(c.stats).map(([name, data]) => {
-        return `<div class="stat-box"><div class="stat-label">${name}</div><div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div><span class="stat-mod">${data.mod >= 0 ? '+' + data.mod : data.mod}</span></div>`;
-      }).join('');
-      const attacksHtml = c.attacks.map((a, i) => `<div style="display:flex;justify-content:space-between;padding:0.3rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.2rem;font-size:0.8rem;"><span style="font-weight:bold;color:#d4c8ff;">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span><span style="color:#c8b8f0;">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span><span style="color:#e8d8ff;">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span></div>`).join('');
-      const featuresHtml = c.features.map((f, i) => `<div class="ability-card"><div class="ability-name">${makeEditable(f.name, `feat-name-${i}`, charKey)}${f.cost ? `<span class="ability-cost">${f.cost}</span>` : ''}</div><div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>${renderUsageBoxes(charKey, i, f.uses)}</div>`).join('');
-      const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => `<div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonus >= 0 ? '+' + bonus : bonus}</span></div>`).join('') : '';
-      const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => `<div class="spell-slot"><div class="slot-level">${level}</div><div class="slot-count">${count}</div></div>`).join('') : '';
-      const spellOptions = Object.keys(spellDatabase).map(name => `<option value="${name}">${name} (${spellDatabase[name].level})</option>`).join('');
+  // ─── LOAD DYNAMIC LISTS ──────────────────────────────
+  function loadDynamicLists(charKey) {
+    const c = characterData[charKey]; if (!c) return;
+    db.ref(`characters/${charKey}/spells`).once('value').then(s => { const spells = s.val() || c.spells || []; if (!s.val()) db.ref(`characters/${charKey}/spells`).set(c.spells || []); renderList(charKey, 'spellsList', spells, false); });
+    db.ref(`characters/${charKey}/equipment`).once('value').then(s => { const equip = s.val() || c.equipment || []; if (!s.val()) db.ref(`characters/${charKey}/equipment`).set(c.equipment || []); renderList(charKey, 'equipList', equip, true); });
+    db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => { const feats = s.val(); if (feats && Array.isArray(feats)) renderCustomFeats(charKey, feats); });
+    loadCharNotes(charKey);
+  }
+  function renderList(charKey, containerId, items, isEquip) {
+    const container = document.getElementById(`${containerId}-${charKey}`); if (!container) return;
+    const addForm = container.querySelector('.add-form'), dropdown = container.querySelector('.spell-dropdown-section');
+    container.innerHTML = '';
+    items.forEach(item => {
+      const spellInfo = spellDatabase[item];
+      const levelBadge = spellInfo ? `<span class="spell-level-badge">Lvl ${spellInfo.level}</span>` : '';
+      const el = document.createElement(isEquip ? 'li' : 'div');
+      el.style.cssText = 'display:flex;align-items:center;gap:0.3rem;padding:0.2rem 0;border-bottom:1px solid rgba(100,80,160,0.2);font-size:0.8rem;';
+      if (!isEquip && spellInfo) el.className = 'current-spell-item';
+      el.innerHTML = `${isEquip ? '✦ ' : ''}<span class="editable-text" contenteditable="true">${escapeHtml(item)}</span>${levelBadge}${!isEquip && spellInfo ? ` <span style="color:#9088c0;font-size:0.6rem;cursor:pointer;text-decoration:underline;" onclick="showCurrentSpellInfo('${escapeHtml(item)}','${charKey}')">[?]</span>` : ''}<button class="btn-remove" onclick="removeItem(this,'${charKey}','${isEquip ? 'equipment' : 'spells'}','${escapeHtml(item)}')">✕</button>`;
+      container.appendChild(el);
+    });
+    if (dropdown) container.appendChild(dropdown);
+    if (addForm) container.appendChild(addForm);
+  }
+  function renderCustomFeats(charKey, feats) {
+    const container = document.getElementById(`featList-${charKey}`); if (!container) return;
+    container.querySelectorAll('.custom-feature').forEach(el => el.remove());
+    feats.forEach((f, i) => {
+      const div = document.createElement('div'); div.className = 'ability-card custom-feature';
+      div.innerHTML = `<div class="ability-name"><span class="editable-text" contenteditable="true">${escapeHtml(f.name)}</span>${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}<button class="btn-remove" onclick="removeItem(this,'${charKey}','customFeatures','${escapeHtml(f.name)}')">✕</button></div><div class="ability-desc"><span class="editable-text" contenteditable="true">${escapeHtml(f.desc)}</span></div>${renderUsageBoxes(charKey, `custom-${i}`, f.uses)}`;
+      container.appendChild(div);
+    });
+  }
 
-      return `<div class="char-sheet">
-        <div class="sheet-section" style="${isDMPC ? 'border-color:rgba(180,160,140,0.4);' : ''}">
-          <div class="section-header"><span>📜 ${makeEditable(c.name, 'name', charKey)} ${isDMPC ? '<span style="font-size:0.6rem;color:#d8c8a0;">[DMPC]</span>' : ''}</span>
-            <div><button class="btn-rest" onclick="resetAllByType('${charKey}','short')">🌅 Short</button><button class="btn-rest" onclick="resetAllByType('${charKey}','long')">🌙 Long</button></div>
-          </div>
-          <div class="info-grid">
-            <div class="info-item"><span class="info-label">Class</span><span class="info-value">${makeEditable(c.classLevel, 'classLevel', charKey)}</span></div>
-            <div class="info-item"><span class="info-label">Race</span><span class="info-value">${makeEditable(c.race, 'race', charKey)}</span></div>
-            <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey)}</span></div>
-          </div>
+  // ─── RENDER CHARACTER ────────────────────────────────
+  function renderCharacterSheet(charKey) {
+    const c = characterData[charKey]; if (!c) return '<p>Not found</p>';
+    const isDMPC = charKey === 'dmpc';
+    const statsHtml = Object.entries(c.stats).map(([name, data]) => `<div class="stat-box"><div class="stat-label">${name}</div><div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div><span class="stat-mod">${data.mod >= 0 ? '+' + data.mod : data.mod}</span></div>`).join('');
+    const attacksHtml = c.attacks.map((a, i) => `<div style="display:flex;justify-content:space-between;padding:0.3rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.2rem;font-size:0.8rem;"><span style="font-weight:bold;color:#d4c8ff;">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span><span style="color:#c8b8f0;">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span><span style="color:#e8d8ff;">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span></div>`).join('');
+    const featuresHtml = c.features.map((f, i) => `<div class="ability-card"><div class="ability-name">${makeEditable(f.name, `feat-name-${i}`, charKey)}${f.cost ? `<span class="ability-cost">${f.cost}</span>` : ''}</div><div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>${renderUsageBoxes(charKey, i, f.uses)}</div>`).join('');
+    const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => `<div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonus >= 0 ? '+' + bonus : bonus}</span></div>`).join('') : '';
+    const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => `<div class="spell-slot"><div class="slot-level">${level}</div><div class="slot-count">${count}</div></div>`).join('') : '';
+    const filteredOptions = getFilteredSpellOptions(charKey);
+    const passiveHtml = c.combat ? `
+      <div class="info-grid" style="margin-top:0.3rem;">
+        ${c.combat.passivePerception ? `<div class="info-item"><span class="info-label">Pass. Perception</span><span class="info-value">${c.combat.passivePerception}</span></div>` : ''}
+        ${c.combat.passiveInvestigation ? `<div class="info-item"><span class="info-label">Pass. Investigation</span><span class="info-value">${c.combat.passiveInvestigation}</span></div>` : ''}
+        ${c.combat.passiveInsight ? `<div class="info-item"><span class="info-label">Pass. Insight</span><span class="info-value">${c.combat.passiveInsight}</span></div>` : ''}
+        ${c.combat.passiveMedicine ? `<div class="info-item"><span class="info-label">Pass. Medicine</span><span class="info-value">${c.combat.passiveMedicine}</span></div>` : ''}
+        ${c.combat.passiveArcana ? `<div class="info-item"><span class="info-label">Pass. Arcana</span><span class="info-value">${c.combat.passiveArcana}</span></div>` : ''}
+      </div>` : '';
+
+    return `<div class="char-sheet">
+      <div class="sheet-section" style="${isDMPC ? 'border-color:rgba(180,160,140,0.4);' : ''}">
+        <div class="section-header"><span>📜 ${makeEditable(c.name, 'name', charKey)} ${isDMPC ? '<span style="font-size:0.6rem;color:#d8c8a0;">[DMPC]</span>' : ''}</span>
+          <div><button class="btn-rest" onclick="resetAllByType('${charKey}','short')">🌅 Short</button><button class="btn-rest" onclick="resetAllByType('${charKey}','long')">🌙 Long</button></div>
         </div>
-        <div class="sheet-section"><div class="section-header">📊 ABILITY SCORES</div><div class="stat-row">${statsHtml}</div>
-          <div class="info-grid" style="margin-top:0.4rem;"><div class="info-item"><span class="info-label">AC</span><span class="info-value">${c.combat.ac}</span></div><div class="info-item"><span class="info-label">HP</span><span class="info-value">${c.combat.hp}</span></div><div class="info-item"><span class="info-label">Speed</span><span class="info-value">${c.combat.speed} ft.</span></div></div>
+        <div class="info-grid">
+          <div class="info-item"><span class="info-label">Class</span><span class="info-value">${makeEditable(c.classLevel, 'classLevel', charKey)}</span></div>
+          <div class="info-item"><span class="info-label">Race</span><span class="info-value">${makeEditable(c.race, 'race', charKey)}</span></div>
+          <div class="info-item"><span class="info-label">Background</span><span class="info-value">${makeEditable(c.background, 'background', charKey)}</span></div>
+          <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey)}</span></div>
         </div>
-        ${skillsHtml ? `<div class="sheet-section"><div class="section-header">🎯 SKILLS</div><div class="info-grid">${skillsHtml}</div></div>` : ''}
-        <div class="sheet-section"><div class="section-header">⚔️ ATTACKS</div>${attacksHtml}</div>
-        ${spellSlotsHtml ? `<div class="sheet-section"><div class="section-header">🔮 SPELL SLOTS</div><div class="spell-slot-grid">${spellSlotsHtml}</div></div>` : ''}
-        <div class="sheet-section">
-          <div class="section-header">📜 SPELLS & ABILITIES</div>
-          <div class="spell-dropdown-section">
-            <select id="spellSelect-${charKey}" onchange="showSpellInfo('${charKey}')"><option value="">— Select to view details —</option>${spellOptions}</select>
-            <div id="spellInfo-${charKey}" class="spell-info-popup"></div>
-            <button class="btn-add" onclick="addSpellFromDropdown('${charKey}')" style="margin-top:0.3rem;">+ Add to My Spells</button>
-          </div>
-          <div id="spellsList-${charKey}" style="margin-top:0.5rem;"></div>
-          <div class="add-form"><input type="text" id="newSpell-${charKey}" placeholder="Custom spell..."><button class="btn-add" onclick="addSpell('${charKey}')">+ Add</button></div>
+        ${c.tools ? `<div style="margin-top:0.3rem;"><strong style="color:#c8b8f0;">Tools:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.tools, 'tools', charKey)}</span></div>` : ''}
+        ${c.languages ? `<div><strong style="color:#c8b8f0;">Languages:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.languages, 'languages', charKey)}</span></div>` : ''}
+        ${c.appearance ? `<div style="margin-top:0.3rem;"><strong style="color:#c8b8f0;">Appearance:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.appearance, 'appearance', charKey)}</span></div>` : ''}
+      </div>
+      <div class="sheet-section"><div class="section-header">📊 ABILITY SCORES</div><div class="stat-row">${statsHtml}</div>
+        <div class="info-grid" style="margin-top:0.4rem;">
+          <div class="info-item"><span class="info-label">AC</span><span class="info-value">${makeEditable(c.combat.ac, 'ac', charKey)}</span></div>
+          <div class="info-item"><span class="info-label">HP</span><span class="info-value">${makeEditable(c.combat.hp, 'hp', charKey)}</span></div>
+          <div class="info-item"><span class="info-label">Speed</span><span class="info-value">${makeEditable(c.combat.speed, 'speed', charKey)} ft.</span></div>
+          <div class="info-item"><span class="info-label">Initiative</span><span class="info-value">+${c.combat.initiative}</span></div>
+          <div class="info-item"><span class="info-label">Prof. Bonus</span><span class="info-value">+${c.combat.proficiency}</span></div>
+          <div class="info-item"><span class="info-label">Hit Dice</span><span class="info-value">${c.combat.hitDice}</span></div>
         </div>
-        <div class="sheet-section"><div class="section-header">✨ FEATURES</div><div id="featList-${charKey}">${featuresHtml}</div>
-          <div class="add-form"><input type="text" id="newFeatName-${charKey}" placeholder="Name" style="flex:1;"><input type="text" id="newFeatDesc-${charKey}" placeholder="Desc" style="flex:2;"><input type="text" id="newFeatUses-${charKey}" placeholder="Uses" style="width:50px;"><button class="btn-add" onclick="addFeature('${charKey}')">+ Add</button></div>
+        ${passiveHtml}
+      </div>
+      ${skillsHtml ? `<div class="sheet-section"><div class="section-header">🎯 SKILLS</div><div class="info-grid">${skillsHtml}</div></div>` : ''}
+      <div class="sheet-section"><div class="section-header">⚔️ ATTACKS</div>${attacksHtml}</div>
+      ${spellSlotsHtml ? `<div class="sheet-section"><div class="section-header">🔮 SPELL SLOTS</div><div class="spell-slot-grid">${spellSlotsHtml}</div></div>` : ''}
+      <div class="sheet-section">
+        <div class="section-header">📜 SPELLS & ABILITIES <span style="font-size:0.6rem;color:#9088c0;">Click [?] for details</span></div>
+        <div id="spellsList-${charKey}" style="margin-bottom:0.5rem;"></div>
+        <div class="spell-dropdown-section">
+          <select id="spellSelect-${charKey}" onchange="showSpellInfo('${charKey}')"><option value="">— Browse available spells/abilities (filtered by class, ordered by level) —</option>${filteredOptions}</select>
+          <div id="spellInfo-${charKey}" class="spell-info-popup"></div>
+          <button class="btn-add" onclick="addSpellFromDropdown('${charKey}')" style="margin-top:0.3rem;">+ Add to My List</button>
         </div>
-        <div class="sheet-section"><div class="section-header">🎒 EQUIPMENT</div><ul class="equipment-list" id="equipList-${charKey}"></ul>
-          <div class="add-form"><input type="text" id="newEquip-${charKey}" placeholder="Item"><button class="btn-add" onclick="addEquipment('${charKey}')">+ Add</button></div>
-        </div>
-        <div class="sheet-section"><div class="section-header">📖 BACKSTORY</div><div style="color:#c0b8e8;line-height:1.5;font-style:italic;font-size:0.8rem;">${makeEditable(c.backstory, 'backstory', charKey)}</div></div>
-        <div class="sheet-section"><div class="section-header">📝 PLAYER NOTES</div>
-          <div id="charNotes-${charKey}"><p style="color:#9088c0;font-size:0.75rem;">Loading...</p></div>
-          <div class="add-form"><input type="text" id="charNoteInput-${charKey}" placeholder="Add a note..."><button class="btn-add" onclick="addCharNote('${charKey}')">+ Note</button></div>
-        </div>
-      </div>`;
-    }
+        <div class="add-form"><input type="text" id="newSpell-${charKey}" placeholder="Custom spell/ability..."><button class="btn-add" onclick="addSpell('${charKey}')">+ Add</button></div>
+      </div>
+      <div class="sheet-section"><div class="section-header">✨ FEATURES</div><div id="featList-${charKey}">${featuresHtml}</div>
+        <div class="add-form"><input type="text" id="newFeatName-${charKey}" placeholder="Name" style="flex:1;"><input type="text" id="newFeatDesc-${charKey}" placeholder="Desc" style="flex:2;"><input type="text" id="newFeatUses-${charKey}" placeholder="Uses" style="width:50px;"><button class="btn-add" onclick="addFeature('${charKey}')">+ Add</button></div>
+      </div>
+      <div class="sheet-section"><div class="section-header">🎒 EQUIPMENT</div><ul class="equipment-list" id="equipList-${charKey}"></ul>
+        <div class="add-form"><input type="text" id="newEquip-${charKey}" placeholder="Item"><button class="btn-add" onclick="addEquipment('${charKey}')">+ Add</button></div>
+      </div>
+      <div class="sheet-section"><div class="section-header">📖 BACKSTORY</div><div style="color:#c0b8e8;line-height:1.6;font-style:italic;font-size:0.8rem;">${makeEditable(c.backstory, 'backstory', charKey)}</div></div>
+      <div class="sheet-section"><div class="section-header">📝 PLAYER NOTES</div>
+        <div id="charNotes-${charKey}"><p style="color:#9088c0;font-size:0.75rem;">Loading...</p></div>
+        <div class="add-form"><input type="text" id="charNoteInput-${charKey}" placeholder="Add a note..."><button class="btn-add" onclick="addCharNote('${charKey}')">+ Note</button></div>
+      </div>
+    </div>`;
+  }
 
-    // ─── DM PAGE ──────────────────────────────────────────
-    function renderDMPage() {
-      return `<div style="text-align:center;padding:0.5rem;">
-        <h2 style="color:#d4c8ff;">🔐 DM Stargate</h2><p style="color:#a098d0;">Enter PIN:</p>
-        <input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:1.1rem;text-align:center;letter-spacing:4px;margin:0.6rem 0;" maxlength="8">
-        <br><button class="btn-rest" id="pinSubmit">Unlock</button>
-        <p id="pinError" style="color:#e0a0c0;"></p>
-        <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1rem;">
-          <div class="section-header" style="color:#d4c8ff;">🗝️ SECRETS</div>
-          ${Object.entries(dmSecrets).map(([k,s]) => `<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.6rem;border-radius:0.5rem;margin:0.5rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${characterData[k]?.name||k}</div><div style="color:#c8b8f0;font-size:0.8rem;">${s}</div></div>`).join('')}
-          <div class="section-header" style="color:#d4c8ff;">📋 CHANGE LOG</div>
-          <div class="change-log" id="changeLogContainer"></div>
-          <div class="section-header" style="color:#d4c8ff;">📝 SESSION NOTES</div>
-          <div style="border:2px dashed rgba(140,160,200,0.4);padding:0.8rem;margin:0.5rem 0;background:rgba(18,20,35,0.5);">
-            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem;"><div style="flex:1;"><input type="date" id="sessionDate" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div><div style="flex:2;"><input type="text" id="sessionTitle" placeholder="Title..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div></div>
-            <div><button class="btn-sm" onclick="addBulletToForm()">• +</button><textarea id="sessionNotes" rows="4" placeholder="• Notes..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;resize:vertical;margin-top:0.2rem;"></textarea></div>
-            <button class="btn-add" onclick="addSessionNote()" style="width:100%;margin-top:0.3rem;">+ Save Note</button>
-          </div>
-          <div id="sessionNotesContainer"></div>
-        </div>
-      </div>`;
-    }
+  function renderDMPage() {
+    return `<div style="text-align:center;padding:0.5rem;"><h2 style="color:#d4c8ff;">🔐 DM Stargate</h2><p style="color:#a098d0;">Enter PIN:</p><input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:1.1rem;text-align:center;letter-spacing:4px;margin:0.6rem 0;" maxlength="8"><br><button class="btn-rest" id="pinSubmit">Unlock</button><p id="pinError" style="color:#e0a0c0;"></p><div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1rem;"><div class="section-header" style="color:#d4c8ff;">🗝️ SECRETS</div>${Object.entries(dmSecrets).map(([k,s]) => `<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.6rem;border-radius:0.5rem;margin:0.5rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${characterData[k]?.name||k}</div><div style="color:#c8b8f0;font-size:0.8rem;line-height:1.4;">${s}</div></div>`).join('')}<div class="section-header" style="color:#d4c8ff;">📋 CHANGE LOG</div><div class="change-log" id="changeLogContainer"></div><div class="section-header" style="color:#d4c8ff;">📝 SESSION NOTES</div><div style="border:2px dashed rgba(140,160,200,0.4);padding:0.8rem;margin:0.5rem 0;background:rgba(18,20,35,0.5);"><div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem;"><div style="flex:1;"><input type="date" id="sessionDate" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div><div style="flex:2;"><input type="text" id="sessionTitle" placeholder="Title..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div></div><div><button class="btn-sm" onclick="addBulletToForm()">• +</button><textarea id="sessionNotes" rows="4" placeholder="• Notes..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;resize:vertical;margin-top:0.2rem;"></textarea></div><button class="btn-add" onclick="addSessionNote()" style="width:100%;margin-top:0.3rem;">+ Save Note</button></div><div id="sessionNotesContainer"></div></div></div>`;
+  }
+  function renderChangeLog() { const c = document.getElementById('changeLogContainer'); if (!c) return; c.innerHTML = changeLog.length === 0 ? '<p style="color:#9088c0;">No changes.</p>' : changeLog.map(e => `<div class="log-entry">[${e.time}] <strong>${e.char}</strong> · ${e.field}: ${e.value}</div>`).join(''); }
 
-    function renderChangeLog() {
-      const c = document.getElementById('changeLogContainer');
-      if (!c) return;
-      c.innerHTML = changeLog.length === 0 ? '<p style="color:#9088c0;">No changes.</p>' : changeLog.map(e => `<div class="log-entry">[${e.time}] <strong>${e.char}</strong> · ${e.field}: ${e.value}</div>`).join('');
-    }
+  function setActiveTab(tabId) { ['dmpc','drunken','chronurgy','grave','psi','dm'].forEach(id => { const btn = document.getElementById('tab' + id.charAt(0).toUpperCase() + id.slice(1)); if (btn) btn.classList.remove('active'); }); const btn = document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1)); if (btn) btn.classList.add('active'); }
+  function switchTab(tabId) {
+    Object.values(autoSaveTimers).forEach(t => clearTimeout(t)); currentTab = tabId; setActiveTab(tabId);
+    if (tabId === 'dm') { dmAuthenticated = false; contentPanel.innerHTML = renderDMPage();
+      document.getElementById('pinSubmit').addEventListener('click', () => { if (document.getElementById('pinInput').value === DM_PIN) { dmAuthenticated = true; document.getElementById('dmSecretsContainer').style.display = 'block'; db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; renderChangeLog(); }); db.ref('sessionNotes').once('value').then(s => { sessionNotes = s.val() || []; renderSessionNotes(); }); } });
+    } else { contentPanel.innerHTML = renderCharacterSheet(tabId); setTimeout(() => loadDynamicLists(tabId), 100); dmAuthenticated = false; }
+  }
 
-    // ─── TAB SWITCHING ───────────────────────────────────
-    function setActiveTab(tabId) {
-      ['dmpc','drunken','chronurgy','grave','psi','dm'].forEach(id => {
-        const btn = document.getElementById('tab' + id.charAt(0).toUpperCase() + id.slice(1));
-        if (btn) btn.classList.remove('active');
-      });
-      const btn = document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
-      if (btn) btn.classList.add('active');
-    }
-    function switchTab(tabId) {
-      Object.values(autoSaveTimers).forEach(t => clearTimeout(t));
-      currentTab = tabId; setActiveTab(tabId);
-      if (tabId === 'dm') {
-        dmAuthenticated = false; contentPanel.innerHTML = renderDMPage();
-        document.getElementById('pinSubmit').addEventListener('click', () => {
-          if (document.getElementById('pinInput').value === DM_PIN) {
-            dmAuthenticated = true;
-            document.getElementById('dmSecretsContainer').style.display = 'block';
-            db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; renderChangeLog(); });
-            db.ref('sessionNotes').once('value').then(s => { sessionNotes = s.val() || []; renderSessionNotes(); });
-          }
-        });
-      } else {
-        contentPanel.innerHTML = renderCharacterSheet(tabId);
-        setTimeout(() => loadDynamicLists(tabId), 100);
-        dmAuthenticated = false;
-      }
-    }
-
-    document.getElementById('tabDmpc').addEventListener('click', () => switchTab('dmpc'));
-    document.getElementById('tabDrunken').addEventListener('click', () => switchTab('drunken'));
-    document.getElementById('tabChronurgy').addEventListener('click', () => switchTab('chronurgy'));
-    document.getElementById('tabGrave').addEventListener('click', () => switchTab('grave'));
-    document.getElementById('tabPsi').addEventListener('click', () => switchTab('psi'));
-    document.getElementById('tabDM').addEventListener('click', () => switchTab('dm'));
-
-    db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; });
-    switchTab('dmpc');
-  })();
+  document.getElementById('tabDmpc').addEventListener('click', () => switchTab('dmpc'));
+  document.getElementById('tabDrunken').addEventListener('click', () => switchTab('drunken'));
+  document.getElementById('tabChronurgy').addEventListener('click', () => switchTab('chronurgy'));
+  document.getElementById('tabGrave').addEventListener('click', () => switchTab('grave'));
+  document.getElementById('tabPsi').addEventListener('click', () => switchTab('psi'));
+  document.getElementById('tabDM').addEventListener('click', () => switchTab('dm'));
+  db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; });
+  switchTab('dmpc');
+})();
 </script>
 </body>
 </html>
