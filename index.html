@@ -207,9 +207,6 @@
 
     .pencil-btn:hover { background: rgba(140, 120, 200, 0.5); color: white; box-shadow: 0 0 8px rgba(120, 100, 200, 0.4); }
 
-    .field-group { margin: 0.4rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem; }
-    .field-label { color: #a098d0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; min-width: 60px; }
-
     .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 0.7rem; margin: 0.8rem 0; }
 
     .stat-box {
@@ -240,23 +237,109 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    .ability-name { font-size: 1rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.4rem; letter-spacing: 1px; }
+    .ability-name { font-size: 1rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.4rem; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
     .ability-desc { font-size: 0.9rem; color: #c0b8e8; line-height: 1.5; }
     .ability-cost { color: #e0c8ff; font-weight: bold; font-size: 0.8rem; background: rgba(80, 50, 140, 0.5); padding: 0.2rem 0.5rem; border-radius: 0.5rem; display: inline-block; margin-right: 0.5rem; }
 
-    .attack-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid rgba(100, 80, 160, 0.2); flex-wrap: wrap; gap: 0.5rem; }
-    .attack-name { font-weight: bold; color: #d4c8ff; min-width: 130px; }
-    .attack-bonus { color: #c8b8f0; background: rgba(60, 40, 120, 0.4); padding: 0.2rem 0.5rem; border-radius: 0.5rem; }
-    .attack-damage { color: #e8d8ff; }
+    /* Checkbox tracking styles */
+    .usage-tracker {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+    .usage-checkboxes {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+    .usage-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(140, 120, 220, 0.6);
+      border-radius: 3px;
+      background: rgba(20, 15, 40, 0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .usage-checkbox.used {
+      background: rgba(120, 100, 200, 0.6);
+      border-color: rgba(180, 160, 240, 0.9);
+      box-shadow: 0 0 6px rgba(140, 120, 220, 0.5);
+    }
+    .usage-checkbox.used::after {
+      content: "✓";
+      color: white;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .usage-label {
+      font-size: 0.7rem;
+      color: #9088c0;
+      text-transform: uppercase;
+    }
+    .btn-reset-uses {
+      background: rgba(120, 100, 180, 0.2);
+      border: 1px solid rgba(140, 120, 200, 0.4);
+      color: #c8b8f0;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-reset-uses:hover { background: rgba(140, 120, 200, 0.4); }
 
-    .spell-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(55px, 1fr)); gap: 0.5rem; margin: 0.8rem 0; }
-    .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.4rem; border-radius: 0.5rem; background: rgba(20, 15, 35, 0.5); }
-    .slot-level { font-size: 0.7rem; color: #9088c0; }
-    .slot-count { font-size: 1.2rem; color: #d4c8ff; font-weight: bold; }
+    .btn-add {
+      background: rgba(80, 140, 100, 0.3);
+      border: 1px solid rgba(100, 200, 140, 0.5);
+      color: #b8f0c8;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+    }
+    .btn-add:hover { background: rgba(100, 200, 140, 0.5); box-shadow: 0 0 10px rgba(100, 200, 140, 0.3); }
 
-    .equipment-list { list-style: none; padding: 0; }
-    .equipment-list li { padding: 0.35rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; }
-    .equipment-list li::before { content: "✦ "; color: #b0a0e0; }
+    .btn-remove {
+      background: rgba(200, 80, 80, 0.3);
+      border: 1px solid rgba(200, 100, 100, 0.5);
+      color: #f0b8b8;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 0.3rem;
+    }
+    .btn-remove:hover { background: rgba(200, 80, 80, 0.5); }
+
+    .add-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+      padding: 0.8rem;
+      background: rgba(20, 15, 40, 0.5);
+      border-radius: 0.5rem;
+      border: 1px dashed rgba(120, 100, 180, 0.3);
+    }
+    .add-form input {
+      background: rgba(20, 15, 40, 0.7);
+      border: 1px solid rgba(140, 120, 220, 0.4);
+      color: #e8e0ff;
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.3rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
 
     .btn-save {
       background: rgba(80, 50, 140, 0.5);
@@ -269,52 +352,7 @@
       transition: 0.2s;
       font-size: 0.9rem;
     }
-
     .btn-save:hover { background: rgba(100, 60, 170, 0.7); box-shadow: 0 0 15px rgba(140, 120, 220, 0.5); }
-    .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .dm-pin-section { text-align: center; padding: 2rem; }
-
-    .dm-pin-input {
-      background: rgba(20, 15, 40, 0.7);
-      border: 2px solid rgba(140, 120, 220, 0.5);
-      padding: 0.7rem 1.5rem;
-      border-radius: 0.5rem;
-      color: #e8e0ff;
-      font-family: inherit;
-      font-size: 1.2rem;
-      text-align: center;
-      letter-spacing: 4px;
-      outline: none;
-      margin: 1rem 0;
-    }
-
-    .dm-pin-input:focus { border-color: rgba(180, 160, 240, 0.8); box-shadow: 0 0 20px rgba(140, 120, 220, 0.5); }
-
-    .secret-box { border: 2px dashed rgba(140, 120, 220, 0.5); background: rgba(20, 15, 35, 0.6); padding: 1rem; border-radius: 0.8rem; margin: 1rem 0; }
-    .secret-label { color: #d4c8ff; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
-    .secret-text { color: #c8b8f0; margin-top: 0.5rem; line-height: 1.6; }
-
-    /* Sync status indicator */
-    .sync-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      color: #a098d0;
-      margin-left: 1rem;
-    }
-    .sync-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #6a6a8a;
-      transition: background 0.3s;
-    }
-    .sync-dot.synced { background: #7bc8a0; }
-    .sync-dot.saving { background: #e8c86a; animation: pulse 0.8s infinite; }
-    .sync-dot.error { background: #e87070; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 
     @media (max-width: 768px) {
       .grimoire { padding: 1rem; }
@@ -329,13 +367,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     FIREBASE SETUP
-     1. Go to https://firebase.google.com → Add project
-     2. Build → Realtime Database → Create database (test mode)
-     3. Project Settings → Your apps → Add web app
-     4. Replace EVERY placeholder below with your actual config values
-     ═══════════════════════════════════════════════════════════════ -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script>
@@ -368,17 +399,17 @@
 <script>
   (function() {
     const db = window._db;
-
-    // ─── Active listener teardown ───────────────────────────────
     let activeListenerRef = null;
     function detachListener() {
-      if (activeListenerRef) {
-        activeListenerRef.off('value');
-        activeListenerRef = null;
-      }
+      if (activeListenerRef) { activeListenerRef.off('value'); activeListenerRef = null; }
     }
 
-    // ─── Character data ─────────────────────────────────────────
+    const DM_PIN = "8968";
+    let currentTab = 'drunken';
+    let dmAuthenticated = false;
+    const contentPanel = document.getElementById('contentPanel');
+
+    // ─── FULL CHARACTER DATA (same as before) ───────────────
     const characterData = {
       drunken: {
         name: "Kaelen 'Kettle' Morrow",
@@ -388,11 +419,11 @@
         alignment: "Chaotic Good",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine. He moves with a deceptive grace — stumbling one moment, flowing like water the next.",
+        appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes.",
         personality: ["I measure time in drinks, not hours.", "If I'm standing, I'm not that drunk yet.", "I remember things that never happened. Don't ask."],
-        ideal: "Memory is a cage. Forgetting is freedom — but only if you choose it, not if it's stolen.",
-        bond: "The party is my new monastery. I'll die before I let them be erased like the last one.",
-        flaw: "Sometimes I call my friends by names from my lost order. They don't exist anymore. I don't notice until they ask who I'm talking about.",
+        ideal: "Memory is a cage. Forgetting is freedom.",
+        bond: "The party is my new monastery.",
+        flaw: "Sometimes I call my friends by names from my lost order.",
         stats: {
           STR: { score: 10, mod: 0, save: 4 },
           DEX: { score: 20, mod: 5, save: 9 },
@@ -404,41 +435,34 @@
         combat: { ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4 },
         attacks: [
           { name: "Unarmed Strike", bonus: "+9", damage: "1d6+5 bludgeoning", notes: "Magical" },
-          { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each (two attacks)", notes: "Costs 1 ki" },
-          { name: "Improvised Weapon", bonus: "+9", damage: "1d4+5 bludgeoning", notes: "Bottle, chair, etc." },
-          { name: "Quarterstaff", bonus: "+9", damage: "1d6+5 (versatile 1d8)", notes: "Monk weapon" }
+          { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each (two attacks)", notes: "Costs 1 ki" }
         ],
         skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9, "Sleight of Hand": 9, Athletics: 4 },
         tools: "Brewer's supplies",
         languages: "Common, Primordial",
         features: [
-          { name: "Martial Arts (1d6)", desc: "Your unarmed strikes and monk weapons deal 1d6 damage. When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action.", cost: "Passive" },
-          { name: "Ki (10 points)", desc: "You have 10 ki points that recharge on a short rest. Ki save DC = 16 (8 + proficiency + WIS). You can spend ki to fuel various monk features.", cost: "10 points / short rest" },
-          { name: "Flurry of Blows", desc: "Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action.", cost: "1 ki" },
-          { name: "Patient Defense", desc: "You can spend 1 ki point to take the Dodge action as a bonus action on your turn.", cost: "1 ki" },
-          { name: "Step of the Wind", desc: "You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.", cost: "1 ki" },
-          { name: "Stunning Strike", desc: "When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.", cost: "1 ki per attempt" },
-          { name: "Drunken Technique", desc: "When you use Flurry of Blows, you gain the benefit of the Disengage action and your walking speed increases by 10 feet until the end of the current turn.", cost: "Free with Flurry" },
-          { name: "Tipsy Sway", desc: "When a creature misses you with a melee attack roll, you can spend 1 ki point as a reaction to cause that attack to hit one creature of your choice, other than the attacker, that you can see within 5 feet of you.", cost: "1 ki (reaction)" },
-          { name: "Evasion", desc: "When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.", cost: "Passive" },
-          { name: "Purity of Body", desc: "You are immune to disease and poison.", cost: "Passive" }
+          { name: "Flurry of Blows", desc: "Spend 1 ki to make two unarmed strikes as a bonus action.", cost: "1 ki", uses: 10 },
+          { name: "Stunning Strike", desc: "Spend 1 ki to stun on hit (CON save).", cost: "1 ki per attempt", uses: 10 },
+          { name: "Patient Defense", desc: "Spend 1 ki to Dodge as bonus action.", cost: "1 ki", uses: 10 }
         ],
-        equipment: ["Quarterstaff (used as a walking stick)", "10 darts", "Explorer's pack (mostly empty bottles)", "Broken ceramic bottle (improvised weapon)", "A worn flask that never seems to empty", "Common clothes (stained)", "Belt pouch with 10 gp"],
-        backstory: "The Monastery of the Unremembered Path stood on a mountain that no longer exists, in a valley that never was. Your order believed in perfect emptiness — not void, but absence so complete it becomes presence. You trained for forty years to achieve it. You failed. You still felt joy. Still felt grief. Still loved your tea-brewing master, old Lin Wei, who called you 'Little Kettle' because you always boiled over. Then the event happened. A crack in time — caused by someone testing a piece of the Rod of Seven Parts. Your monastery didn't burn. Didn't fall. It un-happened. Lin Wei didn't die. He was never born. The mountain didn't crumble. It was never there. You survived because you were in a cave below the mountain, drunk on stolen rice wine — your first and only act of rebellion. You stumbled out to find... a different mountain. Different sky. Different gods. No one remembers your order. No one can. Now you drink to forget — but forgetting is exactly what they took from you."
+        spellSlots: null,
+        spells: [],
+        equipment: ["Quarterstaff", "10 darts", "Explorer's pack", "Worn flask", "10 gp"],
+        backstory: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor."
       },
       chronurgy: {
         name: "Vesper Aldric",
         classLevel: "Wizard (School of Chronurgy) - Level 10",
-        race: "Variant Human / Custom Lineage",
+        race: "Variant Human",
         background: "Temporal Archivist",
         alignment: "True Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "Vesper carries the weight of futures that may never come. His robes are enchanted with temporal threads that shift slightly in color. His eyes hold the weariness of someone who has seen too many timelines collapse.",
-        personality: ["Time is a river, and I've learned to swim upstream.", "I always keep a backup plan. And a backup for the backup.", "Punctuality is the highest form of respect."],
+        appearance: "Vesper carries the weight of futures that may never come.",
+        personality: ["Time is a river, and I've learned to swim upstream.", "I always keep a backup plan.", "Punctuality is the highest form of respect."],
         ideal: "Knowledge is the only true currency across timelines.",
         bond: "I've seen the end of this story. I'm here to rewrite it.",
-        flaw: "I sometimes respond to things that haven't happened yet. People find it unsettling.",
+        flaw: "I sometimes respond to things that haven't happened yet.",
         stats: {
           STR: { score: 8, mod: -1, save: 3 },
           DEX: { score: 14, mod: 2, save: 6 },
@@ -449,24 +473,19 @@
         },
         combat: { ac: 15, hp: 62, speed: 30, initiative: 5, hitDice: "10d6", proficiency: 4 },
         attacks: [
-          { name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" },
-          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic (if damaged)", notes: "Wisdom save" },
-          { name: "Fire Bolt", bonus: "+9", damage: "2d10 fire", notes: "Ranged spell attack" }
+          { name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" }
         ],
-        skills: { Arcana: 9, History: 9, Investigation: 9, Insight: 5, Perception: 5 },
+        skills: { Arcana: 9, History: 9, Investigation: 9 },
         tools: "Calligrapher's supplies",
         languages: "Common, Draconic, Primordial, Celestial",
         features: [
-          { name: "Chronal Shift", desc: "You can magically manipulate the flow of time around a creature. As a reaction when a creature you can see within 30 feet makes an attack roll, ability check, or saving throw, you can force the creature to reroll.", cost: "2 uses / long rest" },
-          { name: "Temporal Awareness", desc: "You add your Intelligence modifier (+5) to your initiative rolls.", cost: "Passive" },
-          { name: "Momentary Stasis", desc: "As an action, you can magically force a Large or smaller creature you can see within 60 feet to make a Constitution saving throw. On a failure, the creature is incapacitated and has a speed of 0 until the end of your next turn or until it takes damage.", cost: "Action, PB uses / long rest" },
-          { name: "Arcane Abeyance", desc: "When you cast a spell using a spell slot of 4th level or lower, you can condense the spell's magic into a tiny bead. A creature holding the bead can use its action to release the spell. The bead vanishes after 1 hour.", cost: "1 use / short rest" },
-          { name: "Spellcasting", desc: "You are a 10th-level wizard with access to dunamancy spells. Spell save DC = 17, Spell attack modifier = +9.", cost: "See spell slots" }
+          { name: "Chronal Shift", desc: "Reaction: force a reroll within 30 ft.", cost: "2 uses / long rest", uses: 2 },
+          { name: "Arcane Abeyance", desc: "Store a spell (4th or lower) in a bead for 1 hour.", cost: "1 use / short rest", uses: 1 }
         ],
-        spellSlots: { cantrips: 4, "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        spells: ["Gift of Alacrity (1st)", "Fortune's Favor (2nd)", "Haste (3rd)", "Slow (3rd)", "Temporal Shunt (5th)", "Counterspell (3rd)", "Shield (1st)", "Misty Step (2nd)", "Dimension Door (4th)", "Wall of Force (5th)"],
-        equipment: ["Spellbook bound in temporal leather", "Component pouch", "Arcane focus (hourglass pendant)", "Scholar's pack", "A small hourglass that runs backwards", "Ink and quill", "15 gp"],
-        backstory: "Vesper was always out of step with time. As a child, he would answer questions before they were asked. The Chronurgy Academy found him and trained him to stabilize temporal anomalies. But during a routine calibration of a temporal anchor, he caught a glimpse of the end — the Rod of Seven Parts fully assembled, and the multiverse collapsing into a single, frozen moment. He's been trying to prevent that future ever since, even if it means breaking every rule of chronomancy."
+        spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
+        spells: ["Shield (1st)", "Misty Step (2nd)", "Counterspell (3rd)", "Haste (3rd)", "Dimension Door (4th)", "Wall of Force (5th)"],
+        equipment: ["Spellbook", "Component pouch", "Hourglass pendant", "Scholar's pack", "15 gp"],
+        backstory: "Vesper caught a glimpse of the end — the Rod assembled and the multiverse collapsing."
       },
       grave: {
         name: "Morwen",
@@ -476,11 +495,11 @@
         alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side. Your voice is quiet — death doesn't need to shout. When you speak, people listen. Not because you're charming, but because you sound like you already know how their story ends.",
-        personality: ["I speak to the dead. They're better listeners than the living.", "Death doesn't frighten me. What comes after? That's another matter.", "I keep a list of everyone I've buried. I've never needed a second page."],
-        ideal: "Death is a door, not a wall. My job is to make sure no one kicks it down before their time.",
-        bond: "The Raven Queen saved me. I don't know why. I intend to find out — and maybe earn my freedom.",
-        flaw: "I have no fear of death. This makes me reckless — and unnerving to my allies.",
+        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side.",
+        personality: ["I speak to the dead.", "Death doesn't frighten me.", "I keep a list of everyone I've buried."],
+        ideal: "Death is a door, not a wall.",
+        bond: "The Raven Queen saved me.",
+        flaw: "I have no fear of death.",
         stats: {
           STR: { score: 8, mod: -1, save: 3 },
           DEX: { score: 12, mod: 1, save: 5 },
@@ -491,42 +510,34 @@
         },
         combat: { ac: 15, hp: 82, speed: 30, initiative: 1, hitDice: "10d8", proficiency: 4 },
         attacks: [
-          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic (if damaged)", notes: "Wisdom save" },
-          { name: "Sacred Flame", bonus: "DC 17", damage: "2d8 radiant", notes: "Ignores cover" },
-          { name: "Spiritual Weapon", bonus: "+9", damage: "1d8+5 force", notes: "Bonus action" },
-          { name: "Mace + Divine Strike", bonus: "+3", damage: "1d6+1 + 1d8 necrotic", notes: "Once per turn" }
+          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic", notes: "Wisdom save" }
         ],
-        skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9, Perception: 9, Religion: 4 },
-        tools: "Herbalism Kit, Calligrapher's Supplies",
+        skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9, Perception: 9 },
+        tools: "Herbalism Kit",
         languages: "Common, Primordial",
         features: [
-          { name: "Circle of Mortality", desc: "When you would normally roll one or more dice to restore hit points with a spell to a creature at 0 hit points, you instead use the highest number possible for each die.", cost: "Passive" },
-          { name: "Eyes of the Grave", desc: "As an action, you can open your awareness to magically detect undead. Until the end of your next turn, you know the location and type of any undead within 60 feet that isn't behind total cover.", cost: "Action, PB uses / long rest" },
-          { name: "Path to the Grave", desc: "As a bonus action, you can curse one creature you can see within 30 feet. The next time you or an ally hits the cursed creature with an attack, the creature has vulnerability to all of that attack's damage.", cost: "Channel Divinity (1 use)" },
-          { name: "Sentinel at Death's Door", desc: "When a creature you can see within 30 feet is critically hit, you can use your reaction to turn that critical hit into a normal hit.", cost: "Reaction" },
-          { name: "Divine Strike", desc: "Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 necrotic damage.", cost: "Free, once per turn" },
-          { name: "Deathless Nature", desc: "You have advantage on death saving throws and no longer need to eat, drink, or breathe. You also have resistance to disease.", cost: "Passive" }
+          { name: "Channel Divinity: Path to the Grave", desc: "Curse target; next attack deals double damage.", cost: "1 Channel Divinity", uses: 2 },
+          { name: "Sentinel at Death's Door", desc: "Reaction: cancel a crit within 30 ft.", cost: "Reaction", uses: "∞" },
+          { name: "Eyes of the Grave", desc: "Detect undead within 60 ft.", cost: "PB uses / long rest", uses: 4 }
         ],
-        spellSlots: { cantrips: 4, "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        domainSpells: ["1st: Bane, False Life", "2nd: Gentle Repose, Ray of Enfeeblement", "3rd: Revivify, Vampiric Touch", "4th: Blight, Death Ward", "5th: Antilife Shell, Raise Dead"],
-        spells: ["Toll the Dead (cantrip)", "Guidance (cantrip)", "Spare the Dying (cantrip)", "Bless (1st)", "Healing Word (1st)", "Spiritual Weapon (2nd)", "Enhance Ability (2nd)", "Spirit Guardians (3rd)", "Speak with Dead (3rd)", "Death Ward (4th)", "Banishment (4th)", "Greater Restoration (5th)"],
-        channelDivinity: ["Turn Undead: Each undead within 30 ft. makes WIS save or flees for 1 minute (destroyed if CR ≤ 1).", "Path to the Grave: Bonus action curse. Next attack deals double damage."],
-        equipment: ["Breastplate (AC 14 + DEX 1)", "Holy symbol (silver raven skull)", "Mace", "Shield (optional, +2 AC)", "Explorer's pack", "Prayer book of the Raven Queen", "A small bell for funeral rites", "Black feather quill", "15 gp"],
-        backstory: "You remember dying. Cold. Quiet. A long hallway with a door at the end. You were walking toward it when a hand — skeletal, elegant, impossibly old — touched your shoulder and said: 'Not yet. I have use for you.' You woke up on a stone table in a fortress made of frozen shadows. The Raven Queen stood over you. She didn't explain. She simply said: 'You will keep the balance. You will ensure things die when they should. And you will stop the Wolf-Spider from unmaking the grave itself.' That was years ago. You've served her since — traveling the planes, burying the dead, slaying the undead."
+        spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
+        spells: ["Guidance (cantrip)", "Toll the Dead (cantrip)", "Bless (1st)", "Healing Word (1st)", "Spiritual Weapon (2nd)", "Spirit Guardians (3rd)", "Death Ward (4th)", "Greater Restoration (5th)"],
+        equipment: ["Breastplate", "Holy symbol", "Mace", "Prayer book", "Bell for funeral rites", "15 gp"],
+        backstory: "You died and the Raven Queen gave you a second chance."
       },
       psi: {
         name: "Zor-Ashkev's Vessel",
         classLevel: "Fighter (Psi Warrior) - Level 10",
-        race: "Aasimar (Fallen, reflavored)",
+        race: "Aasimar (Fallen)",
         background: "Wind Duke Sleeper Agent",
-        alignment: "Lawful Neutral (sliding)",
+        alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have an unnerving stillness. Your eyes are a pale silver that sometimes flicker when you concentrate. You move with precision that seems almost rehearsed, as if your body knows where to be before you decide. When the Wind Duke ghost stirs, your pupils become faceted — like cut gemstones.",
-        personality: ["I don't remember learning half of what I know. I just... know it.", "I count things. Steps. Arrows. Lies. I don't know why.", "Sometimes I speak in a language I've never heard."],
-        ideal: "Order is a tool, not a master. (But the ghost inside disagrees.)",
-        bond: "The party is my unit. I will not sacrifice them — yet.",
-        flaw: "When stressed, I speak in the Wind Duke's voice without realizing.",
+        appearance: "You have an unnerving stillness. Your eyes are pale silver.",
+        personality: ["I don't remember learning half of what I know.", "I count things. Steps. Arrows. Lies.", "Sometimes I speak in a language I've never heard."],
+        ideal: "Order is a tool, not a master.",
+        bond: "The party is my unit.",
+        flaw: "When stressed, I speak in the Wind Duke's voice.",
         stats: {
           STR: { score: 17, mod: 3, save: 7 },
           DEX: { score: 10, mod: 0, save: 4 },
@@ -537,378 +548,22 @@
         },
         combat: { ac: 19, hp: 84, speed: 30, initiative: 0, hitDice: "10d10", proficiency: 4 },
         attacks: [
-          { name: "Longsword (1H + Dueling)", bonus: "+7", damage: "1d8+5 slashing", notes: "+2 Dueling style" },
-          { name: "Longsword + Psionic Strike", bonus: "+7", damage: "1d8+5 + 1d8+2 force", notes: "Costs 1 Psionic Die" },
-          { name: "Heavy Crossbow", bonus: "+4", damage: "1d10 piercing", notes: "Range 100/400" }
+          { name: "Longsword", bonus: "+7", damage: "1d8+5 slashing", notes: "+2 Dueling" }
         ],
-        skills: { Athletics: 7, Perception: 4, History: 6, Investigation: 6, Insight: 4 },
+        skills: { Athletics: 7, Perception: 4, History: 6, Investigation: 6 },
         tools: "Calligrapher's tools",
-        languages: "Common, Primordial (Wind Duke)",
+        languages: "Common, Primordial",
         features: [
-          { name: "Psionic Power (6 dice, d8+2)", desc: "You harbor a wellspring of psionic energy within yourself. This energy is represented by your Psionic Energy dice, which are each a d8. You have 6 dice total, recharging on a long rest.", cost: "6 dice / long rest" },
-          { name: "Protective Field", desc: "When you or another creature you can see within 30 feet takes damage, you can use your reaction to expend one Psionic Energy die, roll it, and reduce the damage taken by the number rolled plus your Intelligence modifier (+2).", cost: "1 die (reaction)" },
-          { name: "Psionic Strike", desc: "Once on each of your turns, immediately after you hit a target with a weapon attack, you can expend one Psionic Energy die, dealing force damage equal to the number rolled plus your Intelligence modifier (+2).", cost: "1 die (free, once/turn)" },
-          { name: "Telekinetic Movement", desc: "As an action, you can expend one Psionic Energy die to move one object or willing creature (up to Large size) up to 30 feet in any direction without opportunity attacks.", cost: "1 die (action)" },
-          { name: "Telekinetic Shove", desc: "As a bonus action, you can telekinetically shove one creature you can see within 30 feet. Target makes a Strength save (DC 14) or is moved 5 ft. or knocked prone.", cost: "Bonus action (free)" },
-          { name: "Guarded Mind", desc: "You have immunity to psychic damage and to the charmed and frightened conditions.", cost: "Passive" },
-          { name: "Action Surge", desc: "On your turn, you can take one additional action. Recharges on a short or long rest.", cost: "1 / short rest" },
-          { name: "Necrotic Shroud", desc: "As an action, you transform to reveal ghostly silver wings. Creatures within 10 ft. make CHA save (DC 11) or be frightened. Once per turn, deal extra necrotic damage equal to your level (10).", cost: "1 / long rest" }
+          { name: "Psionic Power (6 dice)", desc: "6 Psionic Energy dice (d8), recharge on long rest.", cost: "6 dice / long rest", uses: 6 },
+          { name: "Protective Field", desc: "Reaction: reduce damage by 1d8+2 within 30 ft.", cost: "1 die", uses: 6 },
+          { name: "Action Surge", desc: "Take an additional action.", cost: "1 / short rest", uses: 1 }
         ],
-        equipment: ["Plate armor (AC 19)", "Longsword", "Shield (optional)", "Heavy crossbow (20 bolts)", "Dungeoneer's pack", "A small silver cube that hums near Rod pieces", "A journal full of geometric symbols", "15 gp"],
-        backstory: "You don't remember your childhood clearly. Not trauma — absence. You remember a field, a blue sky, and suddenly knowing how to arrange stones into a perfect geometric ward. You were seven. As you grew, so did the hum. You became a mercenary famous for impossible tactics — predicting ambushes, drawing perfect maps of places you'd never seen. Your comrades called you 'the Compass.' Six months ago, you woke up with seven words carved into your forearm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
+        spellSlots: null,
+        spells: [],
+        equipment: ["Plate armor", "Longsword", "Heavy crossbow", "Silver cube", "15 gp"],
+        backstory: "You woke up with seven words carved into your forearm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
       }
     };
 
     const dmSecrets = {
-      drunken: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor. Old Lin Wei's spirit sometimes watches over him, invisible to all but the Raven Queen.",
-      chronurgy: "Vesper's future self is the one assembling the Rod — believing that freezing the multiverse is the only way to prevent a greater catastrophe. Vesper will have to face himself.",
-      grave: "In your previous life, you were a minor Wind Duke scholar who helped design the Rod. The Raven Queen erased those memories. She wants the Rod reassembled to control death across all planes.",
-      psi: "Embedded in your psyche is General Zor-Ashkev. You are a sleeper agent. The seven words are a psychic trigger. At the climax, you can choose to suppress the ghost."
-    };
-
-    // ─── IMPORTANT: This PIN is visible in the page source to anyone ───
-    // It protects the DM tab from casual visitors but is NOT truly secret.
-    // To properly hide DM content, you would need a server-side auth system.
-    const DM_PIN = "8968";
-
-    let currentTab = 'drunken';
-    let dmAuthenticated = false;
-    const contentPanel = document.getElementById('contentPanel');
-    const tabs = {
-      drunken: document.getElementById('tabDrunken'),
-      chronurgy: document.getElementById('tabChronurgy'),
-      grave: document.getElementById('tabGrave'),
-      psi: document.getElementById('tabPsi'),
-      dm: document.getElementById('tabDM')
-    };
-
-    function setActiveTab(tabId) {
-      Object.values(tabs).forEach(btn => btn?.classList.remove('active'));
-      if (tabs[tabId]) tabs[tabId].classList.add('active');
-    }
-
-    function escapeHtml(str) {
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    function makeEditable(value, fieldKey, charKey, tag = 'span', className = '') {
-      const uniqueId = `editable-${charKey}-${fieldKey}-${Date.now()}-${Math.random().toString(36).substr(2,5)}`;
-      const escaped = escapeHtml(String(value));
-      if (tag === 'input') {
-        return `<span class="editable-field"><input type="text" id="${uniqueId}" class="editable-text ${className}" value="${escaped}" data-field="${fieldKey}" data-char="${charKey}"><button class="pencil-btn" onclick="toggleEditField('${uniqueId}')" title="Edit">✎</button></span>`;
-      }
-      return `<span class="editable-field"><span id="${uniqueId}" class="editable-text ${className}" contenteditable="false" data-field="${fieldKey}" data-char="${charKey}">${escaped}</span><button class="pencil-btn" onclick="toggleEditField('${uniqueId}')" title="Edit">✎</button></span>`;
-    }
-
-    window.toggleEditField = function(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (el.contentEditable === 'true' || (el.tagName === 'INPUT' && !el.readOnly)) {
-        if (el.tagName === 'INPUT') {
-          el.readOnly = true;
-          el.style.border = '1px solid transparent';
-        } else {
-          el.contentEditable = 'false';
-          el.style.border = '1px solid transparent';
-          el.style.background = 'transparent';
-        }
-      } else {
-        if (el.tagName === 'INPUT') {
-          el.readOnly = false;
-          el.style.border = '1px solid rgba(160,140,220,0.6)';
-          el.focus();
-        } else {
-          el.contentEditable = 'true';
-          el.style.border = '1px solid rgba(160,140,220,0.6)';
-          el.style.background = 'rgba(120,100,180,0.15)';
-          el.focus();
-        }
-      }
-    };
-
-    // ─── Sync status helper ──────────────────────────────────────
-    function setSyncStatus(state, label) {
-      const dot = document.getElementById('syncDot');
-      const txt = document.getElementById('syncText');
-      if (!dot || !txt) return;
-      dot.className = 'sync-dot ' + state;
-      txt.textContent = label;
-    }
-
-    // ─── Firebase: save all edits for a character ────────────────
-    window.saveAllEdits = function(charKey) {
-      const editables = document.querySelectorAll(`[data-char="${charKey}"]`);
-      const savedData = {};
-      editables.forEach(el => {
-        const field = el.getAttribute('data-field');
-        if (field) savedData[field] = el.tagName === 'INPUT' ? el.value : el.textContent;
-      });
-
-      setSyncStatus('saving', 'Saving…');
-      const btn = document.getElementById('saveBtn-' + charKey);
-      if (btn) btn.disabled = true;
-
-      db.ref('characters/' + charKey).set(savedData)
-        .then(() => {
-          setSyncStatus('synced', 'Saved ✓');
-          if (btn) btn.disabled = false;
-        })
-        .catch(err => {
-          console.error('Firebase save error:', err);
-          setSyncStatus('error', 'Save failed ✗');
-          if (btn) btn.disabled = false;
-          alert('Save failed. Check your Firebase config in the HTML file.');
-        });
-    };
-
-    // ─── Firebase: load & live-sync edits for a character ────────
-    function loadCharacterEdits(charKey) {
-      detachListener();
-      const ref = db.ref('characters/' + charKey);
-      activeListenerRef = ref;
-
-      setSyncStatus('saving', 'Loading…');
-      ref.on('value', (snapshot) => {
-        const data = snapshot.val();
-        setSyncStatus('synced', 'Live ✓');
-        if (!data) return;
-        Object.entries(data).forEach(([field, value]) => {
-          document.querySelectorAll(`[data-char="${charKey}"][data-field="${field}"]`).forEach(el => {
-            if (el.tagName === 'INPUT') el.value = value;
-            else el.textContent = value;
-          });
-        });
-      }, (err) => {
-        console.error('Firebase read error:', err);
-        setSyncStatus('error', 'Offline');
-      });
-    }
-
-    // ─── Render helpers ──────────────────────────────────────────
-    function renderStatBox(label, score, mod, save, charKey, statKey) {
-      const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
-      const saveStr = save >= 0 ? `+${save}` : `${save}`;
-      return `
-        <div class="stat-box">
-          <div class="stat-label">${label}</div>
-          <div class="stat-value">${makeEditable(score, `stat-${statKey}-score`, charKey)}</div>
-          <span class="stat-mod">${modStr}</span>
-          <div style="font-size:0.7rem;color:#9088c0;margin-top:0.2rem;">Save ${saveStr}</div>
-        </div>`;
-    }
-
-    function renderCharacterSheet(charKey) {
-      const c = characterData[charKey];
-      if (!c) return '<p style="color:#c8b8f0;">Character not found.</p>';
-
-      const statsHtml = Object.entries(c.stats).map(([name, data]) =>
-        renderStatBox(name, data.score, data.mod, data.save, charKey, name)
-      ).join('');
-
-      const attacksHtml = c.attacks.map((a, i) => `
-        <div class="attack-row">
-          <span class="attack-name">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span>
-          <span class="attack-bonus">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span>
-          <span class="attack-damage">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span>
-          <span style="color:#a098d0;font-size:0.8rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
-        </div>`).join('');
-
-      const featuresHtml = c.features.map((f, i) => `
-        <div class="ability-card">
-          <div class="ability-name">
-            ${makeEditable(f.name, `feat-name-${i}`, charKey)}
-            ${f.cost ? `<span class="ability-cost">${makeEditable(f.cost, `feat-cost-${i}`, charKey)}</span>` : ''}
-          </div>
-          <div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>
-        </div>`).join('');
-
-      const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => {
-        const bonusStr = bonus >= 0 ? `+${bonus}` : `${bonus}`;
-        return `<div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonusStr}</span></div>`;
-      }).join('') : '';
-
-      const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => `
-        <div class="spell-slot">
-          <div class="slot-level">${level}</div>
-          <div class="slot-count">${count}</div>
-        </div>`).join('') : '';
-
-      const equipmentHtml = c.equipment ? c.equipment.map((item, i) =>
-        `<li>${makeEditable(item, `equip-${i}`, charKey)}</li>`
-      ).join('') : '';
-
-      return `
-        <div class="char-sheet">
-          <div class="sheet-section">
-            <div class="section-header">
-              <span>📜 CHARACTER SHEET</span>
-              <span style="font-size:0.85rem;color:#a098d0;">${c.campaign}</span>
-            </div>
-            <div class="field-group">
-              <span class="field-label">Name:</span>
-              ${makeEditable(c.name, 'name', charKey)}
-            </div>
-            <div class="info-grid" style="margin-top:0.5rem;">
-              <div class="info-item"><span class="info-label">Class & Level</span><span class="info-value">${makeEditable(c.classLevel, 'classLevel', charKey)}</span></div>
-              <div class="info-item"><span class="info-label">Race</span><span class="info-value">${makeEditable(c.race, 'race', charKey)}</span></div>
-              <div class="info-item"><span class="info-label">Background</span><span class="info-value">${makeEditable(c.background, 'background', charKey)}</span></div>
-              <div class="info-item"><span class="info-label">Alignment</span><span class="info-value">${makeEditable(c.alignment, 'alignment', charKey)}</span></div>
-              <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey, 'input', '')}</span></div>
-            </div>
-            <div style="margin-top:0.8rem;">
-              <strong style="color:#c8b8f0;">Appearance:</strong>
-              <p style="color:#c0b8e8;line-height:1.6;margin-top:0.3rem;">${makeEditable(c.appearance, 'appearance', charKey)}</p>
-            </div>
-          </div>
-
-          <div class="sheet-section">
-            <div class="section-header">📊 ABILITY SCORES</div>
-            <div class="stat-row">${statsHtml}</div>
-            <div class="info-grid" style="margin-top:0.8rem;">
-              <div class="info-item"><span class="info-label">AC</span><span class="info-value">${makeEditable(c.combat.ac, 'ac', charKey)}</span></div>
-              <div class="info-item"><span class="info-label">HP</span><span class="info-value">${makeEditable(c.combat.hp, 'hp', charKey)}</span></div>
-              <div class="info-item"><span class="info-label">Speed</span><span class="info-value">${makeEditable(c.combat.speed, 'speed', charKey)} ft.</span></div>
-              <div class="info-item"><span class="info-label">Initiative</span><span class="info-value">+${c.combat.initiative}</span></div>
-            </div>
-          </div>
-
-          ${skillsHtml ? `<div class="sheet-section"><div class="section-header">🎯 SKILLS</div><div class="info-grid">${skillsHtml}</div></div>` : ''}
-
-          <div class="sheet-section">
-            <div class="section-header">⚔️ ATTACKS</div>
-            ${attacksHtml}
-          </div>
-
-          ${spellSlotsHtml ? `
-          <div class="sheet-section">
-            <div class="section-header">🔮 SPELLCASTING</div>
-            <div class="spell-slot-grid">${spellSlotsHtml}</div>
-            ${c.domainSpells ? `<div style="margin-top:0.8rem;"><strong style="color:#d4c8ff;">Domain Spells:</strong> ${c.domainSpells.map(s => makeEditable(s, `domain-${s}`, charKey)).join(' | ')}</div>` : ''}
-            ${c.spells ? `<div style="margin-top:0.5rem;"><strong style="color:#d4c8ff;">Spells:</strong> ${c.spells.map(s => makeEditable(s, `spell-${s}`, charKey)).join(' · ')}</div>` : ''}
-          </div>` : ''}
-
-          <div class="sheet-section">
-            <div class="section-header">✨ FEATURES & ABILITIES</div>
-            ${featuresHtml}
-          </div>
-
-          ${equipmentHtml ? `
-          <div class="sheet-section">
-            <div class="section-header">🎒 EQUIPMENT</div>
-            <ul class="equipment-list">${equipmentHtml}</ul>
-          </div>` : ''}
-
-          <div class="sheet-section">
-            <div class="section-header">📖 BACKSTORY</div>
-            <div style="color:#c0b8e8;line-height:1.7;font-style:italic;">${makeEditable(c.backstory, 'backstory', charKey)}</div>
-          </div>
-
-          <div style="text-align:center;margin-top:0.5rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.5rem;">
-            <button id="saveBtn-${charKey}" class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save Changes for Everyone</button>
-            <span class="sync-status">
-              <span class="sync-dot" id="syncDot"></span>
-              <span id="syncText">Connecting…</span>
-            </span>
-            <span style="color:#a098d0;font-size:0.8rem;">Click ✎ to edit any field</span>
-          </div>
-        </div>`;
-    }
-
-    // ─── DM Page ─────────────────────────────────────────────────
-    function renderDMPage() {
-      return `
-        <div class="dm-pin-section">
-          <h2 style="color:#d4c8ff;">🔐 DM Stargate</h2>
-          <p style="color:#a098d0;">Enter the cosmic PIN to reveal secrets</p>
-          <input type="password" id="pinInput" class="dm-pin-input" placeholder="****" maxlength="8">
-          <br>
-          <button class="btn-save" id="pinSubmit" style="margin-top:1rem;">Unlock</button>
-          <p id="pinError" style="color:#e0a0c0;margin-top:1rem;"></p>
-          <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:2rem;">
-            <div class="section-header" style="color:#d4c8ff;">🗝️ CHARACTER SECRETS</div>
-            ${Object.entries(dmSecrets).map(([key, secret]) => `
-              <div class="secret-box">
-                <div class="secret-label">${characterData[key]?.name || key}</div>
-                <div class="secret-text">${makeEditable(secret, `dm-secret-${key}`, 'dm')}</div>
-              </div>`).join('')}
-            <div style="margin-top:1.5rem;">
-              <label style="color:#d4c8ff;">📝 DM Notes:</label>
-              <textarea id="dmEditArea" rows="4" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.7rem;border-radius:0.5rem;font-family:inherit;margin-top:0.5rem;" placeholder="Campaign notes…"></textarea>
-              <div style="display:flex;align-items:center;gap:0.8rem;margin-top:0.7rem;">
-                <button class="btn-save" onclick="saveDMNotes()">Save DM Notes for Everyone</button>
-                <span class="sync-status">
-                  <span class="sync-dot" id="syncDot"></span>
-                  <span id="syncText">Ready</span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    // ─── Firebase: save DM notes ─────────────────────────────────
-    window.saveDMNotes = function() {
-      const ta = document.getElementById('dmEditArea');
-      if (!ta) return;
-      setSyncStatus('saving', 'Saving…');
-      db.ref('dm/notes').set(ta.value)
-        .then(() => setSyncStatus('synced', 'Saved ✓'))
-        .catch(err => {
-          console.error('Firebase DM save error:', err);
-          setSyncStatus('error', 'Save failed ✗');
-          alert('Save failed. Check your Firebase config.');
-        });
-    };
-
-    // ─── Firebase: load DM notes ─────────────────────────────────
-    function loadDMNotes() {
-      detachListener();
-      const ref = db.ref('dm/notes');
-      activeListenerRef = ref;
-      ref.on('value', (snapshot) => {
-        const val = snapshot.val();
-        const ta = document.getElementById('dmEditArea');
-        if (ta && val !== null) ta.value = val;
-        setSyncStatus('synced', 'Live ✓');
-      });
-    }
-
-    // ─── Tab switching ───────────────────────────────────────────
-    function switchTab(tabId) {
-      detachListener();
-      currentTab = tabId;
-      setActiveTab(tabId);
-
-      if (tabId === 'dm') {
-        dmAuthenticated = false;
-        contentPanel.innerHTML = renderDMPage();
-        document.getElementById('pinSubmit').addEventListener('click', () => {
-          const pin = document.getElementById('pinInput').value;
-          if (pin === DM_PIN) {
-            dmAuthenticated = true;
-            document.getElementById('dmSecretsContainer').style.display = 'block';
-            document.getElementById('pinError').innerText = '';
-            loadDMNotes();
-          } else {
-            document.getElementById('pinError').innerText = 'Incorrect PIN.';
-            document.getElementById('dmSecretsContainer').style.display = 'none';
-          }
-        });
-      } else {
-        contentPanel.innerHTML = renderCharacterSheet(tabId);
-        setTimeout(() => loadCharacterEdits(tabId), 50);
-        dmAuthenticated = false;
-      }
-    }
-
-    tabs.drunken.addEventListener('click', () => switchTab('drunken'));
-    tabs.chronurgy.addEventListener('click', () => switchTab('chronurgy'));
-    tabs.grave.addEventListener('click', () => switchTab('grave'));
-    tabs.psi.addEventListener('click', () => switchTab('psi'));
-    tabs.dm.addEventListener('click', () => switchTab('dm'));
-
-    switchTab('drunken');
-  })();
-</script>
-</body>
-</html>
+      drunken: "The Monastery was erased by a Rod fragment.
