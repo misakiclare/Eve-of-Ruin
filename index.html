@@ -566,4 +566,442 @@
     };
 
     const dmSecrets = {
-      drunken: "The Monastery was erased by a Rod fragment.
+      drunken: "The Monastery was erased by a Rod fragment. Kaelen is the only survivor.",
+      chronurgy: "Vesper's future self is assembling the Rod.",
+      grave: "You were a Wind Duke scholar who helped design the Rod.",
+      psi: "You are a sleeper agent for General Zor-Ashkev."
+    };
+
+    // ─── HELPERS ──────────────────────────────────────────
+    function escapeHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    function makeEditable(value, fieldKey, charKey, tag = 'span', className = '') {
+      const uniqueId = `editable-${charKey}-${fieldKey}-${Date.now()}-${Math.random().toString(36).substr(2,5)}`;
+      const escaped = escapeHtml(String(value));
+      if (tag === 'input') {
+        return `<span class="editable-field"><input type="text" id="${uniqueId}" class="editable-text ${className}" value="${escaped}" data-field="${fieldKey}" data-char="${charKey}"><button class="pencil-btn" onclick="toggleEditField('${uniqueId}')" title="Edit">✎</button></span>`;
+      }
+      return `<span class="editable-field"><span id="${uniqueId}" class="editable-text ${className}" contenteditable="false" data-field="${fieldKey}" data-char="${charKey}">${escaped}</span><button class="pencil-btn" onclick="toggleEditField('${uniqueId}')" title="Edit">✎</button></span>`;
+    }
+
+    window.toggleEditField = function(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.contentEditable === 'true' || (el.tagName === 'INPUT' && !el.readOnly)) {
+        if (el.tagName === 'INPUT') { el.readOnly = true; el.style.border = '1px solid transparent'; }
+        else { el.contentEditable = 'false'; el.style.border = '1px solid transparent'; el.style.background = 'transparent'; }
+      } else {
+        if (el.tagName === 'INPUT') { el.readOnly = false; el.style.border = '1px solid rgba(160,140,220,0.6)'; el.focus(); }
+        else { el.contentEditable = 'true'; el.style.border = '1px solid rgba(160,140,220,0.6)'; el.style.background = 'rgba(120,100,180,0.15)'; el.focus(); }
+      }
+    };
+
+    // ─── USAGE CHECKBOX LOGIC ───────────────────────────
+    function renderUsageCheckboxes(charKey, featureIndex, maxUses) {
+      if (maxUses === "∞" || maxUses === "Passive" || !maxUses || maxUses === 0) return '';
+      const num = parseInt(maxUses);
+      if (isNaN(num) || num <= 0 || num > 20) return '';
+      
+      const storageKey = `uses-${charKey}-feat-${featureIndex}`;
+      let usedCount = parseInt(localStorage.getItem(storageKey) || '0');
+      if (usedCount > num) usedCount = num;
+      
+      let checkboxes = '';
+      for (let i = 0; i < num; i++) {
+        const checked = i < usedCount ? ' used' : '';
+        checkboxes += `<span class="usage-checkbox${checked}" onclick="toggleUsageCheckbox(this, '${storageKey}', ${i}, ${num})" title="Use ${i+1}"></span>`;
+      }
+      
+      return `
+        <div class="usage-tracker" style="margin-top:0.3rem;">
+          <span class="usage-label">Used:</span>
+          <div class="usage-checkboxes">${checkboxes}</div>
+          <button class="btn-reset-uses" onclick="resetUsage('${storageKey}', ${num}, this)" title="Reset all uses">↺</button>
+        </div>`;
+    }
+
+    window.toggleUsageCheckbox = function(el, storageKey, index, maxUses) {
+      el.classList.toggle('used');
+      const allBoxes = el.parentElement.querySelectorAll('.usage-checkbox');
+      let usedCount = 0;
+      allBoxes.forEach(b => { if (b.classList.contains('used')) usedCount++; });
+      localStorage.setItem(storageKey, usedCount);
+    };
+
+    window.resetUsage = function(storageKey, maxUses, btn) {
+      localStorage.setItem(storageKey, '0');
+      const container = btn.parentElement;
+      const boxes = container.querySelectorAll('.usage-checkbox');
+      boxes.forEach(b => b.classList.remove('used'));
+    };
+
+    // ─── ADD/REMOVE FUNCTIONS ───────────────────────────
+    window.addSpell = function(charKey) {
+      const input = document.getElementById(`newSpell-${charKey}`);
+      if (!input || !input.value.trim()) return;
+      const spellName = input.value.trim();
+      
+      const spellsList = document.getElementById(`spellsList-${charKey}`);
+      const index = Date.now();
+      const div = document.createElement('div');
+      div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
+      div.innerHTML = `
+        <span class="editable-text" contenteditable="true" data-field="spell-${index}" data-char="${charKey}" style="flex:1;">${escapeHtml(spellName)}</span>
+        <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
+        <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>`;
+      spellsList.appendChild(div);
+      input.value = '';
+    };
+
+    window.addEquipment = function(charKey) {
+      const input = document.getElementById(`newEquip-${charKey}`);
+      if (!input || !input.value.trim()) return;
+      const itemName = input.value.trim();
+      
+      const equipList = document.getElementById(`equipList-${charKey}`);
+      const li = document.createElement('li');
+      li.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+      li.innerHTML = `
+        <span class="editable-text" contenteditable="true" data-field="equip-custom-${Date.now()}" data-char="${charKey}" style="flex:1;">✦ ${escapeHtml(itemName)}</span>
+        <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
+        <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>`;
+      equipList.appendChild(li);
+      input.value = '';
+    };
+
+    window.addFeature = function(charKey) {
+      const nameInput = document.getElementById(`newFeatName-${charKey}`);
+      const descInput = document.getElementById(`newFeatDesc-${charKey}`);
+      const usesInput = document.getElementById(`newFeatUses-${charKey}`);
+      if (!nameInput || !nameInput.value.trim()) return;
+      
+      const featList = document.getElementById(`featList-${charKey}`);
+      const index = Date.now();
+      const maxUses = usesInput.value.trim() || '0';
+      const usesCheckboxes = (maxUses !== '0' && maxUses !== '∞' && maxUses !== 'Passive') 
+        ? renderUsageCheckboxes(charKey, index, maxUses) : '';
+      
+      const div = document.createElement('div');
+      div.className = 'ability-card';
+      div.innerHTML = `
+        <div class="ability-name">
+          <span class="editable-text" contenteditable="true" data-field="feat-name-custom-${index}" data-char="${charKey}">${escapeHtml(nameInput.value.trim())}</span>
+          ${maxUses ? `<span class="ability-cost">${escapeHtml(maxUses)} uses</span>` : ''}
+          <button class="btn-remove" onclick="this.parentElement.parentElement.remove()">✕</button>
+        </div>
+        <div class="ability-desc">
+          <span class="editable-text" contenteditable="true" data-field="feat-desc-custom-${index}" data-char="${charKey}">${escapeHtml(descInput.value.trim() || 'New ability')}</span>
+        </div>
+        ${usesCheckboxes}`;
+      featList.appendChild(div);
+      nameInput.value = '';
+      descInput.value = '';
+      usesInput.value = '';
+    };
+
+    // ─── SAVE TO FIREBASE ────────────────────────────────
+    window.saveAllEdits = function(charKey) {
+      const editables = document.querySelectorAll(`[data-char="${charKey}"]`);
+      const savedData = {};
+      editables.forEach(el => {
+        const field = el.getAttribute('data-field');
+        if (field) savedData[field] = el.tagName === 'INPUT' ? el.value : el.textContent;
+      });
+      
+      // Also save dynamic lists
+      const spellsContainer = document.getElementById(`spellsList-${charKey}`);
+      if (spellsContainer) {
+        const spellEls = spellsContainer.querySelectorAll('.editable-text');
+        savedData._spells = Array.from(spellEls).map(el => el.textContent);
+      }
+      const equipContainer = document.getElementById(`equipList-${charKey}`);
+      if (equipContainer) {
+        const equipEls = equipContainer.querySelectorAll('.editable-text');
+        savedData._equipment = Array.from(equipEls).map(el => el.textContent.replace('✦ ', ''));
+      }
+      const featContainer = document.getElementById(`featList-${charKey}`);
+      if (featContainer) {
+        const featCards = featContainer.querySelectorAll('.ability-card');
+        savedData._features = Array.from(featCards).map(card => ({
+          name: card.querySelector('.ability-name .editable-text')?.textContent || '',
+          desc: card.querySelector('.ability-desc .editable-text')?.textContent || '',
+          cost: card.querySelector('.ability-cost')?.textContent || ''
+        }));
+      }
+
+      db.ref('characters/' + charKey).set(savedData)
+        .then(() => alert('All changes saved for everyone! ✦'))
+        .catch(err => { console.error(err); alert('Save failed. Check Firebase config.'); });
+    };
+
+    function loadCharacterEdits(charKey) {
+      detachListener();
+      const ref = db.ref('characters/' + charKey);
+      activeListenerRef = ref;
+      ref.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        Object.entries(data).forEach(([field, value]) => {
+          if (field.startsWith('_')) return; // Skip meta fields
+          document.querySelectorAll(`[data-char="${charKey}"][data-field="${field}"]`).forEach(el => {
+            if (el.tagName === 'INPUT') el.value = value;
+            else el.textContent = value;
+          });
+        });
+        // Restore dynamic lists
+        if (data._spells) restoreDynamicList(charKey, 'spellsList', data._spells, 'spell');
+        if (data._equipment) restoreDynamicList(charKey, 'equipList', data._equipment, 'equip');
+        if (data._features) restoreFeatures(charKey, data._features);
+      });
+    }
+
+    function restoreDynamicList(charKey, containerId, items, prefix) {
+      const container = document.getElementById(`${containerId}-${charKey}`);
+      if (!container || !items) return;
+      container.querySelectorAll('.dynamic-item').forEach(el => el.remove());
+      items.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.className = 'dynamic-item';
+        div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
+        div.innerHTML = `
+          <span class="editable-text" contenteditable="true" data-field="${prefix}-custom-${i}" data-char="${charKey}" style="flex:1;">${escapeHtml(item)}</span>
+          <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
+          <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>`;
+        container.appendChild(div);
+      });
+    }
+
+    function restoreFeatures(charKey, features) {
+      const container = document.getElementById(`featList-${charKey}`);
+      if (!container || !features) return;
+      container.querySelectorAll('.dynamic-feature').forEach(el => el.remove());
+      features.forEach((f, i) => {
+        const div = document.createElement('div');
+        div.className = 'ability-card dynamic-feature';
+        div.innerHTML = `
+          <div class="ability-name">
+            <span class="editable-text" contenteditable="true" data-field="feat-name-custom-${i}" data-char="${charKey}">${escapeHtml(f.name)}</span>
+            ${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}
+            <button class="btn-remove" onclick="this.parentElement.parentElement.remove()">✕</button>
+          </div>
+          <div class="ability-desc">
+            <span class="editable-text" contenteditable="true" data-field="feat-desc-custom-${i}" data-char="${charKey}">${escapeHtml(f.desc)}</span>
+          </div>`;
+        container.appendChild(div);
+      });
+    }
+
+    // ─── RENDER CHARACTER SHEET ──────────────────────────
+    function renderCharacterSheet(charKey) {
+      const c = characterData[charKey];
+      if (!c) return '<p style="color:#c8b8f0;">Character not found.</p>';
+
+      const statsHtml = Object.entries(c.stats).map(([name, data]) => {
+        const modStr = data.mod >= 0 ? `+${data.mod}` : `${data.mod}`;
+        const saveStr = data.save >= 0 ? `+${data.save}` : `${data.save}`;
+        return `<div class="stat-box">
+          <div class="stat-label">${name}</div>
+          <div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div>
+          <span class="stat-mod">${modStr}</span>
+          <div style="font-size:0.7rem;color:#9088c0;margin-top:0.2rem;">Save ${saveStr}</div>
+        </div>`;
+      }).join('');
+
+      const attacksHtml = c.attacks.map((a, i) => `
+        <div class="attack-row">
+          <span class="attack-name">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span>
+          <span class="attack-bonus">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span>
+          <span class="attack-damage">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span>
+          <span style="color:#a098d0;font-size:0.8rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
+        </div>`).join('');
+
+      const featuresHtml = c.features.map((f, i) => {
+        let uses = f.uses || 0;
+        if (f.cost && f.cost.includes('/') && !f.uses) {
+          const match = f.cost.match(/(\d+)\s*uses/);
+          if (match) uses = parseInt(match[1]);
+        }
+        return `<div class="ability-card">
+          <div class="ability-name">
+            ${makeEditable(f.name, `feat-name-${i}`, charKey)}
+            ${f.cost ? `<span class="ability-cost">${makeEditable(f.cost, `feat-cost-${i}`, charKey)}</span>` : ''}
+          </div>
+          <div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>
+          ${renderUsageCheckboxes(charKey, i, uses)}
+        </div>`;
+      }).join('');
+
+      const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => {
+        const bonusStr = bonus >= 0 ? `+${bonus}` : `${bonus}`;
+        return `<div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonusStr}</span></div>`;
+      }).join('') : '';
+
+      const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => `
+        <div class="spell-slot">
+          <div class="slot-level">${level}</div>
+          <div class="slot-count">${count}</div>
+          ${count !== "∞" ? renderUsageCheckboxes(charKey, `slot-${level}`, parseInt(count) || 0) : ''}
+        </div>`).join('') : '';
+
+      const spellsHtml = c.spells ? c.spells.map((s, i) => `
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);">
+          <span class="editable-text" contenteditable="true" data-field="spell-${i}" data-char="${charKey}" style="flex:1;">${escapeHtml(s)}</span>
+          <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
+          <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>
+        </div>`).join('') : '';
+
+      const equipmentHtml = c.equipment ? c.equipment.map((item, i) => `
+        <li style="display:flex;align-items:center;gap:0.5rem;">
+          <span class="editable-text" contenteditable="true" data-field="equip-${i}" data-char="${charKey}" style="flex:1;">✦ ${escapeHtml(item)}</span>
+          <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
+          <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>
+        </li>`).join('') : '';
+
+      return `
+        <div class="char-sheet">
+          <div class="sheet-section">
+            <div class="section-header"><span>📜 CHARACTER SHEET</span></div>
+            <div class="field-group"><span class="field-label">Name:</span>${makeEditable(c.name, 'name', charKey)}</div>
+            <div class="info-grid" style="margin-top:0.5rem;">
+              <div class="info-item"><span class="info-label">Class</span><span class="info-value">${makeEditable(c.classLevel, 'classLevel', charKey)}</span></div>
+              <div class="info-item"><span class="info-label">Race</span><span class="info-value">${makeEditable(c.race, 'race', charKey)}</span></div>
+              <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey, 'input', '')}</span></div>
+            </div>
+          </div>
+
+          <div class="sheet-section">
+            <div class="section-header">📊 ABILITY SCORES</div>
+            <div class="stat-row">${statsHtml}</div>
+            <div class="info-grid" style="margin-top:0.8rem;">
+              <div class="info-item"><span class="info-label">AC</span><span class="info-value">${makeEditable(c.combat.ac, 'ac', charKey)}</span></div>
+              <div class="info-item"><span class="info-label">HP</span><span class="info-value">${makeEditable(c.combat.hp, 'hp', charKey)}</span></div>
+              <div class="info-item"><span class="info-label">Speed</span><span class="info-value">${makeEditable(c.combat.speed, 'speed', charKey)} ft.</span></div>
+            </div>
+          </div>
+
+          ${skillsHtml ? `<div class="sheet-section"><div class="section-header">🎯 SKILLS</div><div class="info-grid">${skillsHtml}</div></div>` : ''}
+
+          <div class="sheet-section">
+            <div class="section-header">⚔️ ATTACKS</div>
+            ${attacksHtml}
+          </div>
+
+          ${spellSlotsHtml ? `
+          <div class="sheet-section">
+            <div class="section-header">🔮 SPELL SLOTS</div>
+            <div class="spell-slot-grid">${spellSlotsHtml}</div>
+          </div>` : ''}
+
+          <div class="sheet-section">
+            <div class="section-header">
+              <span>📜 SPELLS</span>
+            </div>
+            <div id="spellsList-${charKey}">${spellsHtml}</div>
+            <div class="add-form">
+              <input type="text" id="newSpell-${charKey}" placeholder="Spell name (e.g., Fireball 3rd)">
+              <button class="btn-add" onclick="addSpell('${charKey}')">+ Add Spell</button>
+            </div>
+          </div>
+
+          <div class="sheet-section">
+            <div class="section-header">
+              <span>✨ FEATURES & ABILITIES</span>
+            </div>
+            <div id="featList-${charKey}">${featuresHtml}</div>
+            <div class="add-form">
+              <input type="text" id="newFeatName-${charKey}" placeholder="Ability name" style="flex:1;">
+              <input type="text" id="newFeatDesc-${charKey}" placeholder="Description" style="flex:2;">
+              <input type="text" id="newFeatUses-${charKey}" placeholder="Uses (number or ∞)" style="width:80px;">
+              <button class="btn-add" onclick="addFeature('${charKey}')">+ Add Ability</button>
+            </div>
+          </div>
+
+          <div class="sheet-section">
+            <div class="section-header">
+              <span>🎒 EQUIPMENT</span>
+            </div>
+            <ul class="equipment-list" id="equipList-${charKey}">${equipmentHtml}</ul>
+            <div class="add-form">
+              <input type="text" id="newEquip-${charKey}" placeholder="Item name">
+              <button class="btn-add" onclick="addEquipment('${charKey}')">+ Add Item</button>
+            </div>
+          </div>
+
+          <div class="sheet-section">
+            <div class="section-header">📖 BACKSTORY</div>
+            <div style="color:#c0b8e8;line-height:1.7;font-style:italic;">${makeEditable(c.backstory, 'backstory', charKey)}</div>
+          </div>
+
+          <div style="text-align:center;margin-top:0.5rem;">
+            <button class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save Changes for Everyone</button>
+            <span style="color:#a098d0;font-size:0.8rem;margin-left:1rem;">Click ✎ to edit · Checkboxes track usage</span>
+          </div>
+        </div>`;
+    }
+
+    // ─── DM PAGE ─────────────────────────────────────────
+    function renderDMPage() {
+      return `
+        <div class="dm-pin-section">
+          <h2 style="color:#d4c8ff;">🔐 DM Stargate</h2>
+          <p style="color:#a098d0;">Enter the cosmic PIN to reveal secrets</p>
+          <input type="password" id="pinInput" class="dm-pin-input" placeholder="****" maxlength="8">
+          <br>
+          <button class="btn-save" id="pinSubmit" style="margin-top:1rem;">Unlock</button>
+          <p id="pinError" style="color:#e0a0c0;margin-top:1rem;"></p>
+          <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:2rem;">
+            <div class="section-header" style="color:#d4c8ff;">🗝️ CHARACTER SECRETS</div>
+            ${Object.entries(dmSecrets).map(([key, secret]) => `
+              <div class="secret-box">
+                <div class="secret-label">${characterData[key]?.name || key}</div>
+                <div class="secret-text">${secret}</div>
+              </div>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    // ─── TAB SWITCHING ───────────────────────────────────
+    function setActiveTab(tabId) {
+      ['drunken','chronurgy','grave','psi','dm'].forEach(id => {
+        const btn = document.getElementById('tab' + id.charAt(0).toUpperCase() + id.slice(1));
+        if (btn) btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    function switchTab(tabId) {
+      detachListener();
+      currentTab = tabId;
+      setActiveTab(tabId);
+      if (tabId === 'dm') {
+        dmAuthenticated = false;
+        contentPanel.innerHTML = renderDMPage();
+        document.getElementById('pinSubmit').addEventListener('click', () => {
+          if (document.getElementById('pinInput').value === DM_PIN) {
+            dmAuthenticated = true;
+            document.getElementById('dmSecretsContainer').style.display = 'block';
+            document.getElementById('pinError').innerText = '';
+          } else {
+            document.getElementById('pinError').innerText = 'Incorrect PIN.';
+            document.getElementById('dmSecretsContainer').style.display = 'none';
+          }
+        });
+      } else {
+        contentPanel.innerHTML = renderCharacterSheet(tabId);
+        setTimeout(() => loadCharacterEdits(tabId), 50);
+        dmAuthenticated = false;
+      }
+    }
+
+    document.getElementById('tabDrunken').addEventListener('click', () => switchTab('drunken'));
+    document.getElementById('tabChronurgy').addEventListener('click', () => switchTab('chronurgy'));
+    document.getElementById('tabGrave').addEventListener('click', () => switchTab('grave'));
+    document.getElementById('tabPsi').addEventListener('click', () => switchTab('psi'));
+    document.getElementById('tabDM').addEventListener('click', () => switchTab('dm'));
+
+    switchTab('drunken');
+  })();
+</script>
+</body>
+</html>
