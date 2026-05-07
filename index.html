@@ -20,7 +20,7 @@
         radial-gradient(ellipse at 20% 50%, rgba(72, 49, 140, 0.25) 0%, transparent 55%),
         radial-gradient(ellipse at 80% 20%, rgba(30, 60, 120, 0.3) 0%, transparent 55%),
         radial-gradient(ellipse at 50% 90%, rgba(100, 70, 180, 0.2) 0%, transparent 50%),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.6"><circle cx="120" cy="80" r="1.5" fill="white" opacity="0.9"/><circle cx="350" cy="45" r="1" fill="white" opacity="0.7"/><circle cx="680" cy="120" r="1.8" fill="white" opacity="0.85"/><circle cx="90" cy="350" r="1.2" fill="white" opacity="0.65"/><circle cx="750" cy="400" r="1.4" fill="white" opacity="0.75"/><circle cx="200" cy="650" r="1.6" fill="white" opacity="0.8"/><circle cx="500" cy="700" r="1.1" fill="white" opacity="0.7"/><circle cx="400" cy="380" r="1.7" fill="white" opacity="0.85"/></svg>');
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.6"><circle cx="120" cy="80" r="1.5" fill="white" opacity="0.9"/><circle cx="350" cy="45" r="1" fill="white" opacity="0.7"/><circle cx="680" cy="120" r="1.8" fill="white" opacity="0.85"/></svg>');
       background-size: cover;
       background-attachment: fixed;
       position: relative;
@@ -28,344 +28,95 @@
 
     body::before {
       content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: 
-        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1.5px 1.5px at 45% 15%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.3), transparent);
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.4), transparent);
       pointer-events: none; z-index: 0;
     }
 
     .grimoire {
-      max-width: 1250px;
-      width: 100%;
+      max-width: 1300px; width: 100%;
       background: rgba(15, 12, 30, 0.9);
       backdrop-filter: blur(15px);
       border: 2px solid rgba(140, 120, 220, 0.4);
       box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 40px rgba(100, 80, 180, 0.15);
-      border-radius: 2rem;
-      padding: 1.5rem 2rem 2rem;
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      border-radius: 2rem; padding: 1.5rem 2rem 2rem;
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; gap: 1.5rem;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 300;
-      text-align: center;
-      letter-spacing: 6px;
-      color: #d4c8ff;
-      text-shadow: 0 0 20px rgba(150, 130, 220, 0.6);
-      border-bottom: 2px solid rgba(140, 120, 220, 0.4);
-      padding-bottom: 0.5rem;
-      text-transform: uppercase;
-    }
+    h1 { font-size: 2.2rem; font-weight: 300; text-align: center; letter-spacing: 6px; color: #d4c8ff; text-shadow: 0 0 20px rgba(150, 130, 220, 0.6); border-bottom: 2px solid rgba(140, 120, 220, 0.4); padding-bottom: 0.5rem; text-transform: uppercase; }
 
-    .tab-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      background: rgba(20, 16, 40, 0.7);
-      padding: 0.6rem 1rem;
-      border-radius: 3rem;
-      border: 1px solid rgba(140, 120, 220, 0.3);
-    }
+    .tab-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; background: rgba(20, 16, 40, 0.7); padding: 0.5rem 0.8rem; border-radius: 3rem; border: 1px solid rgba(140, 120, 220, 0.3); }
 
-    .tab-btn {
-      background: rgba(40, 30, 70, 0.5);
-      border: 1px solid rgba(120, 100, 180, 0.3);
-      color: #b8b0e0;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 0.5rem 1.1rem;
-      border-radius: 2.5rem;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-      text-transform: uppercase;
-    }
-
+    .tab-btn { background: rgba(40, 30, 70, 0.5); border: 1px solid rgba(120, 100, 180, 0.3); color: #b8b0e0; font-family: inherit; font-size: 0.8rem; font-weight: 500; padding: 0.45rem 0.9rem; border-radius: 2.5rem; cursor: pointer; letter-spacing: 1px; transition: all 0.3s; text-transform: uppercase; }
     .tab-btn:hover { background: rgba(60, 40, 100, 0.6); color: #e8e0ff; box-shadow: 0 0 12px rgba(120, 100, 200, 0.4); }
-    .tab-btn.active { background: rgba(80, 50, 140, 0.7); color: #fff; border-color: rgba(180, 160, 240, 0.9); box-shadow: 0 0 18px rgba(140, 120, 220, 0.5); }
+    .tab-btn.active { background: rgba(80, 50, 140, 0.7); color: #fff; border-color: rgba(180, 160, 240, 0.9); }
     .dm-lock { border: 1px dashed rgba(160, 140, 220, 0.5); color: #c8b8f0; }
+    .dmpc-tab { border: 1px solid rgba(180, 160, 140, 0.5); color: #d8c8a0; background: rgba(50, 40, 30, 0.5); }
 
-    .content-panel {
-      background: rgba(12, 10, 25, 0.75);
-      border: 2px solid rgba(120, 100, 180, 0.35);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      background-image: linear-gradient(145deg, rgba(20, 15, 40, 0.7) 0%, rgba(8, 6, 18, 0.8) 100%);
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
-      min-height: 450px;
-      max-height: 70vh;
-      overflow-y: auto;
-    }
-
+    .content-panel { background: rgba(12, 10, 25, 0.75); border: 2px solid rgba(120, 100, 180, 0.35); border-radius: 1.5rem; padding: 1.5rem; background-image: linear-gradient(145deg, rgba(20, 15, 40, 0.7) 0%, rgba(8, 6, 18, 0.8) 100%); box-shadow: inset 0 0 40px rgba(0,0,0,0.5); min-height: 450px; max-height: 70vh; overflow-y: auto; }
     .content-panel::-webkit-scrollbar { width: 7px; }
-    .content-panel::-webkit-scrollbar-track { background: rgba(20, 15, 40, 0.5); border-radius: 4px; }
-    .content-panel::-webkit-scrollbar-thumb { background: rgba(120, 100, 180, 0.5); border-radius: 4px; }
+    .content-panel::-webkit-scrollbar-track { background: rgba(20, 15, 40, 0.5); }
+    .content-panel::-webkit-scrollbar-thumb { background: rgba(120, 100, 180, 0.5); }
 
-    .char-sheet { display: flex; flex-direction: column; gap: 1rem; }
+    .char-sheet { display: flex; flex-direction: column; gap: 0.8rem; }
+    .sheet-section { border: 2px solid rgba(120, 100, 180, 0.3); border-radius: 0.8rem; padding: 0.8rem; background: rgba(18, 14, 35, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .section-header { font-size: 1rem; color: #c8b8f0; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
 
-    .sheet-section {
-      border: 2px solid rgba(120, 100, 180, 0.3);
-      border-radius: 1rem;
-      padding: 1rem;
-      background: rgba(18, 14, 35, 0.6);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .section-header {
-      font-size: 1.1rem;
-      color: #c8b8f0;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border-bottom: 1px solid rgba(120, 100, 180, 0.3);
-      padding-bottom: 0.4rem;
-      margin-bottom: 0.7rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .editable-text {
-      background: transparent;
-      border: 1px solid transparent;
-      color: inherit;
-      font-family: inherit;
-      font-size: inherit;
-      padding: 0.15rem 0.3rem;
-      border-radius: 0.3rem;
-      outline: none;
-      transition: all 0.2s;
-      display: inline-block;
-      min-width: 20px;
-    }
-
+    .editable-text { background: transparent; border: 1px solid transparent; color: inherit; font-family: inherit; font-size: inherit; padding: 0.1rem 0.25rem; border-radius: 0.25rem; outline: none; transition: all 0.2s; display: inline-block; min-width: 15px; }
     .editable-text:hover { background: rgba(120, 100, 180, 0.1); border-color: rgba(120, 100, 180, 0.3); }
-    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); box-shadow: 0 0 8px rgba(120, 100, 200, 0.3); }
+    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); }
 
-    .pencil-btn {
-      background: rgba(120, 100, 180, 0.3);
-      border: 1px solid rgba(140, 120, 200, 0.5);
-      color: #c8b8f0;
-      font-size: 0.7rem;
-      padding: 0.15rem 0.4rem;
-      border-radius: 0.3rem;
-      cursor: pointer;
-      margin-left: 0.2rem;
-      transition: all 0.2s;
-    }
-    .pencil-btn:hover { background: rgba(140, 120, 200, 0.5); color: white; }
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(75px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; }
+    .stat-box { border: 2px solid rgba(120, 100, 180, 0.3); border-radius: 0.6rem; padding: 0.4rem; text-align: center; background: rgba(25, 18, 50, 0.6); }
+    .stat-label { font-size: 0.6rem; color: #a098d0; text-transform: uppercase; }
+    .stat-value { font-size: 1.1rem; font-weight: bold; color: #e8d8ff; }
+    .stat-mod { font-size: 0.7rem; color: #c8b8f0; background: rgba(80, 60, 140, 0.4); border-radius: 0.8rem; padding: 0.05rem 0.3rem; }
 
-    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap: 0.6rem; margin: 0.7rem 0; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.5rem; }
+    .info-item { border: 1px solid rgba(120, 100, 180, 0.25); padding: 0.3rem 0.5rem; border-radius: 0.3rem; background: rgba(20, 15, 35, 0.5); }
+    .info-label { font-size: 0.6rem; color: #9088c0; text-transform: uppercase; }
+    .info-value { font-size: 0.8rem; color: #d4c8ff; font-weight: 500; }
 
-    .stat-box {
-      border: 2px solid rgba(120, 100, 180, 0.3);
-      border-radius: 0.7rem;
-      padding: 0.5rem;
-      text-align: center;
-      background: rgba(25, 18, 50, 0.6);
-    }
+    .ability-card { border: 2px solid rgba(120, 100, 180, 0.25); border-radius: 0.6rem; padding: 0.6rem; margin: 0.5rem 0; background: linear-gradient(135deg, rgba(25, 18, 45, 0.7) 0%, rgba(15, 10, 30, 0.8) 100%); }
+    .ability-name { font-size: 0.85rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.2rem; margin-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem; }
+    .ability-desc { font-size: 0.8rem; color: #c0b8e8; line-height: 1.3; }
+    .ability-cost { color: #e0c8ff; font-size: 0.7rem; background: rgba(80, 50, 140, 0.5); padding: 0.1rem 0.3rem; border-radius: 0.4rem; }
 
-    .stat-label { font-size: 0.65rem; color: #a098d0; text-transform: uppercase; letter-spacing: 1px; }
-    .stat-value { font-size: 1.3rem; font-weight: bold; color: #e8d8ff; }
-    .stat-mod { font-size: 0.75rem; color: #c8b8f0; background: rgba(80, 60, 140, 0.4); border-radius: 1rem; padding: 0.1rem 0.4rem; }
+    .usage-checkbox { width: 14px; height: 14px; border: 2px solid rgba(140, 120, 220, 0.6); border-radius: 2px; background: rgba(20, 15, 40, 0.7); cursor: pointer; display: inline-block; }
+    .usage-checkbox.used { background: rgba(120, 100, 200, 0.6); }
+    .usage-checkbox.used::after { content: "✓"; color: white; font-size: 9px; display: flex; justify-content: center; height: 100%; }
 
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.6rem; }
-    .info-item { border: 1px solid rgba(120, 100, 180, 0.25); padding: 0.4rem 0.6rem; border-radius: 0.4rem; background: rgba(20, 15, 35, 0.5); }
-    .info-label { font-size: 0.65rem; color: #9088c0; text-transform: uppercase; }
-    .info-value { font-size: 0.9rem; color: #d4c8ff; font-weight: 500; }
+    .btn-sm { background: rgba(120, 100, 180, 0.2); border: 1px solid rgba(140, 120, 200, 0.4); color: #c8b8f0; font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 0.25rem; cursor: pointer; }
+    .btn-rest { background: rgba(100, 140, 200, 0.3); border: 1px solid rgba(140, 180, 220, 0.5); color: #c8d8f0; font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 0.4rem; cursor: pointer; margin: 0 0.15rem; }
+    .btn-add { background: rgba(80, 140, 100, 0.3); border: 1px solid rgba(100, 200, 140, 0.5); color: #b8f0c8; font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 0.3rem; cursor: pointer; }
+    .btn-remove { background: rgba(200, 80, 80, 0.3); border: 1px solid rgba(200, 100, 100, 0.5); color: #f0b8b8; font-size: 0.6rem; padding: 0.1rem 0.25rem; border-radius: 0.2rem; cursor: pointer; margin-left: 0.15rem; }
 
-    .ability-card {
-      border: 2px solid rgba(120, 100, 180, 0.25);
-      border-radius: 0.7rem;
-      padding: 0.7rem;
-      margin: 0.6rem 0;
-      background: linear-gradient(135deg, rgba(25, 18, 45, 0.7) 0%, rgba(15, 10, 30, 0.8) 100%);
-    }
-
-    .ability-name { font-size: 0.95rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
-    .ability-desc { font-size: 0.85rem; color: #c0b8e8; line-height: 1.4; }
-    .ability-cost { color: #e0c8ff; font-size: 0.75rem; background: rgba(80, 50, 140, 0.5); padding: 0.15rem 0.4rem; border-radius: 0.5rem; }
-
-    .usage-checkbox {
-      width: 16px; height: 16px;
-      border: 2px solid rgba(140, 120, 220, 0.6);
-      border-radius: 3px;
-      background: rgba(20, 15, 40, 0.7);
-      cursor: pointer;
-      display: inline-block;
-      vertical-align: middle;
-    }
-    .usage-checkbox.used { background: rgba(120, 100, 200, 0.6); border-color: rgba(180, 160, 240, 0.9); }
-    .usage-checkbox.used::after { content: "✓"; color: white; font-size: 10px; display: flex; justify-content: center; height: 100%; }
-
-    .btn-sm {
-      background: rgba(120, 100, 180, 0.2);
-      border: 1px solid rgba(140, 120, 200, 0.4);
-      color: #c8b8f0;
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.3rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-sm:hover { background: rgba(140, 120, 200, 0.4); }
-
-    .btn-rest {
-      background: rgba(100, 140, 200, 0.3);
-      border: 1px solid rgba(140, 180, 220, 0.5);
-      color: #c8d8f0;
-      font-size: 0.75rem;
-      padding: 0.3rem 0.7rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      margin: 0 0.2rem;
-    }
-    .btn-rest:hover { background: rgba(140, 180, 220, 0.5); }
-
-    .btn-add {
-      background: rgba(80, 140, 100, 0.3);
-      border: 1px solid rgba(100, 200, 140, 0.5);
-      color: #b8f0c8;
-      font-size: 0.75rem;
-      padding: 0.3rem 0.7rem;
-      border-radius: 0.4rem;
-      cursor: pointer;
-    }
-    .btn-add:hover { background: rgba(100, 200, 140, 0.5); }
-
-    .btn-remove { background: rgba(200, 80, 80, 0.3); border: 1px solid rgba(200, 100, 100, 0.5); color: #f0b8b8; font-size: 0.65rem; padding: 0.15rem 0.3rem; border-radius: 0.3rem; cursor: pointer; margin-left: 0.2rem; }
-    .btn-remove:hover { background: rgba(200, 80, 80, 0.5); }
-
-    .add-form {
-      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem;
-      padding: 0.7rem; background: rgba(20, 15, 40, 0.5);
-      border-radius: 0.4rem; border: 1px dashed rgba(120, 100, 180, 0.3);
-    }
-    .add-form input, .add-form textarea {
-      background: rgba(20, 15, 40, 0.7);
-      border: 1px solid rgba(140, 120, 220, 0.4);
-      color: #e8e0ff; padding: 0.25rem 0.5rem;
-      border-radius: 0.3rem; font-family: inherit; font-size: 0.8rem;
-    }
-    .add-form textarea { resize: vertical; min-height: 60px; width: 100%; }
+    .add-form { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; padding: 0.5rem; background: rgba(20, 15, 40, 0.5); border-radius: 0.3rem; border: 1px dashed rgba(120, 100, 180, 0.3); }
+    .add-form input, .add-form textarea, .add-form select { background: rgba(20, 15, 40, 0.7); border: 1px solid rgba(140, 120, 220, 0.4); color: #e8e0ff; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: inherit; font-size: 0.75rem; }
+    .add-form select { cursor: pointer; }
+    .add-form select option { background: #1a1530; color: #e8e0ff; }
 
     .equipment-list { list-style: none; padding: 0; }
-    .equipment-list li { padding: 0.3rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; display: flex; align-items: center; gap: 0.4rem; }
+    .equipment-list li { padding: 0.2rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; }
 
-    .spell-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); gap: 0.4rem; margin: 0.7rem 0; }
-    .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.3rem; border-radius: 0.4rem; background: rgba(20, 15, 35, 0.5); }
-    .slot-level { font-size: 0.65rem; color: #9088c0; }
-    .slot-count { font-size: 1.1rem; color: #d4c8ff; font-weight: bold; }
+    .spell-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(45px, 1fr)); gap: 0.3rem; margin: 0.5rem 0; }
+    .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.25rem; border-radius: 0.3rem; background: rgba(20, 15, 35, 0.5); }
+    .slot-level { font-size: 0.6rem; color: #9088c0; }
+    .slot-count { font-size: 1rem; color: #d4c8ff; font-weight: bold; }
 
-    .change-log { max-height: 200px; overflow-y: auto; font-size: 0.8rem; }
-    .change-log .log-entry { padding: 0.3rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #a098d0; }
+    .spell-dropdown-section { margin-top: 0.5rem; }
+    .spell-dropdown-section select { background: rgba(20, 15, 40, 0.7); border: 1px solid rgba(140, 120, 220, 0.4); color: #e8e0ff; padding: 0.4rem; border-radius: 0.3rem; font-family: inherit; font-size: 0.8rem; width: 100%; max-width: 400px; cursor: pointer; }
+    .spell-dropdown-section select option { background: #1a1530; color: #e8e0ff; padding: 0.3rem; }
+    .spell-info-popup { margin-top: 0.4rem; padding: 0.6rem; background: rgba(25, 18, 45, 0.8); border: 1px solid rgba(140, 120, 220, 0.5); border-radius: 0.4rem; color: #c0b8e8; font-size: 0.8rem; display: none; }
 
-    .save-indicator { font-size: 0.7rem; color: #90c8a0; margin-left: 0.5rem; transition: opacity 0.3s; }
+    .change-log { max-height: 180px; overflow-y: auto; font-size: 0.75rem; }
+    .change-log .log-entry { padding: 0.2rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #a098d0; }
+    .session-note-card { border: 2px solid rgba(140, 160, 200, 0.3); border-radius: 0.6rem; padding: 0.6rem; margin: 0.5rem 0; background: linear-gradient(135deg, rgba(20, 25, 45, 0.7) 0%, rgba(12, 15, 30, 0.8) 100%); }
+    .session-note-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; border-bottom: 1px solid rgba(140, 160, 200, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.4rem; }
+    .session-date { color: #b8c8e0; font-size: 0.7rem; background: rgba(60, 80, 140, 0.4); padding: 0.15rem 0.4rem; border-radius: 0.4rem; }
 
-    /* Session Notes Styles */
-    .session-note-card {
-      border: 2px solid rgba(140, 160, 200, 0.3);
-      border-radius: 0.8rem;
-      padding: 0.8rem;
-      margin: 0.7rem 0;
-      background: linear-gradient(135deg, rgba(20, 25, 45, 0.7) 0%, rgba(12, 15, 30, 0.8) 100%);
-      position: relative;
-    }
-    .session-note-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      border-bottom: 1px solid rgba(140, 160, 200, 0.3);
-      padding-bottom: 0.4rem;
-      margin-bottom: 0.5rem;
-    }
-    .session-date {
-      color: #b8c8e0;
-      font-size: 0.8rem;
-      background: rgba(60, 80, 140, 0.4);
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.5rem;
-    }
-    .session-title {
-      color: #d4d8ff;
-      font-weight: bold;
-      font-size: 1rem;
-      flex: 1;
-      margin: 0 1rem;
-    }
-    .session-bullets {
-      list-style: none;
-      padding: 0;
-      margin: 0.3rem 0;
-    }
-    .session-bullets li {
-      padding: 0.2rem 0;
-      color: #c0c8e8;
-      font-size: 0.85rem;
-      border-bottom: 1px solid rgba(100, 120, 160, 0.15);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.4rem;
-    }
-    .session-bullets li::before {
-      content: "•";
-      color: #a0b8d0;
-      font-weight: bold;
-    }
-    .bullet-input-row {
-      display: flex;
-      gap: 0.3rem;
-      margin: 0.2rem 0;
-    }
-    .bullet-input-row input {
-      flex: 1;
-      background: rgba(20, 15, 40, 0.7);
-      border: 1px solid rgba(140, 120, 220, 0.4);
-      color: #e8e0ff;
-      padding: 0.2rem 0.4rem;
-      border-radius: 0.3rem;
-      font-family: inherit;
-      font-size: 0.8rem;
-    }
-    .session-notes-form {
-      border: 2px dashed rgba(140, 160, 200, 0.4);
-      border-radius: 0.8rem;
-      padding: 1rem;
-      margin: 1rem 0;
-      background: rgba(18, 20, 35, 0.5);
-    }
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .form-row label {
-      color: #a0b0d0;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    @media (max-width: 768px) {
-      .grimoire { padding: 1rem; }
-      .stat-row { grid-template-columns: repeat(3, 1fr); }
-      h1 { font-size: 1.6rem; }
-    }
+    @media (max-width: 768px) { .grimoire { padding: 0.8rem; } .tab-btn { font-size: 0.7rem; padding: 0.35rem 0.7rem; } }
   </style>
 </head>
 <body>
@@ -387,31 +138,120 @@
 
 <div class="grimoire">
   <h1>✦ Eve of Ruin · Stellar Archive ✦</h1>
-
   <div class="tab-bar">
-    <button class="tab-btn active" id="tabDrunken">🍶 Drunken Master</button>
+    <button class="tab-btn active" id="tabDmpc">🗺️ Syv</button>
+    <button class="tab-btn" id="tabDrunken">🍶 Drunken Master</button>
     <button class="tab-btn" id="tabChronurgy">⏳ Chronurgy Wizard</button>
     <button class="tab-btn" id="tabGrave">💀 Grave Cleric</button>
     <button class="tab-btn" id="tabPsi">🌀 Psi Warrior</button>
     <button class="tab-btn dm-lock" id="tabDM">🔒 DM Stargate</button>
   </div>
-
   <div class="content-panel" id="contentPanel"></div>
 </div>
 
 <script>
   (function() {
-    const db = window._db;
-    const DM_PIN = "8968";
-    let currentTab = 'drunken';
-    let dmAuthenticated = false;
+    const db = window._db; const DM_PIN = "8968";
+    let currentTab = 'dmpc', dmAuthenticated = false;
     const contentPanel = document.getElementById('contentPanel');
-    const autoSaveTimers = {};
-    let changeLog = [];
-    let sessionNotes = [];
+    const autoSaveTimers = {}; let changeLog = [], sessionNotes = [];
+
+    // ─── SPELL DATABASE ───────────────────────────────────
+    const spellDatabase = {
+      // Ranger spells
+      "Goodberry": { level: 1, school: "Transmutation", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Up to 10 berries appear. Each berry heals 1 HP and provides enough nourishment for a day." },
+      "Hunter's Mark": { level: 1, school: "Divination", castingTime: "1 bonus action", range: "90 ft", duration: "Concentration, up to 1 hour", desc: "Mark a target. You deal +1d6 damage to it and have advantage on Survival checks to track it." },
+      "Absorb Elements": { level: 1, school: "Abjuration", castingTime: "1 reaction", range: "Self", duration: "1 round", desc: "Gain resistance to triggering damage type. Next melee attack deals +1d6 of that type." },
+      "Entangle": { level: 1, school: "Conjuration", castingTime: "1 action", range: "90 ft (20-ft square)", duration: "Concentration, up to 1 minute", desc: "Grasping plants restrain creatures in area (STR save). Difficult terrain." },
+      "Pass Without Trace": { level: 2, school: "Abjuration", castingTime: "1 action", range: "Self (30-ft radius)", duration: "Concentration, up to 1 hour", desc: "+10 bonus to Stealth checks for you and allies within 30 ft. Can't be tracked except by magical means." },
+      "Rope Trick": { level: 2, school: "Transmutation", castingTime: "1 action", range: "Touch", duration: "1 hour", desc: "Rope rises to extradimensional space that holds 8 Medium creatures. Safe short rest." },
+      "Speak with Animals": { level: 1, school: "Divination", castingTime: "1 action", range: "Self", duration: "10 minutes", desc: "Gain ability to communicate with beasts." },
+      "Beast Sense": { level: 2, school: "Divination", castingTime: "1 action", range: "Touch", duration: "Concentration, up to 1 hour", desc: "See and hear through a willing beast's senses." },
+      "Cure Wounds": { level: 1, school: "Evocation", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "Heal 1d8 + WIS mod HP." },
+      "Zephyr Strike": { level: 1, school: "Transmutation", castingTime: "1 bonus action", range: "Self", duration: "Concentration, up to 1 minute", desc: "No opportunity attacks for the round. Advantage on one weapon attack, +1d8 force damage, +30 ft speed." },
+      "Silence": { level: 2, school: "Illusion", castingTime: "1 action", range: "120 ft (20-ft sphere)", duration: "Concentration, up to 10 minutes", desc: "No sound can be created within or pass through the sphere." },
+      "Spike Growth": { level: 2, school: "Transmutation", castingTime: "1 action", range: "150 ft (20-ft radius)", duration: "Concentration, up to 10 minutes", desc: "Ground grows spikes. 2d4 piercing per 5 ft. Perception check to notice." },
+      "Lesser Restoration": { level: 2, school: "Abjuration", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "End one disease or condition (blinded, deafened, paralyzed, poisoned)." },
+      "Darkvision": { level: 2, school: "Transmutation", castingTime: "1 action", range: "Touch", duration: "8 hours", desc: "Target gains 60 ft darkvision." },
+      // Monk features
+      "Stunning Strike": { level: "Ki", school: "Monk", desc: "Spend 1 ki on hit: target CON save or stunned until end of next turn." },
+      "Flurry of Blows": { level: "Ki", school: "Monk", desc: "Spend 1 ki: two unarmed strikes as bonus action." },
+      // Cleric spells
+      "Bless": { level: 1, school: "Enchantment", castingTime: "1 action", range: "30 ft", duration: "Concentration, up to 1 minute", desc: "Up to 3 creatures add 1d4 to attack rolls and saving throws." },
+      "Healing Word": { level: 1, school: "Evocation", castingTime: "1 bonus action", range: "60 ft", duration: "Instantaneous", desc: "Heal 1d4 + WIS mod HP." },
+      "Spirit Guardians": { level: 3, school: "Conjuration", castingTime: "1 action", range: "Self (15-ft radius)", duration: "Concentration, up to 10 minutes", desc: "Spirits deal 3d8 radiant/necrotic (your choice) to enemies. Half speed." },
+      "Spiritual Weapon": { level: 2, school: "Evocation", castingTime: "1 bonus action", range: "60 ft", duration: "1 minute", desc: "Floating weapon deals 1d8 + WIS force damage as bonus action." },
+      "Death Ward": { level: 4, school: "Abjuration", castingTime: "1 action", range: "Touch", duration: "8 hours", desc: "Target drops to 1 HP instead of 0. Negates instant-death effects." },
+      "Banishment": { level: 4, school: "Abjuration", castingTime: "1 action", range: "60 ft", duration: "Concentration, up to 1 minute", desc: "Target banished to harmless demiplane (CHA save). Extraplanar creatures sent home." },
+      "Greater Restoration": { level: 5, school: "Abjuration", castingTime: "1 action", range: "Touch", duration: "Instantaneous", desc: "End petrification, curses, ability/HP reduction, or exhaustion." },
+      "Scrying": { level: 5, school: "Divination", castingTime: "10 minutes", range: "Self", duration: "Concentration, up to 10 minutes", desc: "See and hear a creature on any plane (WIS save)." },
+      // Wizard spells
+      "Shield": { level: 1, school: "Abjuration", castingTime: "1 reaction", range: "Self", duration: "1 round", desc: "+5 AC until next turn. Negates Magic Missile." },
+      "Misty Step": { level: 2, school: "Conjuration", castingTime: "1 bonus action", range: "Self", duration: "Instantaneous", desc: "Teleport 30 ft." },
+      "Counterspell": { level: 3, school: "Abjuration", castingTime: "1 reaction", range: "60 ft", duration: "Instantaneous", desc: "Interrupt a spell. Auto-success if spell is 3rd or lower." },
+      "Haste": { level: 3, school: "Transmutation", castingTime: "1 action", range: "30 ft", duration: "Concentration, up to 1 minute", desc: "Double speed, +2 AC, extra action (Attack/Dash/Disengage/Hide)." },
+      "Slow": { level: 3, school: "Transmutation", castingTime: "1 action", range: "120 ft (40-ft cube)", duration: "Concentration, up to 1 minute", desc: "Up to 6 targets: -2 AC, DEX save penalty, limited actions." },
+      "Dimension Door": { level: 4, school: "Conjuration", castingTime: "1 action", range: "500 ft", duration: "Instantaneous", desc: "Teleport yourself and one willing creature up to 500 ft." },
+      "Wall of Force": { level: 5, school: "Evocation", castingTime: "1 action", range: "120 ft", duration: "Concentration, up to 10 minutes", desc: "Invisible, impenetrable wall. Nothing can physically pass through." },
+      "Gift of Alacrity": { level: 1, school: "Divination", castingTime: "1 minute", range: "Touch", duration: "8 hours", desc: "Target adds 1d8 to initiative rolls." },
+      "Fortune's Favor": { level: 2, school: "Divination", castingTime: "1 minute", range: "60 ft", duration: "1 hour", desc: "Target can reroll one attack/check/save and use either result." },
+      "Temporal Shunt": { level: 5, school: "Transmutation", castingTime: "1 reaction", range: "120 ft", duration: "1 round", desc: "Target vanishes to another time. Returns at end of its next turn." },
+      // Psi Warrior abilities
+      "Psionic Strike": { level: "Psionic", school: "Psi Warrior", desc: "Once/turn: add 1d8+INT force damage to a weapon hit (costs 1 Psionic Die)." },
+      "Protective Field": { level: "Psionic", school: "Psi Warrior", desc: "Reaction: reduce damage to self/ally within 30 ft by 1d8+INT (costs 1 die)." },
+      "Telekinetic Movement": { level: "Psionic", school: "Psi Warrior", desc: "Action: move object/creature up to 30 ft (costs 1 die)." },
+    };
 
     // ─── COMPLETE CHARACTER DATA ─────────────────────────
     const characterData = {
+      dmpc: {
+        name: "Sylvara 'Syv' Mosswood",
+        classLevel: "Ranger (Gloom Stalker) 5 / Rogue (Scout) 5",
+        race: "Wood Elf",
+        background: "Planar Cartographer (Wind Duke Archivist)",
+        alignment: "Neutral Good",
+        playerName: "DM (DMPC)",
+        campaign: "Eve of Ruin",
+        appearance: "Sylvara has ash-gray skin and silver-white hair pulled into a tight braid. Her eyes are pale violet and never seem to focus on the present — she's always looking at something slightly out of phase. A faded tattoo of a star chart covers her left forearm, but parts of it are blurred, as if erased. She moves with absolute silence, even on gravel.",
+        personality: ['"I\'ve mapped planes that have since been unmade. Don\'t ask me to prove it."', '"I don\'t trust magic I can\'t see. Traps are poetry. Chaos is noise."', '"The Rod doesn\'t break reality. It smudges it. I carry the eraser."'],
+        ideal: "A map is a promise that somewhere exists. I will finish my atlas of the lost planes.",
+        bond: "The party is the first thing in 300 years that feels real. I'll die before I let them be erased.",
+        flaw: 'I sometimes forget which timeline we\'re in. I\'ve called the Fighter by the wrong name three times. He doesn\'t notice. That worries me.',
+        stats: {
+          STR: { score: 10, mod: 0, save: 4 },
+          DEX: { score: 20, mod: 5, save: 9 },
+          CON: { score: 14, mod: 2, save: 6 },
+          INT: { score: 12, mod: 1, save: 5 },
+          WIS: { score: 14, mod: 2, save: 6 },
+          CHA: { score: 8, mod: -1, save: 3 }
+        },
+        combat: { ac: 17, hp: 85, speed: 35, initiative: 7, hitDice: "5d10 + 5d8", proficiency: 4 },
+        attacks: [
+          { name: "Longbow", bonus: "+11", damage: "1d8+5 piercing", notes: "150/600 ft (Archery style)" },
+          { name: "Longbow + Hunter's Mark", bonus: "+11", damage: "1d8+5 + 1d6", notes: "Bonus action to mark" },
+          { name: "Longbow + Sneak Attack", bonus: "+11", damage: "+3d6 (once/turn)", notes: "Ally adjacent or advantage" },
+          { name: "Dread Ambusher (turn 1)", bonus: "+11", damage: "extra +1d8 on one attack", notes: "+10 ft speed" }
+        ],
+        skills: { Stealth: 13, Perception: 10, Investigation: 5, "Thieves' Tools": 9, Survival: 6, Acrobatics: 9, Nature: 5, Insight: 6 },
+        tools: "Thieves' Tools, Cartographer's Tools, Navigator's Tools",
+        languages: "Common, Elvish, Primordial (Wind Duke dialect), Sylvan",
+        features: [
+          { name: "Sneak Attack (+3d6)", desc: "Once per turn, extra 3d6 damage with advantage or ally within 5 ft of target.", cost: "Free, once/turn", uses: 0, resetOn: "none" },
+          { name: "Cunning Action", desc: "Bonus action: Dash, Disengage, or Hide.", cost: "Bonus action", uses: 0, resetOn: "none" },
+          { name: "Steady Aim", desc: "Bonus action: gain advantage on next attack (no movement that turn).", cost: "Bonus action", uses: 0, resetOn: "none" },
+          { name: "Uncanny Dodge", desc: "Reaction: halve damage from an attack you can see.", cost: "Reaction", uses: 0, resetOn: "none" },
+          { name: "Skirmisher", desc: "Reaction when enemy ends turn within 5 ft: move half speed without opportunity attacks.", cost: "Reaction", uses: 0, resetOn: "none" },
+          { name: "Dread Ambusher", desc: "+WIS to initiative. First turn: +10 ft speed, extra attack dealing +1d8 damage.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Umbral Sight", desc: "Invisible to creatures relying on darkvision while in darkness.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Favored Foe", desc: "Bonus action: mark target. Once/turn deal +1d4 damage (scales to 1d6). No concentration.", cost: "PB uses / long rest", uses: 4, resetOn: "long" },
+          { name: "Mask of the Wild", desc: "Can hide when lightly obscured by natural phenomena.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Fey Ancestry", desc: "Advantage vs charm, immune to magical sleep.", cost: "Passive", uses: 0, resetOn: "none" }
+        ],
+        spellSlots: { "1st": 4, "2nd": 2 },
+        spells: ["Goodberry", "Hunter's Mark", "Absorb Elements", "Entangle", "Pass Without Trace", "Rope Trick"],
+        equipment: ["Studded leather armor", "Longbow", "Quiver with 40 arrows", "Thieves' tools", "Cartographer's tools", "Broken compass (points toward Rod pieces)", "Journal with partial maps of erased planes", "Explorer's pack", "Belt pouch with 20 gp"],
+        backstory: "I was a cartographer for the Wind Dukes. Not a warrior — a mapmaker. I drew the edges of reality before they were fixed. I mapped the space between the Abyss and Mechanus, the forgotten pathways that only the Rod can travel. Then the Rod was tested. A shockwave tore through the In-Between. I woke up with half my memories erased and a broken compass in my hand. My maps — three hundred years of work — were gone. But the tattoo on my arm remains. It shows a place that doesn't exist yet. The Raven Queen found me. She said: 'Guide the ones who will find the Rod. Keep them alive. And when they succeed, you may draw the final map.' I don't know what that means. But I know I'm the only one who can navigate the cracks where the Rod pieces hide. The party calls me Syv. The Fighter's ghost calls me 'Archivist.' I pretend not to hear."
+      },
       drunken: {
         name: "Kaelen 'Kettle' Morrow",
         classLevel: "Monk (Way of the Drunken Master) - Level 10",
@@ -420,88 +260,46 @@
         alignment: "Chaotic Good",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine. He moves with a deceptive grace — stumbling one moment, flowing like water the next. His hands are calloused but surprisingly steady when he's holding a bottle.",
-        personality: ['"I measure time in drinks, not hours."', '"If I\'m standing, I\'m not that drunk yet."', '"I remember things that never happened. Don\'t ask."'],
-        ideal: "Memory is a cage. Forgetting is freedom — but only if you choose it, not if it's stolen.",
-        bond: "The party is my new monastery. I'll die before I let them be erased like the last one.",
-        flaw: "Sometimes I call my friends by names from my lost order. They don't exist anymore. I don't notice until they ask who I'm talking about.",
-        stats: {
-          STR: { score: 10, mod: 0, save: 4 },
-          DEX: { score: 20, mod: 5, save: 9 },
-          CON: { score: 14, mod: 2, save: 6 },
-          INT: { score: 8, mod: -1, save: 3 },
-          WIS: { score: 18, mod: 4, save: 8 },
-          CHA: { score: 10, mod: 0, save: 4 }
-        },
+        appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine.",
+        stats: { STR: { score: 10, mod: 0, save: 4 }, DEX: { score: 20, mod: 5, save: 9 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 8, mod: -1, save: 3 }, WIS: { score: 18, mod: 4, save: 8 }, CHA: { score: 10, mod: 0, save: 4 } },
         combat: { ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4 },
         attacks: [
-          { name: "Unarmed Strike", bonus: "+9", damage: "1d6+5 bludgeoning", notes: "Magical" },
-          { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each (two attacks)", notes: "Costs 1 ki" },
-          { name: "Improvised Weapon", bonus: "+9", damage: "1d4+5 bludgeoning", notes: "Bottle, chair, etc." },
-          { name: "Quarterstaff", bonus: "+9", damage: "1d6+5 (versatile 1d8)", notes: "Monk weapon" }
+          { name: "Unarmed Strike", bonus: "+9", damage: "1d6+5", notes: "Magical" },
+          { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 ×2", notes: "1 ki" }
         ],
-        skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9, "Sleight of Hand": 9, Athletics: 4 },
-        tools: "Brewer's supplies (you make your own terrible wine)",
-        languages: "Common, Primordial (echoes from your lost monastery)",
+        skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9 },
         features: [
-          { name: "Martial Arts (1d6)", desc: "Your unarmed strikes and monk weapons deal 1d6 damage. When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action.", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Ki (10 points)", desc: "You have 10 ki points that recharge on a short rest. Ki save DC = 16 (8 + proficiency + WIS).", cost: "10 points / short rest", uses: 10, resetOn: "short" },
-          { name: "Flurry of Blows", desc: "Spend 1 ki point to make two unarmed strikes as a bonus action.", cost: "1 ki", uses: 10, resetOn: "short" },
-          { name: "Patient Defense", desc: "Spend 1 ki point to take the Dodge action as a bonus action.", cost: "1 ki", uses: 10, resetOn: "short" },
-          { name: "Step of the Wind", desc: "Spend 1 ki point to Disengage/Dash as bonus action; jump doubled.", cost: "1 ki", uses: 10, resetOn: "short" },
-          { name: "Stunning Strike", desc: "Spend 1 ki on hit: target CON save or stunned until end of next turn.", cost: "1 ki per attempt", uses: 10, resetOn: "short" },
-          { name: "Drunken Technique", desc: "With Flurry: free Disengage + 10ft movement for the turn.", cost: "Free with Flurry", uses: 0, resetOn: "none" },
-          { name: "Tipsy Sway", desc: "Reaction when missed: spend 1 ki, redirect attack to creature within 5ft.", cost: "1 ki (reaction)", uses: 10, resetOn: "short" },
-          { name: "Evasion", desc: "DEX save for half → 0 on success, half on fail.", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Stillness of Mind", desc: "Action: end one charm/frighten effect on self.", cost: "Action", uses: 0, resetOn: "none" },
-          { name: "Purity of Body", desc: "Immune to disease and poison.", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Slow Fall", desc: "Reaction: reduce falling damage by 50 HP (5 × monk level).", cost: "Reaction", uses: 0, resetOn: "none" }
+          { name: "Ki (10 points)", desc: "10 ki points, recharge on short rest. DC 16.", cost: "10/short rest", uses: 10, resetOn: "short" },
+          { name: "Flurry of Blows", desc: "1 ki: two unarmed strikes as bonus action.", cost: "1 ki", uses: 10, resetOn: "short" },
+          { name: "Stunning Strike", desc: "1 ki on hit: target CON save or stunned.", cost: "1 ki", uses: 10, resetOn: "short" },
+          { name: "Patient Defense", desc: "1 ki: Dodge as bonus action.", cost: "1 ki", uses: 10, resetOn: "short" },
+          { name: "Step of the Wind", desc: "1 ki: Dash/Disengage as bonus action.", cost: "1 ki", uses: 10, resetOn: "short" }
         ],
         spells: [],
-        equipment: ["Quarterstaff (used as a walking stick)", "10 darts", "Explorer's pack (mostly empty bottles)", "Broken ceramic bottle (improvised weapon)", "A worn flask that never seems to empty", "Common clothes (stained)", "Belt pouch with 10 gp"],
-        backstory: "The Monastery of the Unremembered Path stood on a mountain that no longer exists, in a valley that never was. Your order believed in perfect emptiness — not void, but absence so complete it becomes presence. You trained for forty years to achieve it. You failed. You still felt joy. Still felt grief. Still loved your tea-brewing master, old Lin Wei, who called you 'Little Kettle' because you always boiled over. Then the event happened. A crack in time — caused by someone testing a piece of the Rod of Seven Parts. Your monastery didn't burn. Didn't fall. It un-happened. Lin Wei didn't die. He was never born. The mountain didn't crumble. It was never there. You survived because you were in a cave below the mountain, drunk on stolen rice wine — your first and only act of rebellion. You stumbled out to find... a different mountain. Different sky. Different gods. No one remembers your order. No one can. Now you drink to forget — but forgetting is exactly what they took from you."
+        equipment: ["Quarterstaff", "10 darts", "Explorer's pack", "Worn flask", "10 gp"],
+        backstory: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor."
       },
       chronurgy: {
         name: "Vesper Aldric",
         classLevel: "Wizard (School of Chronurgy) - Level 10",
-        race: "Variant Human / Custom Lineage",
+        race: "Variant Human",
         background: "Temporal Archivist",
         alignment: "True Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "Vesper carries the weight of futures that may never come. His robes are enchanted with temporal threads that shift slightly in color. His eyes hold the weariness of someone who has seen too many timelines collapse.",
-        personality: ['"Time is a river, and I\'ve learned to swim upstream."', '"I always keep a backup plan. And a backup for the backup."', '"Punctuality is the highest form of respect."'],
-        ideal: "Knowledge is the only true currency across timelines.",
-        bond: "I've seen the end of this story. I'm here to rewrite it.",
-        flaw: "I sometimes respond to things that haven't happened yet. People find it unsettling.",
-        stats: {
-          STR: { score: 8, mod: -1, save: 3 },
-          DEX: { score: 14, mod: 2, save: 6 },
-          CON: { score: 14, mod: 2, save: 6 },
-          INT: { score: 20, mod: 5, save: 9 },
-          WIS: { score: 12, mod: 1, save: 5 },
-          CHA: { score: 10, mod: 0, save: 4 }
-        },
+        appearance: "Vesper carries the weight of futures that may never come. His robes are enchanted with temporal threads.",
+        stats: { STR: { score: 8, mod: -1, save: 3 }, DEX: { score: 14, mod: 2, save: 6 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 20, mod: 5, save: 9 }, WIS: { score: 12, mod: 1, save: 5 }, CHA: { score: 10, mod: 0, save: 4 } },
         combat: { ac: 15, hp: 62, speed: 30, initiative: 5, hitDice: "10d6", proficiency: 4 },
-        attacks: [
-          { name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" },
-          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic (if damaged)", notes: "Wisdom save" },
-          { name: "Fire Bolt", bonus: "+9", damage: "2d10 fire", notes: "Ranged spell attack" }
-        ],
-        skills: { Arcana: 9, History: 9, Investigation: 9, Insight: 5, Perception: 5 },
-        tools: "Calligrapher's supplies",
-        languages: "Common, Draconic, Primordial, Celestial",
+        attacks: [{ name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" }],
+        skills: { Arcana: 9, History: 9, Investigation: 9 },
         features: [
-          { name: "Chronal Shift", desc: "Reaction: force a creature within 30 ft. to reroll an attack, check, or save.", cost: "2 uses / long rest", uses: 2, resetOn: "long" },
-          { name: "Temporal Awareness", desc: "Add INT modifier (+5) to initiative rolls.", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Momentary Stasis", desc: "Action: Large-or-smaller creature CON save or incapacitated (speed 0) until end of next turn.", cost: "PB uses / long rest", uses: 4, resetOn: "long" },
-          { name: "Arcane Abeyance", desc: "Store a 4th-or-lower spell in a bead for 1 hour.", cost: "1 use / short rest", uses: 1, resetOn: "short" },
-          { name: "Spellcasting", desc: "10th-level wizard with dunamancy spells. Spell DC 17, attack +9.", cost: "See slots", uses: 0, resetOn: "none" }
+          { name: "Chronal Shift", desc: "Reaction: force reroll within 30 ft.", cost: "2/long rest", uses: 2, resetOn: "long" },
+          { name: "Arcane Abeyance", desc: "Store spell (4th-) in bead for 1 hour.", cost: "1/short rest", uses: 1, resetOn: "short" }
         ],
         spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        spells: ["Gift of Alacrity (1st)", "Fortune's Favor (2nd)", "Haste (3rd)", "Slow (3rd)", "Temporal Shunt (5th)", "Counterspell (3rd)", "Shield (1st)", "Misty Step (2nd)", "Dimension Door (4th)", "Wall of Force (5th)"],
-        equipment: ["Spellbook bound in temporal leather", "Component pouch", "Arcane focus (hourglass pendant)", "Scholar's pack", "A small hourglass that runs backwards", "Ink and quill", "15 gp"],
-        backstory: "Vesper was always out of step with time. As a child, he would answer questions before they were asked. The Chronurgy Academy found him and trained him to stabilize temporal anomalies. But during a routine calibration of a temporal anchor, he caught a glimpse of the end — the Rod of Seven Parts fully assembled, and the multiverse collapsing into a single, frozen moment. He's been trying to prevent that future ever since, even if it means breaking every rule of chronomancy."
+        spells: ["Shield", "Misty Step", "Counterspell", "Haste", "Slow", "Dimension Door", "Wall of Force"],
+        equipment: ["Spellbook", "Component pouch", "Hourglass pendant", "Scholar's pack", "15 gp"],
+        backstory: "Vesper caught a glimpse of the end — the Rod assembled and the multiverse collapsing."
       },
       grave: {
         name: "Morwen",
@@ -511,103 +309,55 @@
         alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side. Your voice is quiet — death doesn't need to shout. When you speak, people listen. Not because you're charming, but because you sound like you already know how their story ends.",
-        personality: ['"I speak to the dead. They\'re better listeners than the living."', '"Death doesn\'t frighten me. What comes after? That\'s another matter."', '"I keep a list of everyone I\'ve buried. I\'ve never needed a second page."'],
-        ideal: "Death is a door, not a wall. My job is to make sure no one kicks it down before their time.",
-        bond: "The Raven Queen saved me. I don't know why. I intend to find out — and maybe earn my freedom.",
-        flaw: "I have no fear of death. This makes me reckless — and unnerving to my allies.",
-        stats: {
-          STR: { score: 8, mod: -1, save: 3 },
-          DEX: { score: 12, mod: 1, save: 5 },
-          CON: { score: 14, mod: 2, save: 6 },
-          INT: { score: 10, mod: 0, save: 4 },
-          WIS: { score: 20, mod: 5, save: 9 },
-          CHA: { score: 16, mod: 3, save: 7 }
-        },
+        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side.",
+        stats: { STR: { score: 8, mod: -1, save: 3 }, DEX: { score: 12, mod: 1, save: 5 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 10, mod: 0, save: 4 }, WIS: { score: 20, mod: 5, save: 9 }, CHA: { score: 16, mod: 3, save: 7 } },
         combat: { ac: 15, hp: 82, speed: 30, initiative: 1, hitDice: "10d8", proficiency: 4 },
-        attacks: [
-          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic (if damaged)", notes: "Wisdom save" },
-          { name: "Sacred Flame", bonus: "DC 17", damage: "2d8 radiant", notes: "Ignores cover" },
-          { name: "Spiritual Weapon", bonus: "+9", damage: "1d8+5 force", notes: "Bonus action" },
-          { name: "Mace + Divine Strike", bonus: "+3", damage: "1d6+1 + 1d8 necrotic", notes: "Once per turn" }
-        ],
-        skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9, Perception: 9, Religion: 4 },
-        tools: "Herbalism Kit (funeral herbs), Calligrapher's Supplies",
-        languages: "Common, Primordial (for Wind Duke negotiations)",
+        attacks: [{ name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic", notes: "Wis save" }],
+        skills: { Persuasion: 7, Intimidation: 7, Insight: 9 },
         features: [
-          { name: "Circle of Mortality", desc: "Healing at 0 HP uses maximum dice (no roll).", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Eyes of the Grave", desc: "Action: detect undead within 60 ft. (not behind total cover).", cost: "PB uses / long rest", uses: 4, resetOn: "long" },
-          { name: "Path to the Grave", desc: "Bonus action: curse target within 30 ft. Next attack deals double damage.", cost: "Channel Divinity", uses: 2, resetOn: "short" },
-          { name: "Sentinel at Death's Door", desc: "Reaction: cancel a critical hit within 30 ft.", cost: "Reaction", uses: "∞", resetOn: "none" },
-          { name: "Divine Strike", desc: "Once/turn: add 1d8 necrotic to a weapon attack.", cost: "Free", uses: 0, resetOn: "none" },
-          { name: "Deathless Nature", desc: "Advantage on death saves; no eating/drinking/breathing; disease resistance.", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Knowledge from a Past Life", desc: "Add 1d6 to a skill check (PB times/long rest).", cost: "PB uses / long rest", uses: 4, resetOn: "long" }
+          { name: "Path to the Grave", desc: "Curse target: next attack double damage.", cost: "Channel Divinity", uses: 2, resetOn: "short" },
+          { name: "Sentinel at Death's Door", desc: "Reaction: cancel crit within 30 ft.", cost: "Reaction", uses: "∞", resetOn: "none" }
         ],
         spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        spells: ["Toll the Dead (cantrip)", "Guidance (cantrip)", "Spare the Dying (cantrip)", "Bless (1st)", "Healing Word (1st)", "Spiritual Weapon (2nd)", "Enhance Ability (2nd)", "Spirit Guardians (3rd)", "Speak with Dead (3rd)", "Death Ward (4th)", "Banishment (4th)", "Greater Restoration (5th)", "Scrying (5th)"],
-        equipment: ["Breastplate (AC 14 + DEX 1)", "Holy symbol (silver raven skull on a chain)", "Mace", "Shield (optional, +2 AC)", "Explorer's pack", "Prayer book of the Raven Queen", "A small bell for funeral rites", "Black feather quill", "Belt pouch with 15 gp"],
-        backstory: "You remember dying. Cold. Quiet. A long hallway with a door at the end. You were walking toward it when a hand — skeletal, elegant, impossibly old — touched your shoulder and said: 'Not yet. I have use for you.' You woke up on a stone table in a fortress made of frozen shadows. The Raven Queen stood over you. She didn't explain. She simply said: 'You will keep the balance. You will ensure things die when they should. And you will stop the Wolf-Spider from unmaking the grave itself.' That was years ago. You've served her since — traveling the planes, burying the dead, slaying the undead, and occasionally asking her why in your prayers. She never answers directly. But sometimes, when you look into a dying person's eyes, you see a flicker of recognition. Like she's watching through them. Now you've heard whispers of the Rod of Seven Parts. If reassembled, it could unravel death itself. No one dies. No one lives. Just chaos. The Raven Queen hasn't commanded you to stop it. She doesn't need to. You owe her. And you intend to pay your debt."
+        spells: ["Guidance", "Bless", "Spiritual Weapon", "Spirit Guardians", "Death Ward", "Greater Restoration"],
+        equipment: ["Breastplate", "Holy symbol", "Mace", "Prayer book", "15 gp"],
+        backstory: "You died. The Raven Queen saved you. You serve her now."
       },
       psi: {
         name: "Zor-Ashkev's Vessel",
         classLevel: "Fighter (Psi Warrior) - Level 10",
-        race: "Aasimar (Fallen, reflavored)",
+        race: "Aasimar (Fallen)",
         background: "Wind Duke Sleeper Agent",
-        alignment: "Lawful Neutral (sliding toward... something)",
+        alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have an unnerving stillness. Your eyes are a pale silver that sometimes flicker when you concentrate. You move with precision that seems almost rehearsed, as if your body knows where to be before you decide. When the Wind Duke ghost stirs, your pupils become faceted — like cut gemstones.",
-        personality: ['"I don\'t remember learning half of what I know. I just... know it."', '"I count things. Steps. Arrows. Lies. I don\'t know why."', '"Sometimes I speak in a language I\'ve never heard."'],
-        ideal: "Order is a tool, not a master. (But the ghost inside disagrees.)",
-        bond: "The party is my unit. I will not sacrifice them — yet.",
-        flaw: 'When stressed, I speak in the Wind Duke\'s voice without realizing.',
-        stats: {
-          STR: { score: 17, mod: 3, save: 7 },
-          DEX: { score: 10, mod: 0, save: 4 },
-          CON: { score: 14, mod: 2, save: 6 },
-          INT: { score: 15, mod: 2, save: 6 },
-          WIS: { score: 10, mod: 0, save: 4 },
-          CHA: { score: 8, mod: -1, save: 3 }
-        },
+        appearance: "You have an unnerving stillness. Your eyes are pale silver.",
+        stats: { STR: { score: 17, mod: 3, save: 7 }, DEX: { score: 10, mod: 0, save: 4 }, CON: { score: 14, mod: 2, save: 6 }, INT: { score: 15, mod: 2, save: 6 }, WIS: { score: 10, mod: 0, save: 4 }, CHA: { score: 8, mod: -1, save: 3 } },
         combat: { ac: 19, hp: 84, speed: 30, initiative: 0, hitDice: "10d10", proficiency: 4 },
-        attacks: [
-          { name: "Longsword (1H + Dueling)", bonus: "+7", damage: "1d8+5 slashing", notes: "+2 Dueling style" },
-          { name: "Longsword + Psionic Strike", bonus: "+7", damage: "1d8+5 + 1d8+2 force", notes: "Costs 1 Psionic Die" },
-          { name: "Heavy Crossbow", bonus: "+4", damage: "1d10 piercing", notes: "Range 100/400" }
-        ],
-        skills: { Athletics: 7, Perception: 4, History: 6, Investigation: 6, Insight: 4 },
-        tools: "Calligrapher's tools (geometric symbols)",
-        languages: "Common, Primordial (Wind Duke dialect)",
+        attacks: [{ name: "Longsword", bonus: "+7", damage: "1d8+5", notes: "+2 Dueling" }],
+        skills: { Athletics: 7, Perception: 4, History: 6 },
         features: [
-          { name: "Psionic Power (6 dice, d8+2)", desc: "6 Psionic Energy dice (d8), recharge on long rest.", cost: "6 dice / long rest", uses: 6, resetOn: "long" },
-          { name: "Protective Field", desc: "Reaction: reduce damage to self/ally within 30 ft. by 1d8+2.", cost: "1 die (reaction)", uses: 6, resetOn: "long" },
-          { name: "Psionic Strike", desc: "Once/turn: add 1d8+2 force to weapon hit.", cost: "1 die", uses: 6, resetOn: "long" },
-          { name: "Telekinetic Movement", desc: "Action: move object/creature (Large-) up to 30 ft.", cost: "1 die (action)", uses: 6, resetOn: "long" },
-          { name: "Telekinetic Shove", desc: "Bonus action: shove creature 5 ft. or prone (STR DC 14).", cost: "Bonus action", uses: 0, resetOn: "none" },
-          { name: "Guarded Mind", desc: "Immune to psychic damage, charmed, frightened.", cost: "Passive", uses: 0, resetOn: "none" },
-          { name: "Action Surge", desc: "Take additional action on your turn.", cost: "1 / short rest", uses: 1, resetOn: "short" },
-          { name: "Second Wind", desc: "Bonus action: regain 1d10+10 HP.", cost: "1 / short rest", uses: 1, resetOn: "short" },
-          { name: "Indomitable", desc: "Reroll a failed save.", cost: "1 / long rest", uses: 1, resetOn: "long" },
-          { name: "Necrotic Shroud", desc: "Action: ghostly wings, frighten 10 ft. (CHA DC 11). +10 necrotic once/turn.", cost: "1 / long rest", uses: 1, resetOn: "long" }
+          { name: "Psionic Power (6 dice)", desc: "6 Psionic dice (d8), recharge long rest.", cost: "6/long rest", uses: 6, resetOn: "long" },
+          { name: "Action Surge", desc: "Take additional action.", cost: "1/short rest", uses: 1, resetOn: "short" }
         ],
         spells: [],
-        equipment: ["Plate armor (AC 19)", "Longsword", "Shield (optional, +2 AC)", "Heavy crossbow (20 bolts)", "Dungeoneer's pack", "A small silver cube that hums when a Rod piece is near", "A journal full of geometric symbols", "Belt pouch with 15 gp"],
-        backstory: "You don't remember your childhood clearly. Not trauma — absence. You remember a field, a blue sky, and suddenly knowing how to arrange stones into a perfect geometric ward. You were seven. As you grew, so did the hum. You became a mercenary famous for impossible tactics — predicting ambushes, drawing perfect maps of places you'd never seen, knowing which soldier would desert before they knew themselves. Your comrades called you 'the Compass.' Six months ago, you woke up with seven words carved into your forearm in a script you'd never seen but immediately understood: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.' You've been hunting pieces of the Rod of Seven Parts ever since — not for glory or gold, but because something inside you screams when the Rod is incomplete. You tell yourself you're saving the world. You don't yet know that the world you'd save would have no free will."
+        equipment: ["Plate armor", "Longsword", "Heavy crossbow", "Silver cube", "15 gp"],
+        backstory: "Six months ago, you woke with seven words on your arm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
       }
     };
 
     const dmSecrets = {
-      drunken: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor. Old Lin Wei's spirit sometimes watches over him, invisible to all but the Raven Queen. The memories that surface when he's drunk are real — fragments of a timeline that no longer exists.",
-      chronurgy: "Vesper's future self is the one assembling the Rod — believing that freezing the multiverse is the only way to prevent a greater catastrophe. Vesper will have to face himself before the campaign ends. His glimpse of the future wasn't random.",
-      grave: "In your previous life, you were a minor Wind Duke scholar who helped design the Rod of Seven Parts. The Raven Queen erased those memories but keeps you as a tool to unmake your own creation. She doesn't want the Rod destroyed. She wants it reassembled and given to her so she can control death across all planes forever. Your killer is still alive and still hunting you.",
-      psi: "Embedded in your psyche is the psychic remnant of General Zor-Ashkev, a Wind Duke who died fighting Miska. You are a sleeper agent. The seven words on your arm are a psychic trigger. Speaking them aloud near three Rod pieces gives the ghost partial control. At the campaign's climax, you can choose to suppress the ghost — losing all psionic powers but keeping your soul."
+      dmpc: "Syv's missing memories were taken by the Raven Queen. She knows where the final Rod piece is hidden. She was the lover of Zor-Ashkev (the Psi Warrior's ghost). If she dies, her tattoo creates a map to the nearest Rod piece.",
+      drunken: "The Monastery was erased by a Rod fragment. Kaelen is the only survivor.",
+      chronurgy: "Vesper's future self is assembling the Rod.",
+      grave: "You were a Wind Duke scholar who helped design the Rod.",
+      psi: "You are a sleeper agent for General Zor-Ashkev. Syv was his lover."
     };
 
     // ─── HELPERS ──────────────────────────────────────────
-    function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
+    function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
     function makeEditable(value, fieldKey, charKey) {
-      const id = `ed-${charKey}-${fieldKey}-${Date.now()}-${Math.random().toString(36).substr(2,4)}`;
+      const id = `ed-${charKey}-${fieldKey}-${Math.random().toString(36).substr(2,5)}`;
       return `<span class="editable-text" id="${id}" contenteditable="true" data-field="${fieldKey}" data-char="${charKey}" oninput="scheduleAutoSave('${charKey}')" onblur="saveFieldImmediate('${charKey}','${fieldKey}',this)">${escapeHtml(String(value))}</span>`;
     }
 
@@ -619,80 +369,81 @@
       let used = parseInt(localStorage.getItem(key) || '0');
       if (used > num) used = num;
       let boxes = '';
-      for (let i = 0; i < num; i++) {
-        boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this, '${key}', ${num})" title="Use ${i+1}"></span>`;
-      }
-      return `<div style="margin-top:0.2rem;display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.6rem;color:#9088c0;">Used:</span>${boxes}<button class="btn-sm" onclick="resetOneUsage('${key}',this)" title="Reset">↺</button></div>`;
+      for (let i = 0; i < num; i++) boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this,'${key}',${num})"></span>`;
+      return `<div style="margin-top:0.15rem;display:flex;align-items:center;gap:0.2rem;"><span style="font-size:0.55rem;color:#9088c0;">Used:</span>${boxes}<button class="btn-sm" onclick="resetOneUsage('${key}',this)">↺</button></div>`;
     }
 
     window.toggleUsage = function(el, key, num) {
       const all = el.parentElement.querySelectorAll('.usage-checkbox');
       const idx = Array.from(all).indexOf(el);
-      if (el.classList.contains('used')) {
-        for (let i = all.length-1; i >= idx; i--) all[i].classList.remove('used');
-      } else {
-        for (let i = 0; i <= idx; i++) all[i].classList.add('used');
-      }
-      let count = 0;
-      all.forEach(b => { if (b.classList.contains('used')) count++; });
+      if (el.classList.contains('used')) { for (let i = all.length-1; i >= idx; i--) all[i].classList.remove('used'); }
+      else { for (let i = 0; i <= idx; i++) all[i].classList.add('used'); }
+      let count = 0; all.forEach(b => { if (b.classList.contains('used')) count++; });
       localStorage.setItem(key, count);
     };
-
-    window.resetOneUsage = function(key, btn) {
-      localStorage.setItem(key, '0');
-      btn.parentElement.querySelectorAll('.usage-checkbox').forEach(b => b.classList.remove('used'));
-    };
-
+    window.resetOneUsage = function(key, btn) { localStorage.setItem(key, '0'); btn.parentElement.querySelectorAll('.usage-checkbox').forEach(b => b.classList.remove('used')); };
     window.resetAllByType = function(charKey, type) {
       const features = characterData[charKey]?.features || [];
-      features.forEach((f, i) => {
-        if (f.resetOn === type || type === 'long') {
-          localStorage.setItem(`uses-${charKey}-feat-${i}`, '0');
-        }
-      });
-      const slots = characterData[charKey]?.spellSlots;
-      if (slots && type === 'long') {
-        Object.keys(slots).forEach(level => {
-          if (level !== 'cantrips') localStorage.setItem(`uses-${charKey}-slot-${level}`, '0');
-        });
-      }
+      features.forEach((f, i) => { if (f.resetOn === type || type === 'long') localStorage.setItem(`uses-${charKey}-feat-${i}`, '0'); });
       switchTab(charKey);
     };
 
-    // ─── AUTO-SAVE ───────────────────────────────────────
     function scheduleAutoSave(charKey) {
       if (autoSaveTimers[charKey]) clearTimeout(autoSaveTimers[charKey]);
-      autoSaveTimers[charKey] = setTimeout(() => {
-        saveAllEdits(charKey, true);
-      }, 3000);
+      autoSaveTimers[charKey] = setTimeout(() => saveAllEdits(charKey, true), 3000);
     }
-
     window.saveFieldImmediate = function(charKey, field, el) {
-      const value = el.textContent.trim();
-      db.ref(`characters/${charKey}/${field}`).set(value);
-      addToChangeLog(charKey, field, value);
+      db.ref(`characters/${charKey}/${field}`).set(el.textContent.trim());
+      addToChangeLog(charKey, field, el.textContent.trim());
     };
-
-    function saveAllEdits(charKey, silent = false) {
+    function saveAllEdits(charKey) {
       const edits = {};
-      document.querySelectorAll(`[data-char="${charKey}"]`).forEach(el => {
-        edits[el.getAttribute('data-field')] = el.textContent.trim();
-      });
-      Object.entries(edits).forEach(([field, value]) => {
-        db.ref(`characters/${charKey}/${field}`).set(value);
-        addToChangeLog(charKey, field, value);
-      });
+      document.querySelectorAll(`[data-char="${charKey}"]`).forEach(el => edits[el.getAttribute('data-field')] = el.textContent.trim());
+      Object.entries(edits).forEach(([f, v]) => { db.ref(`characters/${charKey}/${f}`).set(v); addToChangeLog(charKey, f, v); });
     }
-
     function addToChangeLog(charKey, field, value) {
-      const timestamp = new Date().toLocaleTimeString();
-      const charName = characterData[charKey]?.name || charKey;
-      changeLog.unshift({ time: timestamp, char: charName, field, value: value.substring(0, 50) });
+      changeLog.unshift({ time: new Date().toLocaleTimeString(), char: characterData[charKey]?.name || charKey, field, value: value.substring(0, 50) });
       if (changeLog.length > 10) changeLog = changeLog.slice(0, 10);
       db.ref('changeLog').set(changeLog);
     }
 
-    // ─── ADD/REMOVE ──────────────────────────────────────
+    // ─── DYNAMIC SPELL DROPDOWN ──────────────────────────
+    window.showSpellInfo = function(charKey) {
+      const select = document.getElementById(`spellSelect-${charKey}`);
+      const infoDiv = document.getElementById(`spellInfo-${charKey}`);
+      if (!select || !infoDiv) return;
+      const spellName = select.value;
+      if (!spellName) { infoDiv.style.display = 'none'; return; }
+      const spell = spellDatabase[spellName];
+      if (!spell) { infoDiv.style.display = 'block'; infoDiv.innerHTML = '<p style="color:#a098d0;">No description available.</p>'; return; }
+      infoDiv.style.display = 'block';
+      infoDiv.innerHTML = `
+        <strong style="color:#d4c8ff;">${spellName}</strong>
+        ${spell.level !== undefined ? `<span style="color:#c8b8f0;font-size:0.7rem;margin-left:0.5rem;">Level ${spell.level} · ${spell.school || ''}</span>` : ''}
+        ${spell.castingTime ? `<div><span style="color:#9088c0;">Casting:</span> ${spell.castingTime}</div>` : ''}
+        ${spell.range ? `<div><span style="color:#9088c0;">Range:</span> ${spell.range}</div>` : ''}
+        ${spell.duration ? `<div><span style="color:#9088c0;">Duration:</span> ${spell.duration}</div>` : ''}
+        <div style="margin-top:0.3rem;color:#c0b8e8;">${spell.desc}</div>`;
+    };
+
+    window.addSpellFromDropdown = function(charKey) {
+      const select = document.getElementById(`spellSelect-${charKey}`);
+      if (!select || !select.value) return;
+      const spellName = select.value;
+      db.ref(`characters/${charKey}/spells`).once('value').then(s => {
+        const cur = s.val() || [];
+        if (!cur.includes(spellName)) {
+          cur.push(spellName);
+          return db.ref(`characters/${charKey}/spells`).set(cur);
+        }
+      }).then(() => {
+        addToChangeLog(charKey, 'spells', `Added: ${spellName}`);
+        loadDynamicLists(charKey);
+        select.value = '';
+        document.getElementById(`spellInfo-${charKey}`).style.display = 'none';
+      });
+    };
+
     window.addSpell = function(charKey) {
       const input = document.getElementById(`newSpell-${charKey}`);
       if (!input?.value.trim()) return;
@@ -701,13 +452,8 @@
         const cur = s.val() || [];
         cur.push(name);
         return db.ref(`characters/${charKey}/spells`).set(cur);
-      }).then(() => {
-        addToChangeLog(charKey, 'spells', `Added: ${name}`);
-        loadDynamicLists(charKey);
-        input.value = '';
-      });
+      }).then(() => { addToChangeLog(charKey, 'spells', `Added: ${name}`); loadDynamicLists(charKey); input.value = ''; });
     };
-
     window.addEquipment = function(charKey) {
       const input = document.getElementById(`newEquip-${charKey}`);
       if (!input?.value.trim()) return;
@@ -716,51 +462,33 @@
         const cur = s.val() || [];
         cur.push(name);
         return db.ref(`characters/${charKey}/equipment`).set(cur);
-      }).then(() => {
-        addToChangeLog(charKey, 'equipment', `Added: ${name}`);
-        loadDynamicLists(charKey);
-        input.value = '';
-      });
+      }).then(() => { addToChangeLog(charKey, 'equipment', `Added: ${name}`); loadDynamicLists(charKey); input.value = ''; });
     };
-
     window.addFeature = function(charKey) {
-      const n = document.getElementById(`newFeatName-${charKey}`);
-      const d = document.getElementById(`newFeatDesc-${charKey}`);
-      const u = document.getElementById(`newFeatUses-${charKey}`);
+      const n = document.getElementById(`newFeatName-${charKey}`), d = document.getElementById(`newFeatDesc-${charKey}`), u = document.getElementById(`newFeatUses-${charKey}`);
       if (!n?.value.trim()) return;
-      const feat = { name: n.value.trim(), desc: d.value.trim() || 'New ability', cost: u.value.trim() || 'Passive', uses: u.value.trim() || 0, resetOn: 'none' };
+      const feat = { name: n.value.trim(), desc: d.value.trim() || 'New', cost: u.value.trim() || 'Passive', uses: u.value.trim() || 0, resetOn: 'none' };
       db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => {
         const cur = s.val() || [];
         cur.push(feat);
         return db.ref(`characters/${charKey}/customFeatures`).set(cur);
-      }).then(() => {
-        addToChangeLog(charKey, 'features', `Added: ${feat.name}`);
-        loadDynamicLists(charKey);
-        n.value = ''; d.value = ''; u.value = '';
-      });
+      }).then(() => { addToChangeLog(charKey, 'features', `Added: ${feat.name}`); loadDynamicLists(charKey); n.value = ''; d.value = ''; u.value = ''; });
     };
-
     window.removeItem = function(btn, charKey, category, name) {
       if (!confirm('Remove?')) return;
       db.ref(`characters/${charKey}/${category}`).once('value').then(s => {
         const items = s.val() || [];
         return db.ref(`characters/${charKey}/${category}`).set(items.filter(i => (typeof i === 'string' ? i !== name : i.name !== name)));
-      }).then(() => {
-        addToChangeLog(charKey, category, `Removed: ${name}`);
-        btn.closest('div, li').remove();
-      });
+      }).then(() => { addToChangeLog(charKey, category, `Removed: ${name}`); btn.closest('div, li').remove(); });
     };
-
     window.editItemInline = function(el, charKey, category) {
       const oldVal = el.textContent;
-      el.addEventListener('blur', function handler() {
-        el.removeEventListener('blur', handler);
+      el.addEventListener('blur', function h() { el.removeEventListener('blur', h);
         const newVal = el.textContent.trim() || oldVal;
         db.ref(`characters/${charKey}/${category}`).once('value').then(s => {
           const items = s.val() || [];
           return db.ref(`characters/${charKey}/${category}`).set(items.map(i => (typeof i === 'string' && i === oldVal) ? newVal : (i.name === oldVal ? {...i, name: newVal} : i)));
         });
-        addToChangeLog(charKey, category, `Edited`);
       }, { once: true });
     };
 
@@ -783,21 +511,20 @@
         if (feats && Array.isArray(feats)) renderCustomFeats(charKey, feats);
       });
     }
-
     function renderList(charKey, containerId, items, isEquip) {
       const container = document.getElementById(`${containerId}-${charKey}`);
       if (!container) return;
-      const addForm = container.querySelector('.add-form');
+      const addForm = container.querySelector('.add-form'), dropdown = container.querySelector('.spell-dropdown-section');
       container.innerHTML = '';
       items.forEach(item => {
         const el = document.createElement(isEquip ? 'li' : 'div');
-        el.style.cssText = 'display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
+        el.style.cssText = 'display:flex;align-items:center;gap:0.3rem;padding:0.2rem 0;border-bottom:1px solid rgba(100,80,160,0.2);font-size:0.8rem;';
         el.innerHTML = `${isEquip ? '✦ ' : ''}<span class="editable-text" contenteditable="true" onblur="editItemInline(this,'${charKey}','${isEquip ? 'equipment' : 'spells'}')">${escapeHtml(item)}</span><button class="btn-remove" onclick="removeItem(this,'${charKey}','${isEquip ? 'equipment' : 'spells'}','${escapeHtml(item)}')">✕</button>`;
         container.appendChild(el);
       });
+      if (dropdown) container.appendChild(dropdown);
       if (addForm) container.appendChild(addForm);
     }
-
     function renderCustomFeats(charKey, feats) {
       const container = document.getElementById(`featList-${charKey}`);
       if (!container) return;
@@ -810,82 +537,38 @@
       });
     }
 
-    // ─── SESSION NOTES FUNCTIONS ─────────────────────────
+    // ─── SESSION NOTES ────────────────────────────────────
     window.addSessionNote = function() {
-      const dateInput = document.getElementById('sessionDate');
-      const titleInput = document.getElementById('sessionTitle');
-      const notesInput = document.getElementById('sessionNotes');
-      
-      if (!titleInput?.value.trim()) return;
-      
-      const note = {
-        id: Date.now(),
-        date: dateInput?.value || new Date().toISOString().split('T')[0],
-        title: titleInput.value.trim(),
-        notes: notesInput?.value.trim() || ''
-      };
-      
+      const dt = document.getElementById('sessionDate'), ti = document.getElementById('sessionTitle'), nt = document.getElementById('sessionNotes');
+      if (!ti?.value.trim()) return;
+      const note = { id: Date.now(), date: dt?.value || new Date().toISOString().split('T')[0], title: ti.value.trim(), notes: nt?.value.trim() || '' };
       db.ref('sessionNotes').once('value').then(s => {
         const notes = s.val() || [];
         notes.push(note);
         return db.ref('sessionNotes').set(notes);
-      }).then(() => {
-        sessionNotes.push(note);
-        renderSessionNotes();
-        dateInput.value = '';
-        titleInput.value = '';
-        notesInput.value = '';
-      });
+      }).then(() => { sessionNotes.push(note); renderSessionNotes(); dt.value = ''; ti.value = ''; nt.value = ''; });
     };
-
     window.addBulletToForm = function() {
-      const notesInput = document.getElementById('sessionNotes');
-      if (!notesInput) return;
-      const cursorPos = notesInput.selectionStart;
-      const textBefore = notesInput.value.substring(0, cursorPos);
-      const textAfter = notesInput.value.substring(cursorPos);
-      const lineStart = textBefore.lastIndexOf('\n') + 1;
-      notesInput.value = textBefore + '\n• ' + textAfter;
-      notesInput.focus();
-      notesInput.selectionStart = notesInput.selectionEnd = cursorPos + 3;
+      const nt = document.getElementById('sessionNotes');
+      if (!nt) return;
+      const pos = nt.selectionStart, before = nt.value.substring(0, pos), after = nt.value.substring(pos);
+      nt.value = before + '\n• ' + after;
+      nt.focus(); nt.selectionStart = nt.selectionEnd = pos + 3;
     };
-
-    window.removeSessionNote = function(noteId) {
-      if (!confirm('Delete this session note?')) return;
+    window.removeSessionNote = function(id) {
+      if (!confirm('Delete?')) return;
       db.ref('sessionNotes').once('value').then(s => {
         const notes = s.val() || [];
-        return db.ref('sessionNotes').set(notes.filter(n => n.id !== noteId));
-      }).then(() => {
-        sessionNotes = sessionNotes.filter(n => n.id !== noteId);
-        renderSessionNotes();
-      });
+        return db.ref('sessionNotes').set(notes.filter(n => n.id !== id));
+      }).then(() => { sessionNotes = sessionNotes.filter(n => n.id !== id); renderSessionNotes(); });
     };
-
     function renderSessionNotes() {
       const container = document.getElementById('sessionNotesContainer');
       if (!container) return;
-      
-      if (sessionNotes.length === 0) {
-        container.innerHTML = '<p style="color:#9088c0;text-align:center;padding:1rem;">No session notes yet. Add your first one below!</p>';
-        return;
-      }
-      
-      container.innerHTML = sessionNotes.sort((a, b) => new Date(b.date) - new Date(a.date)).map(note => {
-        const bullets = note.notes ? note.notes.split('\n').filter(line => line.trim()) : [];
-        return `
-          <div class="session-note-card">
-            <div class="session-note-header">
-              <span class="session-date">📅 ${note.date}</span>
-              <span class="session-title">${escapeHtml(note.title)}</span>
-              <button class="btn-remove" onclick="removeSessionNote(${note.id})" title="Delete note">✕</button>
-            </div>
-            ${bullets.length > 0 ? `
-              <ul class="session-bullets">
-                ${bullets.map(b => `<li><span>${escapeHtml(b.replace(/^•\s*/, ''))}</span></li>`).join('')}
-              </ul>
-            ` : '<p style="color:#9088c0;font-size:0.8rem;">No details recorded.</p>'}
-          </div>
-        `;
+      if (sessionNotes.length === 0) { container.innerHTML = '<p style="color:#9088c0;text-align:center;">No session notes yet.</p>'; return; }
+      container.innerHTML = sessionNotes.sort((a,b) => new Date(b.date) - new Date(a.date)).map(note => {
+        const bullets = note.notes ? note.notes.split('\n').filter(l => l.trim()) : [];
+        return `<div class="session-note-card"><div class="session-note-header"><span class="session-date">📅 ${note.date}</span><span style="color:#d4d8ff;font-weight:bold;">${escapeHtml(note.title)}</span><button class="btn-remove" onclick="removeSessionNote(${note.id})">✕</button></div>${bullets.length ? '<ul style="list-style:none;padding:0;">'+bullets.map(b => `<li style="padding:0.15rem 0;color:#c0c8e8;font-size:0.8rem;">• ${escapeHtml(b.replace(/^•\s*/,''))}</li>`).join('')+'</ul>' : '<p style="color:#9088c0;font-size:0.75rem;">No details.</p>'}</div>`;
       }).join('');
     }
 
@@ -893,18 +576,19 @@
     function renderCharacterSheet(charKey) {
       const c = characterData[charKey];
       if (!c) return '<p>Not found</p>';
+      const isDMPC = charKey === 'dmpc';
 
       const statsHtml = Object.entries(c.stats).map(([name, data]) => {
         const modStr = data.mod >= 0 ? `+${data.mod}` : `${data.mod}`;
-        return `<div class="stat-box"><div class="stat-label">${name}</div><div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div><span class="stat-mod">${modStr}</span><div style="font-size:0.6rem;color:#9088c0;">Save ${data.save >= 0 ? '+' + data.save : data.save}</div></div>`;
+        return `<div class="stat-box"><div class="stat-label">${name}</div><div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div><span class="stat-mod">${modStr}</span><div style="font-size:0.55rem;color:#9088c0;">Save ${data.save >= 0 ? '+' + data.save : data.save}</div></div>`;
       }).join('');
 
       const attacksHtml = c.attacks.map((a, i) => `
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.4rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.3rem;">
-          <span style="font-weight:bold;color:#d4c8ff;min-width:130px;">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span>
-          <span style="color:#c8b8f0;background:rgba(60,40,120,0.4);padding:0.15rem 0.4rem;border-radius:0.4rem;">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.3rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.2rem;font-size:0.8rem;">
+          <span style="font-weight:bold;color:#d4c8ff;min-width:120px;">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span>
+          <span style="color:#c8b8f0;background:rgba(60,40,120,0.4);padding:0.1rem 0.3rem;border-radius:0.3rem;">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span>
           <span style="color:#e8d8ff;">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span>
-          <span style="color:#a098d0;font-size:0.75rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
+          <span style="color:#a098d0;font-size:0.7rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
         </div>`).join('');
 
       const featuresHtml = c.features.map((f, i) => `
@@ -923,20 +607,21 @@
         let boxes = '';
         if (slotUses > 0 && slotUses <= 20) {
           let used = parseInt(localStorage.getItem(slotKey) || '0');
-          for (let i = 0; i < slotUses; i++) {
-            boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this,'${slotKey}',${slotUses})"></span>`;
-          }
+          for (let i = 0; i < slotUses; i++) boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this,'${slotKey}',${slotUses})"></span>`;
         }
-        return `<div class="spell-slot"><div class="slot-level">${level}</div><div class="slot-count">${count}</div>${boxes ? `<div style="display:flex;gap:2px;justify-content:center;margin-top:2px;">${boxes}</div>` : ''}</div>`;
+        return `<div class="spell-slot"><div class="slot-level">${level}</div><div class="slot-count">${count}</div>${boxes ? `<div style="display:flex;gap:1px;justify-content:center;">${boxes}</div>` : ''}</div>`;
       }).join('') : '';
 
+      // Build spell dropdown options
+      const spellOptions = Object.keys(spellDatabase).map(name => `<option value="${name}">${name}</option>`).join('');
+
       return `<div class="char-sheet">
-        <div class="sheet-section">
+        <div class="sheet-section" style="${isDMPC ? 'border-color:rgba(180,160,140,0.4);' : ''}">
           <div class="section-header">
-            <span>📜 ${makeEditable(c.name, 'name', charKey)}</span>
+            <span>📜 ${makeEditable(c.name, 'name', charKey)} ${isDMPC ? '<span style="font-size:0.6rem;color:#d8c8a0;">[DMPC]</span>' : ''}</span>
             <div>
-              <button class="btn-rest" onclick="resetAllByType('${charKey}','short')">🌅 Short Rest</button>
-              <button class="btn-rest" onclick="resetAllByType('${charKey}','long')">🌙 Long Rest</button>
+              <button class="btn-rest" onclick="resetAllByType('${charKey}','short')">🌅 Short</button>
+              <button class="btn-rest" onclick="resetAllByType('${charKey}','long')">🌙 Long</button>
             </div>
           </div>
           <div class="info-grid">
@@ -945,16 +630,20 @@
             <div class="info-item"><span class="info-label">Background</span><span class="info-value">${makeEditable(c.background, 'background', charKey)}</span></div>
             <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey)}</span></div>
           </div>
-          <div style="margin-top:0.5rem;"><strong style="color:#c8b8f0;">Appearance:</strong> <span style="color:#c0b8e8;">${makeEditable(c.appearance, 'appearance', charKey)}</span></div>
+          <div style="margin-top:0.4rem;"><strong style="color:#c8b8f0;">Appearance:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.appearance, 'appearance', charKey)}</span></div>
+          ${c.personality ? `<div style="margin-top:0.3rem;"><strong style="color:#c8b8f0;">Personality:</strong> <ul style="list-style:none;padding:0;color:#c0b8e8;font-size:0.8rem;">${c.personality.map(t => `<li>"${makeEditable(t, 'personality-'+Math.random(), charKey)}"</li>`).join('')}</ul></div>` : ''}
+          ${c.ideal ? `<div style="margin-top:0.2rem;"><strong style="color:#c8b8f0;">Ideal:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.ideal, 'ideal', charKey)}</span></div>` : ''}
+          ${c.bond ? `<div><strong style="color:#c8b8f0;">Bond:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.bond, 'bond', charKey)}</span></div>` : ''}
+          ${c.flaw ? `<div><strong style="color:#c8b8f0;">Flaw:</strong> <span style="color:#c0b8e8;font-size:0.8rem;">${makeEditable(c.flaw, 'flaw', charKey)}</span></div>` : ''}
+          ${isDMPC ? `<div style="margin-top:0.5rem;padding:0.5rem;background:rgba(180,160,140,0.1);border:1px solid rgba(180,160,140,0.3);border-radius:0.4rem;"><strong style="color:#d8c8a0;">DMPC Rules:</strong> <span style="color:#c0b8a0;font-size:0.75rem;">Never solves puzzles. Defers to party face. One tactical hint per combat. Never tie-breaking vote.</span></div>` : ''}
         </div>
 
-        <div class="sheet-section">
-          <div class="section-header">📊 ABILITY SCORES</div>
-          <div class="stat-row">${statsHtml}</div>
-          <div class="info-grid" style="margin-top:0.6rem;">
+        <div class="sheet-section"><div class="section-header">📊 ABILITY SCORES</div><div class="stat-row">${statsHtml}</div>
+          <div class="info-grid" style="margin-top:0.4rem;">
             <div class="info-item"><span class="info-label">AC</span><span class="info-value">${makeEditable(c.combat.ac, 'ac', charKey)}</span></div>
             <div class="info-item"><span class="info-label">HP</span><span class="info-value">${makeEditable(c.combat.hp, 'hp', charKey)}</span></div>
             <div class="info-item"><span class="info-label">Speed</span><span class="info-value">${makeEditable(c.combat.speed, 'speed', charKey)} ft.</span></div>
+            <div class="info-item"><span class="info-label">Init</span><span class="info-value">+${c.combat.initiative}</span></div>
           </div>
         </div>
 
@@ -965,9 +654,17 @@
         ${spellSlotsHtml ? `<div class="sheet-section"><div class="section-header">🔮 SPELL SLOTS</div><div class="spell-slot-grid">${spellSlotsHtml}</div></div>` : ''}
 
         <div class="sheet-section">
-          <div class="section-header">📜 SPELLS</div>
-          <div id="spellsList-${charKey}"></div>
-          <div class="add-form"><input type="text" id="newSpell-${charKey}" placeholder="Spell name"><button class="btn-add" onclick="addSpell('${charKey}')">+ Add</button></div>
+          <div class="section-header">📜 SPELLS & ABILITIES REFERENCE</div>
+          <div class="spell-dropdown-section">
+            <select id="spellSelect-${charKey}" onchange="showSpellInfo('${charKey}')">
+              <option value="">— Select a spell/ability to view —</option>
+              ${spellOptions}
+            </select>
+            <div id="spellInfo-${charKey}" class="spell-info-popup"></div>
+            <button class="btn-add" onclick="addSpellFromDropdown('${charKey}')" style="margin-top:0.3rem;">+ Add Selected to My List</button>
+          </div>
+          <div id="spellsList-${charKey}" style="margin-top:0.5rem;"></div>
+          <div class="add-form"><input type="text" id="newSpell-${charKey}" placeholder="Or type custom spell..."><button class="btn-add" onclick="addSpell('${charKey}')">+ Add</button></div>
         </div>
 
         <div class="sheet-section">
@@ -975,8 +672,8 @@
           <div id="featList-${charKey}">${featuresHtml}</div>
           <div class="add-form">
             <input type="text" id="newFeatName-${charKey}" placeholder="Name" style="flex:1;">
-            <input type="text" id="newFeatDesc-${charKey}" placeholder="Description" style="flex:2;">
-            <input type="text" id="newFeatUses-${charKey}" placeholder="Uses" style="width:60px;">
+            <input type="text" id="newFeatDesc-${charKey}" placeholder="Desc" style="flex:2;">
+            <input type="text" id="newFeatUses-${charKey}" placeholder="Uses" style="width:50px;">
             <button class="btn-add" onclick="addFeature('${charKey}')">+ Add</button>
           </div>
         </div>
@@ -984,82 +681,52 @@
         <div class="sheet-section">
           <div class="section-header">🎒 EQUIPMENT</div>
           <ul class="equipment-list" id="equipList-${charKey}"></ul>
-          <div class="add-form"><input type="text" id="newEquip-${charKey}" placeholder="Item name"><button class="btn-add" onclick="addEquipment('${charKey}')">+ Add</button></div>
+          <div class="add-form"><input type="text" id="newEquip-${charKey}" placeholder="Item"><button class="btn-add" onclick="addEquipment('${charKey}')">+ Add</button></div>
         </div>
 
         <div class="sheet-section">
           <div class="section-header">📖 BACKSTORY</div>
-          <div style="color:#c0b8e8;line-height:1.6;font-style:italic;">${makeEditable(c.backstory, 'backstory', charKey)}</div>
+          <div style="color:#c0b8e8;line-height:1.5;font-style:italic;font-size:0.8rem;">${makeEditable(c.backstory, 'backstory', charKey)}</div>
         </div>
       </div>`;
     }
 
-    // ─── DM PAGE ──────────────────────────────────────────
     function renderDMPage() {
-      return `<div style="text-align:center;padding:1rem;">
+      return `<div style="text-align:center;padding:0.5rem;">
         <h2 style="color:#d4c8ff;">🔐 DM Stargate</h2>
         <p style="color:#a098d0;">Enter PIN:</p>
-        <input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.5rem 1rem;border-radius:0.4rem;font-size:1.2rem;text-align:center;letter-spacing:4px;margin:0.8rem 0;" maxlength="8">
+        <input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:1.1rem;text-align:center;letter-spacing:4px;margin:0.6rem 0;" maxlength="8">
         <br><button class="btn-rest" id="pinSubmit">Unlock</button>
-        <p id="pinError" style="color:#e0a0c0;margin-top:0.5rem;"></p>
-        <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1.5rem;">
+        <p id="pinError" style="color:#e0a0c0;margin-top:0.4rem;"></p>
+        <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1rem;">
           <div class="section-header" style="color:#d4c8ff;">🗝️ CHARACTER SECRETS</div>
-          ${Object.entries(dmSecrets).map(([k, s]) => `<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.8rem;border-radius:0.6rem;margin:0.7rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${characterData[k]?.name || k}</div><div style="color:#c8b8f0;line-height:1.5;">${s}</div></div>`).join('')}
-          
-          <div class="section-header" style="color:#d4c8ff;margin-top:1.5rem;">📋 CHANGE LOG (Last 10)</div>
+          ${Object.entries(dmSecrets).map(([k, s]) => `<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.6rem;border-radius:0.5rem;margin:0.5rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${characterData[k]?.name || k}</div><div style="color:#c8b8f0;font-size:0.8rem;line-height:1.4;">${s}</div></div>`).join('')}
+          <div class="section-header" style="color:#d4c8ff;margin-top:1rem;">📋 CHANGE LOG</div>
           <div class="change-log" id="changeLogContainer"><p style="color:#9088c0;">Loading...</p></div>
-          
-          <div class="section-header" style="color:#d4c8ff;margin-top:1.5rem;">📝 SESSION NOTES</div>
-          
-          <div class="session-notes-form">
-            <div class="form-row">
-              <div style="flex:1;">
-                <label>Date</label>
-                <input type="date" id="sessionDate" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;border-radius:0.3rem;font-family:inherit;margin-top:0.2rem;">
-              </div>
-              <div style="flex:2;">
-                <label>Session Title</label>
-                <input type="text" id="sessionTitle" placeholder="e.g., The Siege of Blackwall" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;border-radius:0.3rem;font-family:inherit;margin-top:0.2rem;">
-              </div>
+          <div class="section-header" style="color:#d4c8ff;margin-top:1rem;">📝 SESSION NOTES</div>
+          <div style="border:2px dashed rgba(140,160,200,0.4);border-radius:0.6rem;padding:0.8rem;margin:0.5rem 0;background:rgba(18,20,35,0.5);">
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem;">
+              <div style="flex:1;"><label style="color:#a0b0d0;font-size:0.7rem;text-transform:uppercase;">Date</label><input type="date" id="sessionDate" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;border-radius:0.25rem;font-family:inherit;margin-top:0.15rem;"></div>
+              <div style="flex:2;"><label style="color:#a0b0d0;font-size:0.7rem;text-transform:uppercase;">Title</label><input type="text" id="sessionTitle" placeholder="Session title..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;border-radius:0.25rem;font-family:inherit;margin-top:0.15rem;"></div>
             </div>
-            <div style="margin-bottom:0.5rem;">
-              <label>Notes</label>
-              <div style="display:flex;gap:0.3rem;margin-top:0.2rem;">
-                <button class="btn-sm" onclick="addBulletToForm()" title="Add bullet point">• +</button>
-                <span style="font-size:0.7rem;color:#9088c0;">Click to add bullets, then type your notes</span>
-              </div>
-              <textarea id="sessionNotes" placeholder="• The party arrived at the ancient ruins...&#10;• They discovered a hidden passage...&#10;• Combat erupted with shadow wraiths..." rows="5" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.5rem;border-radius:0.3rem;font-family:inherit;font-size:0.85rem;resize:vertical;margin-top:0.3rem;"></textarea>
-            </div>
-            <button class="btn-add" onclick="addSessionNote()" style="width:100%;">+ Save Session Note</button>
+            <div><button class="btn-sm" onclick="addBulletToForm()">• +</button> <span style="font-size:0.65rem;color:#9088c0;">Add bullets</span>
+            <textarea id="sessionNotes" rows="4" placeholder="• Notes..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;border-radius:0.25rem;font-family:inherit;font-size:0.8rem;resize:vertical;margin-top:0.2rem;"></textarea></div>
+            <button class="btn-add" onclick="addSessionNote()" style="width:100%;margin-top:0.3rem;">+ Save Session Note</button>
           </div>
-          
-          <div id="sessionNotesContainer" style="margin-top:1rem;">
-            <p style="color:#9088c0;text-align:center;">Loading session notes...</p>
-          </div>
+          <div id="sessionNotesContainer"><p style="color:#9088c0;text-align:center;">Loading...</p></div>
         </div>
       </div>`;
     }
 
     function renderChangeLog() {
-      const container = document.getElementById('changeLogContainer');
-      if (!container) return;
-      if (changeLog.length === 0) {
-        container.innerHTML = '<p style="color:#9088c0;">No changes yet.</p>';
-        return;
-      }
-      container.innerHTML = changeLog.map(e => `<div class="log-entry">[${e.time}] <strong>${e.char}</strong> · ${e.field}: ${e.value}</div>`).join('');
-    }
-
-    function loadSessionNotes() {
-      db.ref('sessionNotes').once('value').then(s => {
-        sessionNotes = s.val() || [];
-        renderSessionNotes();
-      });
+      const c = document.getElementById('changeLogContainer');
+      if (!c) return;
+      c.innerHTML = changeLog.length === 0 ? '<p style="color:#9088c0;">No changes yet.</p>' : changeLog.map(e => `<div class="log-entry">[${e.time}] <strong>${e.char}</strong> · ${e.field}: ${e.value}</div>`).join('');
     }
 
     // ─── TAB SWITCHING ───────────────────────────────────
     function setActiveTab(tabId) {
-      ['drunken','chronurgy','grave','psi','dm'].forEach(id => {
+      ['dmpc','drunken','chronurgy','grave','psi','dm'].forEach(id => {
         const btn = document.getElementById('tab' + id.charAt(0).toUpperCase() + id.slice(1));
         if (btn) btn.classList.remove('active');
       });
@@ -1069,23 +736,15 @@
 
     function switchTab(tabId) {
       Object.values(autoSaveTimers).forEach(t => clearTimeout(t));
-      currentTab = tabId;
-      setActiveTab(tabId);
+      currentTab = tabId; setActiveTab(tabId);
       if (tabId === 'dm') {
-        dmAuthenticated = false;
-        contentPanel.innerHTML = renderDMPage();
+        dmAuthenticated = false; contentPanel.innerHTML = renderDMPage();
         document.getElementById('pinSubmit').addEventListener('click', () => {
           if (document.getElementById('pinInput').value === DM_PIN) {
             dmAuthenticated = true;
             document.getElementById('dmSecretsContainer').style.display = 'block';
-            document.getElementById('pinError').innerText = '';
-            db.ref('changeLog').once('value').then(s => {
-              changeLog = s.val() || [];
-              renderChangeLog();
-            });
-            loadSessionNotes();
-          } else {
-            document.getElementById('pinError').innerText = 'Incorrect PIN';
+            db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; renderChangeLog(); });
+            db.ref('sessionNotes').once('value').then(s => { sessionNotes = s.val() || []; renderSessionNotes(); });
           }
         });
       } else {
@@ -1095,6 +754,7 @@
       }
     }
 
+    document.getElementById('tabDmpc').addEventListener('click', () => switchTab('dmpc'));
     document.getElementById('tabDrunken').addEventListener('click', () => switchTab('drunken'));
     document.getElementById('tabChronurgy').addEventListener('click', () => switchTab('chronurgy'));
     document.getElementById('tabGrave').addEventListener('click', () => switchTab('grave'));
@@ -1102,7 +762,7 @@
     document.getElementById('tabDM').addEventListener('click', () => switchTab('dm'));
 
     db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; });
-    switchTab('drunken');
+    switchTab('dmpc');
   })();
 </script>
 </body>
