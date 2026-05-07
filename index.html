@@ -144,23 +144,11 @@
       overflow-y: auto;
     }
 
-    .content-panel::-webkit-scrollbar {
-      width: 8px;
-    }
-    .content-panel::-webkit-scrollbar-track {
-      background: rgba(20, 15, 40, 0.5);
-      border-radius: 4px;
-    }
-    .content-panel::-webkit-scrollbar-thumb {
-      background: rgba(120, 100, 180, 0.5);
-      border-radius: 4px;
-    }
+    .content-panel::-webkit-scrollbar { width: 8px; }
+    .content-panel::-webkit-scrollbar-track { background: rgba(20, 15, 40, 0.5); border-radius: 4px; }
+    .content-panel::-webkit-scrollbar-thumb { background: rgba(120, 100, 180, 0.5); border-radius: 4px; }
 
-    .char-sheet {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
+    .char-sheet { display: flex; flex-direction: column; gap: 1.2rem; }
 
     .sheet-section {
       border: 2px solid rgba(120, 100, 180, 0.3);
@@ -172,9 +160,7 @@
       transition: border-color 0.3s;
     }
 
-    .sheet-section:hover {
-      border-color: rgba(160, 140, 220, 0.5);
-    }
+    .sheet-section:hover { border-color: rgba(160, 140, 220, 0.5); }
 
     .section-header {
       font-size: 1.2rem;
@@ -189,10 +175,7 @@
       align-items: center;
     }
 
-    .editable-field {
-      position: relative;
-      display: inline-block;
-    }
+    .editable-field { position: relative; display: inline-block; }
 
     .editable-text {
       background: transparent;
@@ -206,16 +189,8 @@
       transition: all 0.2s;
     }
 
-    .editable-text:hover {
-      background: rgba(120, 100, 180, 0.1);
-      border-color: rgba(120, 100, 180, 0.3);
-    }
-
-    .editable-text:focus {
-      background: rgba(120, 100, 180, 0.15);
-      border-color: rgba(160, 140, 220, 0.7);
-      box-shadow: 0 0 10px rgba(120, 100, 200, 0.3);
-    }
+    .editable-text:hover { background: rgba(120, 100, 180, 0.1); border-color: rgba(120, 100, 180, 0.3); }
+    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); box-shadow: 0 0 10px rgba(120, 100, 200, 0.3); }
 
     .pencil-btn {
       background: rgba(120, 100, 180, 0.3);
@@ -230,34 +205,12 @@
       vertical-align: middle;
     }
 
-    .pencil-btn:hover {
-      background: rgba(140, 120, 200, 0.5);
-      color: white;
-      box-shadow: 0 0 8px rgba(120, 100, 200, 0.4);
-    }
+    .pencil-btn:hover { background: rgba(140, 120, 200, 0.5); color: white; box-shadow: 0 0 8px rgba(120, 100, 200, 0.4); }
 
-    .field-group {
-      margin: 0.4rem 0;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-    }
+    .field-group { margin: 0.4rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem; }
+    .field-label { color: #a098d0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; min-width: 60px; }
 
-    .field-label {
-      color: #a098d0;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      min-width: 60px;
-    }
-
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-      gap: 0.7rem;
-      margin: 0.8rem 0;
-    }
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 0.7rem; margin: 0.8rem 0; }
 
     .stat-box {
       border: 2px solid rgba(120, 100, 180, 0.3);
@@ -268,54 +221,15 @@
       box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
     }
 
-    .stat-label {
-      font-size: 0.7rem;
-      color: #a098d0;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+    .stat-label { font-size: 0.7rem; color: #a098d0; letter-spacing: 1px; text-transform: uppercase; }
+    .stat-value { font-size: 1.5rem; font-weight: bold; color: #e8d8ff; margin: 0.1rem 0; }
+    .stat-mod { font-size: 0.85rem; color: #c8b8f0; background: rgba(80, 60, 140, 0.4); border-radius: 1rem; padding: 0.1rem 0.5rem; display: inline-block; }
 
-    .stat-value {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #e8d8ff;
-      margin: 0.1rem 0;
-    }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.7rem; }
 
-    .stat-mod {
-      font-size: 0.85rem;
-      color: #c8b8f0;
-      background: rgba(80, 60, 140, 0.4);
-      border-radius: 1rem;
-      padding: 0.1rem 0.5rem;
-      display: inline-block;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.7rem;
-    }
-
-    .info-item {
-      border: 1px solid rgba(120, 100, 180, 0.25);
-      padding: 0.5rem 0.7rem;
-      border-radius: 0.5rem;
-      background: rgba(20, 15, 35, 0.5);
-    }
-
-    .info-label {
-      font-size: 0.7rem;
-      color: #9088c0;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .info-value {
-      font-size: 1rem;
-      color: #d4c8ff;
-      font-weight: 500;
-    }
+    .info-item { border: 1px solid rgba(120, 100, 180, 0.25); padding: 0.5rem 0.7rem; border-radius: 0.5rem; background: rgba(20, 15, 35, 0.5); }
+    .info-label { font-size: 0.7rem; color: #9088c0; text-transform: uppercase; letter-spacing: 1px; }
+    .info-value { font-size: 1rem; color: #d4c8ff; font-weight: 500; }
 
     .ability-card {
       border: 2px solid rgba(120, 100, 180, 0.25);
@@ -326,101 +240,23 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    .ability-name {
-      font-size: 1rem;
-      color: #d4c8ff;
-      font-weight: bold;
-      border-bottom: 1px solid rgba(120, 100, 180, 0.3);
-      padding-bottom: 0.3rem;
-      margin-bottom: 0.4rem;
-      letter-spacing: 1px;
-    }
+    .ability-name { font-size: 1rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.4rem; letter-spacing: 1px; }
+    .ability-desc { font-size: 0.9rem; color: #c0b8e8; line-height: 1.5; }
+    .ability-cost { color: #e0c8ff; font-weight: bold; font-size: 0.8rem; background: rgba(80, 50, 140, 0.5); padding: 0.2rem 0.5rem; border-radius: 0.5rem; display: inline-block; margin-right: 0.5rem; }
 
-    .ability-desc {
-      font-size: 0.9rem;
-      color: #c0b8e8;
-      line-height: 1.5;
-    }
+    .attack-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid rgba(100, 80, 160, 0.2); flex-wrap: wrap; gap: 0.5rem; }
+    .attack-name { font-weight: bold; color: #d4c8ff; min-width: 130px; }
+    .attack-bonus { color: #c8b8f0; background: rgba(60, 40, 120, 0.4); padding: 0.2rem 0.5rem; border-radius: 0.5rem; }
+    .attack-damage { color: #e8d8ff; }
 
-    .ability-cost {
-      color: #e0c8ff;
-      font-weight: bold;
-      font-size: 0.8rem;
-      background: rgba(80, 50, 140, 0.5);
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.5rem;
-      display: inline-block;
-      margin-right: 0.5rem;
-    }
+    .spell-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(55px, 1fr)); gap: 0.5rem; margin: 0.8rem 0; }
+    .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.4rem; border-radius: 0.5rem; background: rgba(20, 15, 35, 0.5); }
+    .slot-level { font-size: 0.7rem; color: #9088c0; }
+    .slot-count { font-size: 1.2rem; color: #d4c8ff; font-weight: bold; }
 
-    .attack-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem;
-      border-bottom: 1px solid rgba(100, 80, 160, 0.2);
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .attack-name {
-      font-weight: bold;
-      color: #d4c8ff;
-      min-width: 130px;
-    }
-
-    .attack-bonus {
-      color: #c8b8f0;
-      background: rgba(60, 40, 120, 0.4);
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.5rem;
-    }
-
-    .attack-damage {
-      color: #e8d8ff;
-    }
-
-    .spell-slot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
-      gap: 0.5rem;
-      margin: 0.8rem 0;
-    }
-
-    .spell-slot {
-      text-align: center;
-      border: 1px solid rgba(120, 100, 180, 0.3);
-      padding: 0.4rem;
-      border-radius: 0.5rem;
-      background: rgba(20, 15, 35, 0.5);
-    }
-
-    .slot-level {
-      font-size: 0.7rem;
-      color: #9088c0;
-    }
-
-    .slot-count {
-      font-size: 1.2rem;
-      color: #d4c8ff;
-      font-weight: bold;
-    }
-
-    .equipment-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .equipment-list li {
-      padding: 0.35rem 0;
-      border-bottom: 1px solid rgba(100, 80, 160, 0.2);
-      color: #c0b8e8;
-    }
-
-    .equipment-list li::before {
-      content: "✦ ";
-      color: #b0a0e0;
-    }
+    .equipment-list { list-style: none; padding: 0; }
+    .equipment-list li { padding: 0.35rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; }
+    .equipment-list li::before { content: "✦ "; color: #b0a0e0; }
 
     .btn-save {
       background: rgba(80, 50, 140, 0.5);
@@ -434,15 +270,10 @@
       font-size: 0.9rem;
     }
 
-    .btn-save:hover {
-      background: rgba(100, 60, 170, 0.7);
-      box-shadow: 0 0 15px rgba(140, 120, 220, 0.5);
-    }
+    .btn-save:hover { background: rgba(100, 60, 170, 0.7); box-shadow: 0 0 15px rgba(140, 120, 220, 0.5); }
+    .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .dm-pin-section {
-      text-align: center;
-      padding: 2rem;
-    }
+    .dm-pin-section { text-align: center; padding: 2rem; }
 
     .dm-pin-input {
       background: rgba(20, 15, 40, 0.7);
@@ -458,57 +289,68 @@
       margin: 1rem 0;
     }
 
-    .dm-pin-input:focus {
-      border-color: rgba(180, 160, 240, 0.8);
-      box-shadow: 0 0 20px rgba(140, 120, 220, 0.5);
-    }
+    .dm-pin-input:focus { border-color: rgba(180, 160, 240, 0.8); box-shadow: 0 0 20px rgba(140, 120, 220, 0.5); }
 
-    .secret-box {
-      border: 2px dashed rgba(140, 120, 220, 0.5);
-      background: rgba(20, 15, 35, 0.6);
-      padding: 1rem;
-      border-radius: 0.8rem;
-      margin: 1rem 0;
-    }
+    .secret-box { border: 2px dashed rgba(140, 120, 220, 0.5); background: rgba(20, 15, 35, 0.6); padding: 1rem; border-radius: 0.8rem; margin: 1rem 0; }
+    .secret-label { color: #d4c8ff; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
+    .secret-text { color: #c8b8f0; margin-top: 0.5rem; line-height: 1.6; }
 
-    .secret-label {
-      color: #d4c8ff;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-size: 0.9rem;
+    /* Sync status indicator */
+    .sync-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: #a098d0;
+      margin-left: 1rem;
     }
-
-    .secret-text {
-      color: #c8b8f0;
-      margin-top: 0.5rem;
-      line-height: 1.6;
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #6a6a8a;
+      transition: background 0.3s;
     }
+    .sync-dot.synced { background: #7bc8a0; }
+    .sync-dot.saving { background: #e8c86a; animation: pulse 0.8s infinite; }
+    .sync-dot.error { background: #e87070; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 
     @media (max-width: 768px) {
-      .grimoire {
-        padding: 1rem;
-      }
-      .stat-row {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
+      .grimoire { padding: 1rem; }
+      .stat-row { grid-template-columns: repeat(3, 1fr); }
+      h1 { font-size: 1.8rem; }
     }
-
     @media (max-width: 480px) {
-      .stat-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .tab-btn {
-        font-size: 0.7rem;
-        padding: 0.4rem 0.7rem;
-      }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .tab-btn { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIREBASE SETUP
+     1. Go to https://firebase.google.com → Add project
+     2. Build → Realtime Database → Create database (test mode)
+     3. Project Settings → Your apps → Add web app
+     4. Replace EVERY placeholder below with your actual config values
+     ═══════════════════════════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyB4U_qIlk-DRJ1qtt2WWGeJ8jXG4w3d1hc",
+    authDomain: "eve-of-ruin-71419.firebaseapp.com",
+    databaseURL: "https://eve-of-ruin-71419-default-rtdb.firebaseio.com/",
+    projectId: "eve-of-ruin-71419",
+    storageBucket: "eve-of-ruin-71419.firebasestorage.app",
+    messagingSenderId: "671973346909",
+    appId: "1:671973346909:web:71bdc854b05ad20e3607b4",
+  });
+  window._db = firebase.database();
+</script>
+
 <div class="grimoire">
   <h1>✦ Eve of Ruin · Stellar Archive ✦</h1>
 
@@ -525,6 +367,18 @@
 
 <script>
   (function() {
+    const db = window._db;
+
+    // ─── Active listener teardown ───────────────────────────────
+    let activeListenerRef = null;
+    function detachListener() {
+      if (activeListenerRef) {
+        activeListenerRef.off('value');
+        activeListenerRef = null;
+      }
+    }
+
+    // ─── Character data ─────────────────────────────────────────
     const characterData = {
       drunken: {
         name: "Kaelen 'Kettle' Morrow",
@@ -535,11 +389,7 @@
         playerName: "__________________",
         campaign: "Eve of Ruin",
         appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine. He moves with a deceptive grace — stumbling one moment, flowing like water the next.",
-        personality: [
-          "I measure time in drinks, not hours.",
-          "If I'm standing, I'm not that drunk yet.",
-          "I remember things that never happened. Don't ask."
-        ],
+        personality: ["I measure time in drinks, not hours.", "If I'm standing, I'm not that drunk yet.", "I remember things that never happened. Don't ask."],
         ideal: "Memory is a cage. Forgetting is freedom — but only if you choose it, not if it's stolen.",
         bond: "The party is my new monastery. I'll die before I let them be erased like the last one.",
         flaw: "Sometimes I call my friends by names from my lost order. They don't exist anymore. I don't notice until they ask who I'm talking about.",
@@ -551,9 +401,7 @@
           WIS: { score: 18, mod: 4, save: 8 },
           CHA: { score: 10, mod: 0, save: 4 }
         },
-        combat: {
-          ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4
-        },
+        combat: { ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4 },
         attacks: [
           { name: "Unarmed Strike", bonus: "+9", damage: "1d6+5 bludgeoning", notes: "Magical" },
           { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each (two attacks)", notes: "Costs 1 ki" },
@@ -718,7 +566,11 @@
       psi: "Embedded in your psyche is General Zor-Ashkev. You are a sleeper agent. The seven words are a psychic trigger. At the climax, you can choose to suppress the ghost."
     };
 
+    // ─── IMPORTANT: This PIN is visible in the page source to anyone ───
+    // It protects the DM tab from casual visitors but is NOT truly secret.
+    // To properly hide DM content, you would need a server-side auth system.
     const DM_PIN = "8968";
+
     let currentTab = 'drunken';
     let dmAuthenticated = false;
     const contentPanel = document.getElementById('contentPanel');
@@ -751,8 +603,7 @@
     window.toggleEditField = function(id) {
       const el = document.getElementById(id);
       if (!el) return;
-      if (el.contentEditable === 'true' || el.tagName === 'INPUT') {
-        // Save mode
+      if (el.contentEditable === 'true' || (el.tagName === 'INPUT' && !el.readOnly)) {
         if (el.tagName === 'INPUT') {
           el.readOnly = true;
           el.style.border = '1px solid transparent';
@@ -762,7 +613,6 @@
           el.style.background = 'transparent';
         }
       } else {
-        // Edit mode
         if (el.tagName === 'INPUT') {
           el.readOnly = false;
           el.style.border = '1px solid rgba(160,140,220,0.6)';
@@ -776,6 +626,65 @@
       }
     };
 
+    // ─── Sync status helper ──────────────────────────────────────
+    function setSyncStatus(state, label) {
+      const dot = document.getElementById('syncDot');
+      const txt = document.getElementById('syncText');
+      if (!dot || !txt) return;
+      dot.className = 'sync-dot ' + state;
+      txt.textContent = label;
+    }
+
+    // ─── Firebase: save all edits for a character ────────────────
+    window.saveAllEdits = function(charKey) {
+      const editables = document.querySelectorAll(`[data-char="${charKey}"]`);
+      const savedData = {};
+      editables.forEach(el => {
+        const field = el.getAttribute('data-field');
+        if (field) savedData[field] = el.tagName === 'INPUT' ? el.value : el.textContent;
+      });
+
+      setSyncStatus('saving', 'Saving…');
+      const btn = document.getElementById('saveBtn-' + charKey);
+      if (btn) btn.disabled = true;
+
+      db.ref('characters/' + charKey).set(savedData)
+        .then(() => {
+          setSyncStatus('synced', 'Saved ✓');
+          if (btn) btn.disabled = false;
+        })
+        .catch(err => {
+          console.error('Firebase save error:', err);
+          setSyncStatus('error', 'Save failed ✗');
+          if (btn) btn.disabled = false;
+          alert('Save failed. Check your Firebase config in the HTML file.');
+        });
+    };
+
+    // ─── Firebase: load & live-sync edits for a character ────────
+    function loadCharacterEdits(charKey) {
+      detachListener();
+      const ref = db.ref('characters/' + charKey);
+      activeListenerRef = ref;
+
+      setSyncStatus('saving', 'Loading…');
+      ref.on('value', (snapshot) => {
+        const data = snapshot.val();
+        setSyncStatus('synced', 'Live ✓');
+        if (!data) return;
+        Object.entries(data).forEach(([field, value]) => {
+          document.querySelectorAll(`[data-char="${charKey}"][data-field="${field}"]`).forEach(el => {
+            if (el.tagName === 'INPUT') el.value = value;
+            else el.textContent = value;
+          });
+        });
+      }, (err) => {
+        console.error('Firebase read error:', err);
+        setSyncStatus('error', 'Offline');
+      });
+    }
+
+    // ─── Render helpers ──────────────────────────────────────────
     function renderStatBox(label, score, mod, save, charKey, statKey) {
       const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
       const saveStr = save >= 0 ? `+${save}` : `${save}`;
@@ -784,16 +693,15 @@
           <div class="stat-label">${label}</div>
           <div class="stat-value">${makeEditable(score, `stat-${statKey}-score`, charKey)}</div>
           <span class="stat-mod">${modStr}</span>
-          <div style="font-size:0.7rem; color:#9088c0; margin-top:0.2rem;">Save ${saveStr}</div>
-        </div>
-      `;
+          <div style="font-size:0.7rem;color:#9088c0;margin-top:0.2rem;">Save ${saveStr}</div>
+        </div>`;
     }
 
     function renderCharacterSheet(charKey) {
       const c = characterData[charKey];
       if (!c) return '<p style="color:#c8b8f0;">Character not found.</p>';
 
-      const statsHtml = Object.entries(c.stats).map(([name, data]) => 
+      const statsHtml = Object.entries(c.stats).map(([name, data]) =>
         renderStatBox(name, data.score, data.mod, data.save, charKey, name)
       ).join('');
 
@@ -802,9 +710,8 @@
           <span class="attack-name">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span>
           <span class="attack-bonus">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span>
           <span class="attack-damage">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span>
-          <span style="color:#a098d0; font-size:0.8rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
-        </div>
-      `).join('');
+          <span style="color:#a098d0;font-size:0.8rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
+        </div>`).join('');
 
       const featuresHtml = c.features.map((f, i) => `
         <div class="ability-card">
@@ -813,8 +720,7 @@
             ${f.cost ? `<span class="ability-cost">${makeEditable(f.cost, `feat-cost-${i}`, charKey)}</span>` : ''}
           </div>
           <div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>
-        </div>
-      `).join('');
+        </div>`).join('');
 
       const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => {
         const bonusStr = bonus >= 0 ? `+${bonus}` : `${bonus}`;
@@ -825,10 +731,9 @@
         <div class="spell-slot">
           <div class="slot-level">${level}</div>
           <div class="slot-count">${count}</div>
-        </div>
-      `).join('') : '';
+        </div>`).join('') : '';
 
-      const equipmentHtml = c.equipment ? c.equipment.map((item, i) => 
+      const equipmentHtml = c.equipment ? c.equipment.map((item, i) =>
         `<li>${makeEditable(item, `equip-${i}`, charKey)}</li>`
       ).join('') : '';
 
@@ -837,11 +742,11 @@
           <div class="sheet-section">
             <div class="section-header">
               <span>📜 CHARACTER SHEET</span>
-              <span style="font-size:0.85rem; color:#a098d0;">${c.campaign}</span>
+              <span style="font-size:0.85rem;color:#a098d0;">${c.campaign}</span>
             </div>
             <div class="field-group">
               <span class="field-label">Name:</span>
-              ${makeEditable(c.name, 'name', charKey, 'span', '')}
+              ${makeEditable(c.name, 'name', charKey)}
             </div>
             <div class="info-grid" style="margin-top:0.5rem;">
               <div class="info-item"><span class="info-label">Class & Level</span><span class="info-value">${makeEditable(c.classLevel, 'classLevel', charKey)}</span></div>
@@ -852,7 +757,7 @@
             </div>
             <div style="margin-top:0.8rem;">
               <strong style="color:#c8b8f0;">Appearance:</strong>
-              <p style="color:#c0b8e8; line-height:1.6; margin-top:0.3rem;">${makeEditable(c.appearance, 'appearance', charKey)}</p>
+              <p style="color:#c0b8e8;line-height:1.6;margin-top:0.3rem;">${makeEditable(c.appearance, 'appearance', charKey)}</p>
             </div>
           </div>
 
@@ -867,12 +772,7 @@
             </div>
           </div>
 
-          ${skillsHtml ? `
-          <div class="sheet-section">
-            <div class="section-header">🎯 SKILLS</div>
-            <div class="info-grid">${skillsHtml}</div>
-          </div>
-          ` : ''}
+          ${skillsHtml ? `<div class="sheet-section"><div class="section-header">🎯 SKILLS</div><div class="info-grid">${skillsHtml}</div></div>` : ''}
 
           <div class="sheet-section">
             <div class="section-header">⚔️ ATTACKS</div>
@@ -885,8 +785,7 @@
             <div class="spell-slot-grid">${spellSlotsHtml}</div>
             ${c.domainSpells ? `<div style="margin-top:0.8rem;"><strong style="color:#d4c8ff;">Domain Spells:</strong> ${c.domainSpells.map(s => makeEditable(s, `domain-${s}`, charKey)).join(' | ')}</div>` : ''}
             ${c.spells ? `<div style="margin-top:0.5rem;"><strong style="color:#d4c8ff;">Spells:</strong> ${c.spells.map(s => makeEditable(s, `spell-${s}`, charKey)).join(' · ')}</div>` : ''}
-          </div>
-          ` : ''}
+          </div>` : ''}
 
           <div class="sheet-section">
             <div class="section-header">✨ FEATURES & ABILITIES</div>
@@ -897,52 +796,25 @@
           <div class="sheet-section">
             <div class="section-header">🎒 EQUIPMENT</div>
             <ul class="equipment-list">${equipmentHtml}</ul>
-          </div>
-          ` : ''}
+          </div>` : ''}
 
           <div class="sheet-section">
             <div class="section-header">📖 BACKSTORY</div>
-            <div style="color:#c0b8e8; line-height:1.7; font-style:italic;">
-              ${makeEditable(c.backstory, 'backstory', charKey)}
-            </div>
+            <div style="color:#c0b8e8;line-height:1.7;font-style:italic;">${makeEditable(c.backstory, 'backstory', charKey)}</div>
           </div>
 
-          <div style="text-align:center; margin-top:0.5rem;">
-            <button class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save All Changes</button>
-            <span style="color:#a098d0; font-size:0.8rem; margin-left:1rem;">Click ✎ to edit any field</span>
+          <div style="text-align:center;margin-top:0.5rem;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.5rem;">
+            <button id="saveBtn-${charKey}" class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save Changes for Everyone</button>
+            <span class="sync-status">
+              <span class="sync-dot" id="syncDot"></span>
+              <span id="syncText">Connecting…</span>
+            </span>
+            <span style="color:#a098d0;font-size:0.8rem;">Click ✎ to edit any field</span>
           </div>
-        </div>
-      `;
+        </div>`;
     }
 
-    window.saveAllEdits = function(charKey) {
-      const editables = document.querySelectorAll(`[data-char="${charKey}"]`);
-      const savedData = {};
-      editables.forEach(el => {
-        const field = el.getAttribute('data-field');
-        if (field) {
-          savedData[field] = el.tagName === 'INPUT' ? el.value : el.textContent;
-        }
-      });
-      localStorage.setItem(`charEdit_${charKey}`, JSON.stringify(savedData));
-      alert('All changes saved to local storage!');
-    };
-
-    function loadCharacterEdits(charKey) {
-      const saved = localStorage.getItem(`charEdit_${charKey}`);
-      if (!saved) return;
-      try {
-        const data = JSON.parse(saved);
-        Object.entries(data).forEach(([field, value]) => {
-          const els = document.querySelectorAll(`[data-char="${charKey}"][data-field="${field}"]`);
-          els.forEach(el => {
-            if (el.tagName === 'INPUT') el.value = value;
-            else el.textContent = value;
-          });
-        });
-      } catch(e) {}
-    }
-
+    // ─── DM Page ─────────────────────────────────────────────────
     function renderDMPage() {
       return `
         <div class="dm-pin-section">
@@ -951,36 +823,62 @@
           <input type="password" id="pinInput" class="dm-pin-input" placeholder="****" maxlength="8">
           <br>
           <button class="btn-save" id="pinSubmit" style="margin-top:1rem;">Unlock</button>
-          <p id="pinError" style="color:#e0a0c0; margin-top:1rem;"></p>
-          <div id="dmSecretsContainer" style="display:none; text-align:left; margin-top:2rem;">
+          <p id="pinError" style="color:#e0a0c0;margin-top:1rem;"></p>
+          <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:2rem;">
             <div class="section-header" style="color:#d4c8ff;">🗝️ CHARACTER SECRETS</div>
             ${Object.entries(dmSecrets).map(([key, secret]) => `
               <div class="secret-box">
                 <div class="secret-label">${characterData[key]?.name || key}</div>
                 <div class="secret-text">${makeEditable(secret, `dm-secret-${key}`, 'dm')}</div>
-              </div>
-            `).join('')}
+              </div>`).join('')}
             <div style="margin-top:1.5rem;">
               <label style="color:#d4c8ff;">📝 DM Notes:</label>
-              <textarea id="dmEditArea" rows="4" style="width:100%; background:rgba(20,15,40,0.7); border:1px solid rgba(140,120,220,0.4); color:#e8e0ff; padding:0.7rem; border-radius:0.5rem; font-family:inherit; margin-top:0.5rem;" placeholder="Campaign notes..."></textarea>
-              <button class="btn-save" onclick="saveDMNotes()" style="margin-top:0.7rem;">Save DM Notes</button>
+              <textarea id="dmEditArea" rows="4" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.7rem;border-radius:0.5rem;font-family:inherit;margin-top:0.5rem;" placeholder="Campaign notes…"></textarea>
+              <div style="display:flex;align-items:center;gap:0.8rem;margin-top:0.7rem;">
+                <button class="btn-save" onclick="saveDMNotes()">Save DM Notes for Everyone</button>
+                <span class="sync-status">
+                  <span class="sync-dot" id="syncDot"></span>
+                  <span id="syncText">Ready</span>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      `;
+        </div>`;
     }
 
+    // ─── Firebase: save DM notes ─────────────────────────────────
     window.saveDMNotes = function() {
       const ta = document.getElementById('dmEditArea');
-      if (ta) {
-        localStorage.setItem('dm_notes', ta.value);
-        alert('DM notes saved.');
-      }
+      if (!ta) return;
+      setSyncStatus('saving', 'Saving…');
+      db.ref('dm/notes').set(ta.value)
+        .then(() => setSyncStatus('synced', 'Saved ✓'))
+        .catch(err => {
+          console.error('Firebase DM save error:', err);
+          setSyncStatus('error', 'Save failed ✗');
+          alert('Save failed. Check your Firebase config.');
+        });
     };
 
+    // ─── Firebase: load DM notes ─────────────────────────────────
+    function loadDMNotes() {
+      detachListener();
+      const ref = db.ref('dm/notes');
+      activeListenerRef = ref;
+      ref.on('value', (snapshot) => {
+        const val = snapshot.val();
+        const ta = document.getElementById('dmEditArea');
+        if (ta && val !== null) ta.value = val;
+        setSyncStatus('synced', 'Live ✓');
+      });
+    }
+
+    // ─── Tab switching ───────────────────────────────────────────
     function switchTab(tabId) {
+      detachListener();
       currentTab = tabId;
       setActiveTab(tabId);
+
       if (tabId === 'dm') {
         dmAuthenticated = false;
         contentPanel.innerHTML = renderDMPage();
@@ -990,8 +888,7 @@
             dmAuthenticated = true;
             document.getElementById('dmSecretsContainer').style.display = 'block';
             document.getElementById('pinError').innerText = '';
-            const saved = localStorage.getItem('dm_notes');
-            if (saved) document.getElementById('dmEditArea').value = saved;
+            loadDMNotes();
           } else {
             document.getElementById('pinError').innerText = 'Incorrect PIN.';
             document.getElementById('dmSecretsContainer').style.display = 'none';
