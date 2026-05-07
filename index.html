@@ -241,7 +241,6 @@
     .ability-desc { font-size: 0.9rem; color: #c0b8e8; line-height: 1.5; }
     .ability-cost { color: #e0c8ff; font-weight: bold; font-size: 0.8rem; background: rgba(80, 50, 140, 0.5); padding: 0.2rem 0.5rem; border-radius: 0.5rem; display: inline-block; margin-right: 0.5rem; }
 
-    /* Checkbox tracking styles */
     .usage-tracker {
       display: flex;
       align-items: center;
@@ -409,7 +408,7 @@
     let dmAuthenticated = false;
     const contentPanel = document.getElementById('contentPanel');
 
-    // ─── FULL CHARACTER DATA (same as before) ───────────────
+    // ─── CHARACTER DATA ──────────────────────────────────
     const characterData = {
       drunken: {
         name: "Kaelen 'Kettle' Morrow",
@@ -420,7 +419,7 @@
         playerName: "__________________",
         campaign: "Eve of Ruin",
         appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes.",
-        personality: ["I measure time in drinks, not hours.", "If I'm standing, I'm not that drunk yet.", "I remember things that never happened. Don't ask."],
+        personality: ["I measure time in drinks, not hours.", "If I'm standing, I'm not that drunk yet."],
         ideal: "Memory is a cage. Forgetting is freedom.",
         bond: "The party is my new monastery.",
         flaw: "Sometimes I call my friends by names from my lost order.",
@@ -435,20 +434,17 @@
         combat: { ac: 19, hp: 73, speed: 50, initiative: 5, hitDice: "10d8", proficiency: 4 },
         attacks: [
           { name: "Unarmed Strike", bonus: "+9", damage: "1d6+5 bludgeoning", notes: "Magical" },
-          { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each (two attacks)", notes: "Costs 1 ki" }
+          { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each", notes: "Costs 1 ki" }
         ],
-        skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9, "Sleight of Hand": 9, Athletics: 4 },
-        tools: "Brewer's supplies",
-        languages: "Common, Primordial",
+        skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9 },
         features: [
           { name: "Flurry of Blows", desc: "Spend 1 ki to make two unarmed strikes as a bonus action.", cost: "1 ki", uses: 10 },
-          { name: "Stunning Strike", desc: "Spend 1 ki to stun on hit (CON save).", cost: "1 ki per attempt", uses: 10 },
-          { name: "Patient Defense", desc: "Spend 1 ki to Dodge as bonus action.", cost: "1 ki", uses: 10 }
+          { name: "Stunning Strike", desc: "Spend 1 ki to stun on hit (CON save).", cost: "1 ki", uses: 10 }
         ],
         spellSlots: null,
         spells: [],
-        equipment: ["Quarterstaff", "10 darts", "Explorer's pack", "Worn flask", "10 gp"],
-        backstory: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor."
+        equipment: ["Quarterstaff", "10 darts", "Worn flask", "10 gp"],
+        backstory: "The Monastery of the Unremembered Path was erased by a fragment of the Rod."
       },
       chronurgy: {
         name: "Vesper Aldric",
@@ -459,9 +455,9 @@
         playerName: "__________________",
         campaign: "Eve of Ruin",
         appearance: "Vesper carries the weight of futures that may never come.",
-        personality: ["Time is a river, and I've learned to swim upstream.", "I always keep a backup plan.", "Punctuality is the highest form of respect."],
+        personality: ["Time is a river, and I've learned to swim upstream."],
         ideal: "Knowledge is the only true currency across timelines.",
-        bond: "I've seen the end of this story. I'm here to rewrite it.",
+        bond: "I've seen the end of this story.",
         flaw: "I sometimes respond to things that haven't happened yet.",
         stats: {
           STR: { score: 8, mod: -1, save: 3 },
@@ -476,16 +472,14 @@
           { name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" }
         ],
         skills: { Arcana: 9, History: 9, Investigation: 9 },
-        tools: "Calligrapher's supplies",
-        languages: "Common, Draconic, Primordial, Celestial",
         features: [
           { name: "Chronal Shift", desc: "Reaction: force a reroll within 30 ft.", cost: "2 uses / long rest", uses: 2 },
-          { name: "Arcane Abeyance", desc: "Store a spell (4th or lower) in a bead for 1 hour.", cost: "1 use / short rest", uses: 1 }
+          { name: "Arcane Abeyance", desc: "Store a spell in a bead for 1 hour.", cost: "1 use / short rest", uses: 1 }
         ],
         spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        spells: ["Shield (1st)", "Misty Step (2nd)", "Counterspell (3rd)", "Haste (3rd)", "Dimension Door (4th)", "Wall of Force (5th)"],
-        equipment: ["Spellbook", "Component pouch", "Hourglass pendant", "Scholar's pack", "15 gp"],
-        backstory: "Vesper caught a glimpse of the end — the Rod assembled and the multiverse collapsing."
+        spells: ["Shield (1st)", "Misty Step (2nd)", "Counterspell (3rd)", "Haste (3rd)"],
+        equipment: ["Spellbook", "Component pouch", "Hourglass pendant"],
+        backstory: "Vesper caught a glimpse of the end — the Rod assembled."
       },
       grave: {
         name: "Morwen",
@@ -495,8 +489,8 @@
         alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side.",
-        personality: ["I speak to the dead.", "Death doesn't frighten me.", "I keep a list of everyone I've buried."],
+        appearance: "You have the stillness of a grave.",
+        personality: ["I speak to the dead.", "Death doesn't frighten me."],
         ideal: "Death is a door, not a wall.",
         bond: "The Raven Queen saved me.",
         flaw: "I have no fear of death.",
@@ -512,17 +506,14 @@
         attacks: [
           { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic", notes: "Wisdom save" }
         ],
-        skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9, Perception: 9 },
-        tools: "Herbalism Kit",
-        languages: "Common, Primordial",
+        skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9 },
         features: [
-          { name: "Channel Divinity: Path to the Grave", desc: "Curse target; next attack deals double damage.", cost: "1 Channel Divinity", uses: 2 },
-          { name: "Sentinel at Death's Door", desc: "Reaction: cancel a crit within 30 ft.", cost: "Reaction", uses: "∞" },
-          { name: "Eyes of the Grave", desc: "Detect undead within 60 ft.", cost: "PB uses / long rest", uses: 4 }
+          { name: "Path to the Grave", desc: "Curse target; next attack deals double damage.", cost: "1 Channel Divinity", uses: 2 },
+          { name: "Sentinel at Death's Door", desc: "Reaction: cancel a crit within 30 ft.", cost: "Reaction", uses: "∞" }
         ],
         spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        spells: ["Guidance (cantrip)", "Toll the Dead (cantrip)", "Bless (1st)", "Healing Word (1st)", "Spiritual Weapon (2nd)", "Spirit Guardians (3rd)", "Death Ward (4th)", "Greater Restoration (5th)"],
-        equipment: ["Breastplate", "Holy symbol", "Mace", "Prayer book", "Bell for funeral rites", "15 gp"],
+        spells: ["Guidance (cantrip)", "Toll the Dead (cantrip)", "Bless (1st)", "Healing Word (1st)"],
+        equipment: ["Breastplate", "Holy symbol", "Mace", "Prayer book"],
         backstory: "You died and the Raven Queen gave you a second chance."
       },
       psi: {
@@ -533,8 +524,8 @@
         alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have an unnerving stillness. Your eyes are pale silver.",
-        personality: ["I don't remember learning half of what I know.", "I count things. Steps. Arrows. Lies.", "Sometimes I speak in a language I've never heard."],
+        appearance: "You have an unnerving stillness.",
+        personality: ["I don't remember learning half of what I know."],
         ideal: "Order is a tool, not a master.",
         bond: "The party is my unit.",
         flaw: "When stressed, I speak in the Wind Duke's voice.",
@@ -550,18 +541,15 @@
         attacks: [
           { name: "Longsword", bonus: "+7", damage: "1d8+5 slashing", notes: "+2 Dueling" }
         ],
-        skills: { Athletics: 7, Perception: 4, History: 6, Investigation: 6 },
-        tools: "Calligrapher's tools",
-        languages: "Common, Primordial",
+        skills: { Athletics: 7, Perception: 4, History: 6 },
         features: [
           { name: "Psionic Power (6 dice)", desc: "6 Psionic Energy dice (d8), recharge on long rest.", cost: "6 dice / long rest", uses: 6 },
-          { name: "Protective Field", desc: "Reaction: reduce damage by 1d8+2 within 30 ft.", cost: "1 die", uses: 6 },
           { name: "Action Surge", desc: "Take an additional action.", cost: "1 / short rest", uses: 1 }
         ],
         spellSlots: null,
         spells: [],
-        equipment: ["Plate armor", "Longsword", "Heavy crossbow", "Silver cube", "15 gp"],
-        backstory: "You woke up with seven words carved into your forearm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
+        equipment: ["Plate armor", "Longsword", "Heavy crossbow", "Silver cube"],
+        backstory: "Seven words carved into your forearm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
       }
     };
 
@@ -596,7 +584,7 @@
       }
     };
 
-    // ─── USAGE CHECKBOX LOGIC ───────────────────────────
+    // ─── USAGE CHECKBOX LOGIC ────────────────────────────
     function renderUsageCheckboxes(charKey, featureIndex, maxUses) {
       if (maxUses === "∞" || maxUses === "Passive" || !maxUses || maxUses === 0) return '';
       const num = parseInt(maxUses);
@@ -635,22 +623,29 @@
       boxes.forEach(b => b.classList.remove('used'));
     };
 
-    // ─── ADD/REMOVE FUNCTIONS ───────────────────────────
+    // ─── ADD FUNCTIONS (only save the new item, not everything) ──
     window.addSpell = function(charKey) {
       const input = document.getElementById(`newSpell-${charKey}`);
       if (!input || !input.value.trim()) return;
       const spellName = input.value.trim();
       
-      const spellsList = document.getElementById(`spellsList-${charKey}`);
-      const index = Date.now();
-      const div = document.createElement('div');
-      div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
-      div.innerHTML = `
-        <span class="editable-text" contenteditable="true" data-field="spell-${index}" data-char="${charKey}" style="flex:1;">${escapeHtml(spellName)}</span>
-        <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
-        <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>`;
-      spellsList.appendChild(div);
-      input.value = '';
+      // Save ONLY this new spell to Firebase
+      db.ref(`characters/${charKey}/spells`).once('value').then(snapshot => {
+        const currentSpells = snapshot.val() || [];
+        currentSpells.push(spellName);
+        return db.ref(`characters/${charKey}/spells`).set(currentSpells);
+      }).then(() => {
+        // Update the UI
+        const spellsList = document.getElementById(`spellsList-${charKey}`);
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
+        div.innerHTML = `
+          <span class="editable-text" contenteditable="true" style="flex:1;">${escapeHtml(spellName)}</span>
+          <button class="pencil-btn" onclick="editDynamicItem(this, '${charKey}', 'spells')">✎</button>
+          <button class="btn-remove" onclick="removeDynamicItem(this, '${charKey}', 'spells', '${escapeHtml(spellName)}')">✕</button>`;
+        spellsList.appendChild(div);
+        input.value = '';
+      });
     };
 
     window.addEquipment = function(charKey) {
@@ -658,15 +653,21 @@
       if (!input || !input.value.trim()) return;
       const itemName = input.value.trim();
       
-      const equipList = document.getElementById(`equipList-${charKey}`);
-      const li = document.createElement('li');
-      li.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
-      li.innerHTML = `
-        <span class="editable-text" contenteditable="true" data-field="equip-custom-${Date.now()}" data-char="${charKey}" style="flex:1;">✦ ${escapeHtml(itemName)}</span>
-        <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
-        <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>`;
-      equipList.appendChild(li);
-      input.value = '';
+      db.ref(`characters/${charKey}/equipment`).once('value').then(snapshot => {
+        const currentEquip = snapshot.val() || [];
+        currentEquip.push(itemName);
+        return db.ref(`characters/${charKey}/equipment`).set(currentEquip);
+      }).then(() => {
+        const equipList = document.getElementById(`equipList-${charKey}`);
+        const li = document.createElement('li');
+        li.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+        li.innerHTML = `
+          <span class="editable-text" contenteditable="true" style="flex:1;">✦ ${escapeHtml(itemName)}</span>
+          <button class="pencil-btn" onclick="editDynamicItem(this, '${charKey}', 'equipment')">✎</button>
+          <button class="btn-remove" onclick="removeDynamicItem(this, '${charKey}', 'equipment', '${escapeHtml(itemName)}')">✕</button>`;
+        equipList.appendChild(li);
+        input.value = '';
+      });
     };
 
     window.addFeature = function(charKey) {
@@ -675,119 +676,195 @@
       const usesInput = document.getElementById(`newFeatUses-${charKey}`);
       if (!nameInput || !nameInput.value.trim()) return;
       
-      const featList = document.getElementById(`featList-${charKey}`);
-      const index = Date.now();
-      const maxUses = usesInput.value.trim() || '0';
-      const usesCheckboxes = (maxUses !== '0' && maxUses !== '∞' && maxUses !== 'Passive') 
-        ? renderUsageCheckboxes(charKey, index, maxUses) : '';
+      const newFeature = {
+        name: nameInput.value.trim(),
+        desc: descInput.value.trim() || 'New ability',
+        cost: usesInput.value.trim() || 'Passive',
+        uses: usesInput.value.trim() || 0
+      };
       
-      const div = document.createElement('div');
-      div.className = 'ability-card';
-      div.innerHTML = `
-        <div class="ability-name">
-          <span class="editable-text" contenteditable="true" data-field="feat-name-custom-${index}" data-char="${charKey}">${escapeHtml(nameInput.value.trim())}</span>
-          ${maxUses ? `<span class="ability-cost">${escapeHtml(maxUses)} uses</span>` : ''}
-          <button class="btn-remove" onclick="this.parentElement.parentElement.remove()">✕</button>
-        </div>
-        <div class="ability-desc">
-          <span class="editable-text" contenteditable="true" data-field="feat-desc-custom-${index}" data-char="${charKey}">${escapeHtml(descInput.value.trim() || 'New ability')}</span>
-        </div>
-        ${usesCheckboxes}`;
-      featList.appendChild(div);
-      nameInput.value = '';
-      descInput.value = '';
-      usesInput.value = '';
-    };
-
-    // ─── SAVE TO FIREBASE ────────────────────────────────
-    window.saveAllEdits = function(charKey) {
-      const editables = document.querySelectorAll(`[data-char="${charKey}"]`);
-      const savedData = {};
-      editables.forEach(el => {
-        const field = el.getAttribute('data-field');
-        if (field) savedData[field] = el.tagName === 'INPUT' ? el.value : el.textContent;
-      });
-      
-      // Also save dynamic lists
-      const spellsContainer = document.getElementById(`spellsList-${charKey}`);
-      if (spellsContainer) {
-        const spellEls = spellsContainer.querySelectorAll('.editable-text');
-        savedData._spells = Array.from(spellEls).map(el => el.textContent);
-      }
-      const equipContainer = document.getElementById(`equipList-${charKey}`);
-      if (equipContainer) {
-        const equipEls = equipContainer.querySelectorAll('.editable-text');
-        savedData._equipment = Array.from(equipEls).map(el => el.textContent.replace('✦ ', ''));
-      }
-      const featContainer = document.getElementById(`featList-${charKey}`);
-      if (featContainer) {
-        const featCards = featContainer.querySelectorAll('.ability-card');
-        savedData._features = Array.from(featCards).map(card => ({
-          name: card.querySelector('.ability-name .editable-text')?.textContent || '',
-          desc: card.querySelector('.ability-desc .editable-text')?.textContent || '',
-          cost: card.querySelector('.ability-cost')?.textContent || ''
-        }));
-      }
-
-      db.ref('characters/' + charKey).set(savedData)
-        .then(() => alert('All changes saved for everyone! ✦'))
-        .catch(err => { console.error(err); alert('Save failed. Check Firebase config.'); });
-    };
-
-    function loadCharacterEdits(charKey) {
-      detachListener();
-      const ref = db.ref('characters/' + charKey);
-      activeListenerRef = ref;
-      ref.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (!data) return;
-        Object.entries(data).forEach(([field, value]) => {
-          if (field.startsWith('_')) return; // Skip meta fields
-          document.querySelectorAll(`[data-char="${charKey}"][data-field="${field}"]`).forEach(el => {
-            if (el.tagName === 'INPUT') el.value = value;
-            else el.textContent = value;
-          });
-        });
-        // Restore dynamic lists
-        if (data._spells) restoreDynamicList(charKey, 'spellsList', data._spells, 'spell');
-        if (data._equipment) restoreDynamicList(charKey, 'equipList', data._equipment, 'equip');
-        if (data._features) restoreFeatures(charKey, data._features);
-      });
-    }
-
-    function restoreDynamicList(charKey, containerId, items, prefix) {
-      const container = document.getElementById(`${containerId}-${charKey}`);
-      if (!container || !items) return;
-      container.querySelectorAll('.dynamic-item').forEach(el => el.remove());
-      items.forEach((item, i) => {
+      db.ref(`characters/${charKey}/customFeatures`).once('value').then(snapshot => {
+        const currentFeatures = snapshot.val() || [];
+        currentFeatures.push(newFeature);
+        return db.ref(`characters/${charKey}/customFeatures`).set(currentFeatures);
+      }).then(() => {
+        const featList = document.getElementById(`featList-${charKey}`);
         const div = document.createElement('div');
-        div.className = 'dynamic-item';
-        div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
-        div.innerHTML = `
-          <span class="editable-text" contenteditable="true" data-field="${prefix}-custom-${i}" data-char="${charKey}" style="flex:1;">${escapeHtml(item)}</span>
-          <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
-          <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>`;
-        container.appendChild(div);
-      });
-    }
-
-    function restoreFeatures(charKey, features) {
-      const container = document.getElementById(`featList-${charKey}`);
-      if (!container || !features) return;
-      container.querySelectorAll('.dynamic-feature').forEach(el => el.remove());
-      features.forEach((f, i) => {
-        const div = document.createElement('div');
-        div.className = 'ability-card dynamic-feature';
+        div.className = 'ability-card';
         div.innerHTML = `
           <div class="ability-name">
-            <span class="editable-text" contenteditable="true" data-field="feat-name-custom-${i}" data-char="${charKey}">${escapeHtml(f.name)}</span>
-            ${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}
-            <button class="btn-remove" onclick="this.parentElement.parentElement.remove()">✕</button>
+            <span class="editable-text" contenteditable="true">${escapeHtml(newFeature.name)}</span>
+            ${newFeature.cost ? `<span class="ability-cost">${escapeHtml(newFeature.cost)}</span>` : ''}
+            <button class="btn-remove" onclick="removeDynamicItem(this, '${charKey}', 'customFeatures', '${escapeHtml(newFeature.name)}')">✕</button>
           </div>
           <div class="ability-desc">
-            <span class="editable-text" contenteditable="true" data-field="feat-desc-custom-${i}" data-char="${charKey}">${escapeHtml(f.desc)}</span>
-          </div>`;
-        container.appendChild(div);
+            <span class="editable-text" contenteditable="true">${escapeHtml(newFeature.desc)}</span>
+          </div>
+          ${renderUsageCheckboxes(charKey, Date.now(), newFeature.uses)}`;
+        featList.appendChild(div);
+        nameInput.value = '';
+        descInput.value = '';
+        usesInput.value = '';
+      });
+    };
+
+    // ─── REMOVE FUNCTIONS (only remove the one item) ─────
+    window.removeDynamicItem = function(btn, charKey, category, itemName) {
+      if (!confirm('Remove this item?')) return;
+      
+      db.ref(`characters/${charKey}/${category}`).once('value').then(snapshot => {
+        const items = snapshot.val() || [];
+        const filtered = items.filter(item => {
+          if (typeof item === 'string') return item !== itemName;
+          if (typeof item === 'object') return item.name !== itemName;
+          return true;
+        });
+        return db.ref(`characters/${charKey}/${category}`).set(filtered);
+      }).then(() => {
+        btn.closest('div, li').remove();
+      });
+    };
+
+    // ─── EDIT DYNAMIC ITEM ───────────────────────────────
+    window.editDynamicItem = function(btn, charKey, category) {
+      const textEl = btn.parentElement.querySelector('.editable-text');
+      if (!textEl) return;
+      
+      const oldValue = textEl.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = oldValue;
+      input.style.cssText = 'flex:1;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.6);color:#e8e0ff;padding:0.3rem;border-radius:0.3rem;font-family:inherit;';
+      
+      textEl.replaceWith(input);
+      input.focus();
+      
+      input.addEventListener('blur', () => {
+        const newValue = input.value.trim() || oldValue;
+        const newSpan = document.createElement('span');
+        newSpan.className = 'editable-text';
+        newSpan.contentEditable = 'true';
+        newSpan.textContent = newValue;
+        newSpan.style.flex = '1';
+        input.replaceWith(newSpan);
+        
+        // Update in Firebase
+        updateDynamicItemInFirebase(charKey, category, oldValue, newValue);
+      });
+      
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') input.blur();
+      });
+    };
+
+    function updateDynamicItemInFirebase(charKey, category, oldValue, newValue) {
+      db.ref(`characters/${charKey}/${category}`).once('value').then(snapshot => {
+        const items = snapshot.val() || [];
+        const updated = items.map(item => {
+          if (typeof item === 'string' && item === oldValue) return newValue;
+          if (typeof item === 'object' && item.name === oldValue) {
+            return { ...item, name: newValue };
+          }
+          return item;
+        });
+        return db.ref(`characters/${charKey}/${category}`).set(updated);
+      });
+    }
+
+    // ─── SAVE EDITS (only editable fields, not lists) ────
+    window.saveAllEdits = function(charKey) {
+      const editables = document.querySelectorAll(`[data-char="${charKey}"][data-field]`);
+      const updates = {};
+      editables.forEach(el => {
+        const field = el.getAttribute('data-field');
+        if (field) {
+          updates[field] = el.tagName === 'INPUT' ? el.value : el.textContent;
+        }
+      });
+      
+      // Update only the specific fields that changed
+      Object.entries(updates).forEach(([field, value]) => {
+        db.ref(`characters/${charKey}/${field}`).set(value);
+      });
+      
+      alert('Edits saved! ✦');
+    };
+
+    // ─── LOAD DYNAMIC LISTS ──────────────────────────────
+    function loadDynamicLists(charKey) {
+      // Load spells
+      db.ref(`characters/${charKey}/spells`).once('value').then(snapshot => {
+        const spells = snapshot.val();
+        const container = document.getElementById(`spellsList-${charKey}`);
+        if (!container) return;
+        
+        // Keep only the add-form at the bottom
+        const addForm = container.querySelector('.add-form');
+        container.innerHTML = '';
+        
+        if (spells && Array.isArray(spells)) {
+          spells.forEach(spell => {
+            const div = document.createElement('div');
+            div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
+            div.innerHTML = `
+              <span class="editable-text" contenteditable="true" style="flex:1;">${escapeHtml(spell)}</span>
+              <button class="pencil-btn" onclick="editDynamicItem(this, '${charKey}', 'spells')">✎</button>
+              <button class="btn-remove" onclick="removeDynamicItem(this, '${charKey}', 'spells', '${escapeHtml(spell)}')">✕</button>`;
+            container.appendChild(div);
+          });
+        }
+        if (addForm) container.appendChild(addForm);
+      });
+      
+      // Load equipment
+      db.ref(`characters/${charKey}/equipment`).once('value').then(snapshot => {
+        const equip = snapshot.val();
+        const container = document.getElementById(`equipList-${charKey}`);
+        if (!container) return;
+        
+        const addForm = container.querySelector('.add-form');
+        container.innerHTML = '';
+        
+        if (equip && Array.isArray(equip)) {
+          equip.forEach(item => {
+            const li = document.createElement('li');
+            li.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+            li.innerHTML = `
+              <span class="editable-text" contenteditable="true" style="flex:1;">✦ ${escapeHtml(item)}</span>
+              <button class="pencil-btn" onclick="editDynamicItem(this, '${charKey}', 'equipment')">✎</button>
+              <button class="btn-remove" onclick="removeDynamicItem(this, '${charKey}', 'equipment', '${escapeHtml(item)}')">✕</button>`;
+            container.appendChild(li);
+          });
+        }
+        if (addForm) container.appendChild(addForm);
+      });
+      
+      // Load custom features
+      db.ref(`characters/${charKey}/customFeatures`).once('value').then(snapshot => {
+        const features = snapshot.val();
+        const container = document.getElementById(`featList-${charKey}`);
+        if (!container) return;
+        
+        // Remove only custom features, keep originals
+        container.querySelectorAll('.custom-feature').forEach(el => el.remove());
+        
+        if (features && Array.isArray(features)) {
+          features.forEach((f, i) => {
+            const div = document.createElement('div');
+            div.className = 'ability-card custom-feature';
+            div.innerHTML = `
+              <div class="ability-name">
+                <span class="editable-text" contenteditable="true">${escapeHtml(f.name)}</span>
+                ${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}
+                <button class="btn-remove" onclick="removeDynamicItem(this, '${charKey}', 'customFeatures', '${escapeHtml(f.name)}')">✕</button>
+              </div>
+              <div class="ability-desc">
+                <span class="editable-text" contenteditable="true">${escapeHtml(f.desc)}</span>
+              </div>
+              ${renderUsageCheckboxes(charKey, `custom-${i}`, f.uses)}`;
+            container.appendChild(div);
+          });
+        }
       });
     }
 
@@ -815,47 +892,20 @@
           <span style="color:#a098d0;font-size:0.8rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
         </div>`).join('');
 
-      const featuresHtml = c.features.map((f, i) => {
-        let uses = f.uses || 0;
-        if (f.cost && f.cost.includes('/') && !f.uses) {
-          const match = f.cost.match(/(\d+)\s*uses/);
-          if (match) uses = parseInt(match[1]);
-        }
-        return `<div class="ability-card">
+      const featuresHtml = c.features.map((f, i) => `
+        <div class="ability-card">
           <div class="ability-name">
             ${makeEditable(f.name, `feat-name-${i}`, charKey)}
             ${f.cost ? `<span class="ability-cost">${makeEditable(f.cost, `feat-cost-${i}`, charKey)}</span>` : ''}
           </div>
           <div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>
-          ${renderUsageCheckboxes(charKey, i, uses)}
-        </div>`;
-      }).join('');
+          ${renderUsageCheckboxes(charKey, i, f.uses)}
+        </div>`).join('');
 
       const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => {
         const bonusStr = bonus >= 0 ? `+${bonus}` : `${bonus}`;
         return `<div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonusStr}</span></div>`;
       }).join('') : '';
-
-      const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => `
-        <div class="spell-slot">
-          <div class="slot-level">${level}</div>
-          <div class="slot-count">${count}</div>
-          ${count !== "∞" ? renderUsageCheckboxes(charKey, `slot-${level}`, parseInt(count) || 0) : ''}
-        </div>`).join('') : '';
-
-      const spellsHtml = c.spells ? c.spells.map((s, i) => `
-        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);">
-          <span class="editable-text" contenteditable="true" data-field="spell-${i}" data-char="${charKey}" style="flex:1;">${escapeHtml(s)}</span>
-          <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
-          <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>
-        </div>`).join('') : '';
-
-      const equipmentHtml = c.equipment ? c.equipment.map((item, i) => `
-        <li style="display:flex;align-items:center;gap:0.5rem;">
-          <span class="editable-text" contenteditable="true" data-field="equip-${i}" data-char="${charKey}" style="flex:1;">✦ ${escapeHtml(item)}</span>
-          <button class="pencil-btn" onclick="this.previousElementSibling.contentEditable='true';this.previousElementSibling.focus();">✎</button>
-          <button class="btn-remove" onclick="this.parentElement.remove()">✕</button>
-        </li>`).join('') : '';
 
       return `
         <div class="char-sheet">
@@ -886,17 +936,11 @@
             ${attacksHtml}
           </div>
 
-          ${spellSlotsHtml ? `
-          <div class="sheet-section">
-            <div class="section-header">🔮 SPELL SLOTS</div>
-            <div class="spell-slot-grid">${spellSlotsHtml}</div>
-          </div>` : ''}
-
           <div class="sheet-section">
             <div class="section-header">
               <span>📜 SPELLS</span>
             </div>
-            <div id="spellsList-${charKey}">${spellsHtml}</div>
+            <div id="spellsList-${charKey}"></div>
             <div class="add-form">
               <input type="text" id="newSpell-${charKey}" placeholder="Spell name (e.g., Fireball 3rd)">
               <button class="btn-add" onclick="addSpell('${charKey}')">+ Add Spell</button>
@@ -920,7 +964,7 @@
             <div class="section-header">
               <span>🎒 EQUIPMENT</span>
             </div>
-            <ul class="equipment-list" id="equipList-${charKey}">${equipmentHtml}</ul>
+            <ul class="equipment-list" id="equipList-${charKey}"></ul>
             <div class="add-form">
               <input type="text" id="newEquip-${charKey}" placeholder="Item name">
               <button class="btn-add" onclick="addEquipment('${charKey}')">+ Add Item</button>
@@ -933,8 +977,8 @@
           </div>
 
           <div style="text-align:center;margin-top:0.5rem;">
-            <button class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save Changes for Everyone</button>
-            <span style="color:#a098d0;font-size:0.8rem;margin-left:1rem;">Click ✎ to edit · Checkboxes track usage</span>
+            <button class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save Edits</button>
+            <span style="color:#a098d0;font-size:0.8rem;margin-left:1rem;">Click ✎ to edit · + Add to create new</span>
           </div>
         </div>`;
     }
@@ -989,7 +1033,7 @@
         });
       } else {
         contentPanel.innerHTML = renderCharacterSheet(tabId);
-        setTimeout(() => loadCharacterEdits(tabId), 50);
+        setTimeout(() => loadDynamicLists(tabId), 100);
         dmAuthenticated = false;
       }
     }
