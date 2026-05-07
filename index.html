@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Eve of Ruin · Character Vault</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: #0a0a1a;
@@ -24,8 +20,8 @@
         radial-gradient(ellipse at 20% 50%, rgba(72, 49, 140, 0.25) 0%, transparent 55%),
         radial-gradient(ellipse at 80% 20%, rgba(30, 60, 120, 0.3) 0%, transparent 55%),
         radial-gradient(ellipse at 50% 90%, rgba(100, 70, 180, 0.2) 0%, transparent 50%),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.6"><defs><radialGradient id="star"><stop offset="0%" stop-color="white" stop-opacity="1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="120" cy="80" r="1.5" fill="white" opacity="0.9"/><circle cx="350" cy="45" r="1" fill="white" opacity="0.7"/><circle cx="680" cy="120" r="1.8" fill="white" opacity="0.85"/><circle cx="90" cy="350" r="1.2" fill="white" opacity="0.65"/><circle cx="750" cy="400" r="1.4" fill="white" opacity="0.75"/><circle cx="200" cy="650" r="1.6" fill="white" opacity="0.8"/><circle cx="500" cy="700" r="1.1" fill="white" opacity="0.7"/><circle cx="620" cy="550" r="1.3" fill="white" opacity="0.65"/><circle cx="45" cy="550" r="0.9" fill="white" opacity="0.6"/><circle cx="400" cy="380" r="1.7" fill="white" opacity="0.85"/><circle cx="550" cy="250" r="1" fill="white" opacity="0.55"/><circle cx="300" cy="200" r="1.4" fill="white" opacity="0.7"/><circle cx="170" cy="480" r="0.8" fill="white" opacity="0.5"/><circle cx="670" cy="680" r="1.2" fill="white" opacity="0.6"/><circle cx="460" cy="100" r="1.5" fill="white" opacity="0.75"/></svg>');
-      background-size: cover, cover, cover, 800px 800px;
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.6"><circle cx="120" cy="80" r="1.5" fill="white" opacity="0.9"/><circle cx="350" cy="45" r="1" fill="white" opacity="0.7"/><circle cx="680" cy="120" r="1.8" fill="white" opacity="0.85"/><circle cx="90" cy="350" r="1.2" fill="white" opacity="0.65"/><circle cx="750" cy="400" r="1.4" fill="white" opacity="0.75"/><circle cx="200" cy="650" r="1.6" fill="white" opacity="0.8"/><circle cx="500" cy="700" r="1.1" fill="white" opacity="0.7"/><circle cx="400" cy="380" r="1.7" fill="white" opacity="0.85"/></svg>');
+      background-size: cover;
       background-attachment: fixed;
       position: relative;
     }
@@ -33,149 +29,111 @@
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: 
         radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.4), transparent),
         radial-gradient(1.5px 1.5px at 45% 15%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.3), transparent),
-        radial-gradient(1.5px 1.5px at 30% 65%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,0.35), transparent),
-        radial-gradient(1.5px 1.5px at 55% 75%, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 20% 80%, rgba(255,255,255,0.3), transparent),
-        radial-gradient(2px 2px at 65% 10%, rgba(200,180,255,0.5), transparent),
-        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.35), transparent);
-      pointer-events: none;
-      z-index: 0;
+        radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.3), transparent);
+      pointer-events: none; z-index: 0;
     }
 
     .grimoire {
-      max-width: 1200px;
+      max-width: 1250px;
       width: 100%;
-      background: rgba(15, 12, 30, 0.85);
+      background: rgba(15, 12, 30, 0.9);
       backdrop-filter: blur(15px);
       border: 2px solid rgba(140, 120, 220, 0.4);
       box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 40px rgba(100, 80, 180, 0.15);
       border-radius: 2rem;
-      padding: 1.8rem 2rem 2.5rem;
+      padding: 1.5rem 2rem 2rem;
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 300;
       text-align: center;
       letter-spacing: 6px;
       color: #d4c8ff;
-      text-shadow: 0 0 20px rgba(150, 130, 220, 0.6), 0 0 40px rgba(100, 80, 180, 0.4);
+      text-shadow: 0 0 20px rgba(150, 130, 220, 0.6);
       border-bottom: 2px solid rgba(140, 120, 220, 0.4);
       padding-bottom: 0.5rem;
-      margin-bottom: 0.2rem;
       text-transform: uppercase;
-      word-spacing: 8px;
     }
 
     .tab-bar {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.65rem;
+      gap: 0.5rem;
       background: rgba(20, 16, 40, 0.7);
-      padding: 0.7rem 1.2rem;
+      padding: 0.6rem 1rem;
       border-radius: 3rem;
       border: 1px solid rgba(140, 120, 220, 0.3);
-      margin: 0.5rem 0 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .tab-btn {
-      background: transparent;
-      border: none;
+      background: rgba(40, 30, 70, 0.5);
+      border: 1px solid rgba(120, 100, 180, 0.3);
       color: #b8b0e0;
-      font-family: 'Segoe UI', 'Candara', sans-serif;
-      font-size: 0.95rem;
+      font-family: inherit;
+      font-size: 0.9rem;
       font-weight: 500;
-      padding: 0.6rem 1.3rem;
+      padding: 0.5rem 1.1rem;
       border-radius: 2.5rem;
       cursor: pointer;
       letter-spacing: 1px;
-      transition: all 0.3s ease;
-      background: rgba(40, 30, 70, 0.5);
-      border: 1px solid rgba(120, 100, 180, 0.3);
+      transition: all 0.3s;
       text-transform: uppercase;
     }
 
-    .tab-btn:hover {
-      background: rgba(60, 40, 100, 0.6);
-      color: #e8e0ff;
-      border-color: rgba(160, 140, 220, 0.7);
-      box-shadow: 0 0 15px rgba(120, 100, 200, 0.4);
-    }
-
-    .tab-btn.active {
-      background: rgba(80, 50, 140, 0.7);
-      color: #ffffff;
-      border-color: rgba(180, 160, 240, 0.9);
-      box-shadow: 0 0 20px rgba(140, 120, 220, 0.5);
-      font-weight: bold;
-    }
-
-    .dm-lock {
-      background: rgba(30, 20, 50, 0.6);
-      border: 1px dashed rgba(160, 140, 220, 0.5);
-      color: #c8b8f0;
-    }
+    .tab-btn:hover { background: rgba(60, 40, 100, 0.6); color: #e8e0ff; box-shadow: 0 0 12px rgba(120, 100, 200, 0.4); }
+    .tab-btn.active { background: rgba(80, 50, 140, 0.7); color: #fff; border-color: rgba(180, 160, 240, 0.9); box-shadow: 0 0 18px rgba(140, 120, 220, 0.5); }
+    .dm-lock { border: 1px dashed rgba(160, 140, 220, 0.5); color: #c8b8f0; }
 
     .content-panel {
-      background: rgba(12, 10, 25, 0.7);
+      background: rgba(12, 10, 25, 0.75);
       border: 2px solid rgba(120, 100, 180, 0.35);
-      border-radius: 2rem;
-      padding: 1.8rem 2rem;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
       background-image: linear-gradient(145deg, rgba(20, 15, 40, 0.7) 0%, rgba(8, 6, 18, 0.8) 100%);
-      box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 15px 30px rgba(0,0,0,0.5);
-      min-height: 500px;
-      max-height: 75vh;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+      min-height: 450px;
+      max-height: 70vh;
       overflow-y: auto;
     }
 
-    .content-panel::-webkit-scrollbar { width: 8px; }
+    .content-panel::-webkit-scrollbar { width: 7px; }
     .content-panel::-webkit-scrollbar-track { background: rgba(20, 15, 40, 0.5); border-radius: 4px; }
     .content-panel::-webkit-scrollbar-thumb { background: rgba(120, 100, 180, 0.5); border-radius: 4px; }
 
-    .char-sheet { display: flex; flex-direction: column; gap: 1.2rem; }
+    .char-sheet { display: flex; flex-direction: column; gap: 1rem; }
 
     .sheet-section {
       border: 2px solid rgba(120, 100, 180, 0.3);
       border-radius: 1rem;
-      padding: 1.2rem;
+      padding: 1rem;
       background: rgba(18, 14, 35, 0.6);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      position: relative;
-      transition: border-color 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    .sheet-section:hover { border-color: rgba(160, 140, 220, 0.5); }
-
     .section-header {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #c8b8f0;
       letter-spacing: 2px;
       text-transform: uppercase;
       border-bottom: 1px solid rgba(120, 100, 180, 0.3);
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.7rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
-    .editable-field { position: relative; display: inline-block; }
 
     .editable-text {
       background: transparent;
@@ -183,159 +141,140 @@
       color: inherit;
       font-family: inherit;
       font-size: inherit;
-      padding: 0.2rem 0.4rem;
+      padding: 0.15rem 0.3rem;
       border-radius: 0.3rem;
       outline: none;
       transition: all 0.2s;
     }
 
     .editable-text:hover { background: rgba(120, 100, 180, 0.1); border-color: rgba(120, 100, 180, 0.3); }
-    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); box-shadow: 0 0 10px rgba(120, 100, 200, 0.3); }
+    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); box-shadow: 0 0 8px rgba(120, 100, 200, 0.3); }
 
     .pencil-btn {
       background: rgba(120, 100, 180, 0.3);
       border: 1px solid rgba(140, 120, 200, 0.5);
       color: #c8b8f0;
-      font-size: 0.8rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 0.4rem;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.3rem;
       cursor: pointer;
-      margin-left: 0.3rem;
+      margin-left: 0.2rem;
       transition: all 0.2s;
-      vertical-align: middle;
     }
 
-    .pencil-btn:hover { background: rgba(140, 120, 200, 0.5); color: white; box-shadow: 0 0 8px rgba(120, 100, 200, 0.4); }
+    .pencil-btn:hover { background: rgba(140, 120, 200, 0.5); color: white; }
 
-    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 0.7rem; margin: 0.8rem 0; }
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap: 0.6rem; margin: 0.7rem 0; }
 
     .stat-box {
       border: 2px solid rgba(120, 100, 180, 0.3);
-      border-radius: 0.8rem;
-      padding: 0.6rem;
+      border-radius: 0.7rem;
+      padding: 0.5rem;
       text-align: center;
       background: rgba(25, 18, 50, 0.6);
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
     }
 
-    .stat-label { font-size: 0.7rem; color: #a098d0; letter-spacing: 1px; text-transform: uppercase; }
-    .stat-value { font-size: 1.5rem; font-weight: bold; color: #e8d8ff; margin: 0.1rem 0; }
-    .stat-mod { font-size: 0.85rem; color: #c8b8f0; background: rgba(80, 60, 140, 0.4); border-radius: 1rem; padding: 0.1rem 0.5rem; display: inline-block; }
+    .stat-label { font-size: 0.65rem; color: #a098d0; text-transform: uppercase; letter-spacing: 1px; }
+    .stat-value { font-size: 1.3rem; font-weight: bold; color: #e8d8ff; }
+    .stat-mod { font-size: 0.75rem; color: #c8b8f0; background: rgba(80, 60, 140, 0.4); border-radius: 1rem; padding: 0.1rem 0.4rem; }
 
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.7rem; }
-    .info-item { border: 1px solid rgba(120, 100, 180, 0.25); padding: 0.5rem 0.7rem; border-radius: 0.5rem; background: rgba(20, 15, 35, 0.5); }
-    .info-label { font-size: 0.7rem; color: #9088c0; text-transform: uppercase; letter-spacing: 1px; }
-    .info-value { font-size: 1rem; color: #d4c8ff; font-weight: 500; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.6rem; }
+    .info-item { border: 1px solid rgba(120, 100, 180, 0.25); padding: 0.4rem 0.6rem; border-radius: 0.4rem; background: rgba(20, 15, 35, 0.5); }
+    .info-label { font-size: 0.65rem; color: #9088c0; text-transform: uppercase; }
+    .info-value { font-size: 0.9rem; color: #d4c8ff; font-weight: 500; }
 
     .ability-card {
       border: 2px solid rgba(120, 100, 180, 0.25);
-      border-radius: 0.8rem;
-      padding: 0.8rem;
-      margin: 0.7rem 0;
+      border-radius: 0.7rem;
+      padding: 0.7rem;
+      margin: 0.6rem 0;
       background: linear-gradient(135deg, rgba(25, 18, 45, 0.7) 0%, rgba(15, 10, 30, 0.8) 100%);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    .ability-name { font-size: 1rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.4rem; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-    .ability-desc { font-size: 0.9rem; color: #c0b8e8; line-height: 1.5; }
-    .ability-cost { color: #e0c8ff; font-weight: bold; font-size: 0.8rem; background: rgba(80, 50, 140, 0.5); padding: 0.2rem 0.5rem; border-radius: 0.5rem; display: inline-block; margin-right: 0.5rem; }
+    .ability-name { font-size: 0.95rem; color: #d4c8ff; font-weight: bold; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
+    .ability-desc { font-size: 0.85rem; color: #c0b8e8; line-height: 1.4; }
+    .ability-cost { color: #e0c8ff; font-size: 0.75rem; background: rgba(80, 50, 140, 0.5); padding: 0.15rem 0.4rem; border-radius: 0.5rem; }
 
-    .usage-tracker { display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap; }
-    .usage-checkboxes { display: flex; gap: 0.3rem; flex-wrap: wrap; }
     .usage-checkbox {
-      width: 18px; height: 18px;
+      width: 16px; height: 16px;
       border: 2px solid rgba(140, 120, 220, 0.6);
       border-radius: 3px;
       background: rgba(20, 15, 40, 0.7);
       cursor: pointer;
-      transition: all 0.2s;
       display: inline-block;
       vertical-align: middle;
     }
-    .usage-checkbox.used {
-      background: rgba(120, 100, 200, 0.6);
-      border-color: rgba(180, 160, 240, 0.9);
-      box-shadow: 0 0 6px rgba(140, 120, 220, 0.5);
-    }
-    .usage-checkbox.used::after {
-      content: "✓"; color: white; font-size: 12px;
-      display: flex; align-items: center; justify-content: center; height: 100%;
-    }
-    .usage-label { font-size: 0.7rem; color: #9088c0; text-transform: uppercase; }
-    .btn-reset-uses {
+    .usage-checkbox.used { background: rgba(120, 100, 200, 0.6); border-color: rgba(180, 160, 240, 0.9); }
+    .usage-checkbox.used::after { content: "✓"; color: white; font-size: 10px; display: flex; justify-content: center; height: 100%; }
+
+    .btn-sm {
       background: rgba(120, 100, 180, 0.2);
       border: 1px solid rgba(140, 120, 200, 0.4);
-      color: #c8b8f0; font-size: 0.7rem; padding: 0.2rem 0.5rem;
-      border-radius: 0.3rem; cursor: pointer; transition: all 0.2s;
+      color: #c8b8f0;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .btn-reset-uses:hover { background: rgba(140, 120, 200, 0.4); }
+    .btn-sm:hover { background: rgba(140, 120, 200, 0.4); }
+
+    .btn-rest {
+      background: rgba(100, 140, 200, 0.3);
+      border: 1px solid rgba(140, 180, 220, 0.5);
+      color: #c8d8f0;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 0 0.3rem;
+    }
+    .btn-rest:hover { background: rgba(140, 180, 220, 0.5); }
 
     .btn-add {
       background: rgba(80, 140, 100, 0.3);
       border: 1px solid rgba(100, 200, 140, 0.5);
-      color: #b8f0c8; font-size: 0.8rem; padding: 0.4rem 0.8rem;
-      border-radius: 0.5rem; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem;
+      color: #b8f0c8;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 0.4rem;
+      cursor: pointer;
     }
-    .btn-add:hover { background: rgba(100, 200, 140, 0.5); box-shadow: 0 0 10px rgba(100, 200, 140, 0.3); }
+    .btn-add:hover { background: rgba(100, 200, 140, 0.5); }
 
-    .btn-remove {
-      background: rgba(200, 80, 80, 0.3);
-      border: 1px solid rgba(200, 100, 100, 0.5);
-      color: #f0b8b8; font-size: 0.7rem; padding: 0.2rem 0.4rem;
-      border-radius: 0.3rem; cursor: pointer; transition: all 0.2s; margin-left: 0.3rem;
-    }
+    .btn-remove { background: rgba(200, 80, 80, 0.3); border: 1px solid rgba(200, 100, 100, 0.5); color: #f0b8b8; font-size: 0.65rem; padding: 0.15rem 0.3rem; border-radius: 0.3rem; cursor: pointer; margin-left: 0.2rem; }
     .btn-remove:hover { background: rgba(200, 80, 80, 0.5); }
 
     .add-form {
-      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;
-      padding: 0.8rem; background: rgba(20, 15, 40, 0.5);
-      border-radius: 0.5rem; border: 1px dashed rgba(120, 100, 180, 0.3);
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem;
+      padding: 0.7rem; background: rgba(20, 15, 40, 0.5);
+      border-radius: 0.4rem; border: 1px dashed rgba(120, 100, 180, 0.3);
     }
     .add-form input {
       background: rgba(20, 15, 40, 0.7);
       border: 1px solid rgba(140, 120, 220, 0.4);
-      color: #e8e0ff; padding: 0.3rem 0.6rem;
-      border-radius: 0.3rem; font-family: inherit; font-size: 0.85rem;
+      color: #e8e0ff; padding: 0.25rem 0.5rem;
+      border-radius: 0.3rem; font-family: inherit; font-size: 0.8rem;
     }
-
-    .btn-save {
-      background: rgba(80, 50, 140, 0.5);
-      border: 1px solid rgba(160, 140, 220, 0.6);
-      color: #e8e0ff; padding: 0.5rem 1.2rem;
-      border-radius: 0.5rem; font-family: inherit; cursor: pointer;
-      transition: 0.2s; font-size: 0.9rem;
-    }
-    .btn-save:hover { background: rgba(100, 60, 170, 0.7); box-shadow: 0 0 15px rgba(140, 120, 220, 0.5); }
 
     .equipment-list { list-style: none; padding: 0; }
-    .equipment-list li { padding: 0.35rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; display: flex; align-items: center; gap: 0.5rem; }
+    .equipment-list li { padding: 0.3rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; display: flex; align-items: center; gap: 0.4rem; }
     .equipment-list li::before { content: "✦ "; color: #b0a0e0; }
 
-    .spell-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(55px, 1fr)); gap: 0.5rem; margin: 0.8rem 0; }
-    .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.4rem; border-radius: 0.5rem; background: rgba(20, 15, 35, 0.5); }
-    .slot-level { font-size: 0.7rem; color: #9088c0; }
-    .slot-count { font-size: 1.2rem; color: #d4c8ff; font-weight: bold; }
+    .spell-slot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); gap: 0.4rem; margin: 0.7rem 0; }
+    .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.3rem; border-radius: 0.4rem; background: rgba(20, 15, 35, 0.5); }
+    .slot-level { font-size: 0.65rem; color: #9088c0; }
+    .slot-count { font-size: 1.1rem; color: #d4c8ff; font-weight: bold; }
 
-    .dm-pin-section { text-align: center; padding: 2rem; }
-    .dm-pin-input {
-      background: rgba(20, 15, 40, 0.7);
-      border: 2px solid rgba(140, 120, 220, 0.5);
-      padding: 0.7rem 1.5rem; border-radius: 0.5rem;
-      color: #e8e0ff; font-family: inherit; font-size: 1.2rem;
-      text-align: center; letter-spacing: 4px; outline: none; margin: 1rem 0;
-    }
-    .secret-box { border: 2px dashed rgba(140, 120, 220, 0.5); background: rgba(20, 15, 35, 0.6); padding: 1rem; border-radius: 0.8rem; margin: 1rem 0; }
-    .secret-label { color: #d4c8ff; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
-    .secret-text { color: #c8b8f0; margin-top: 0.5rem; line-height: 1.6; }
+    .change-log { max-height: 200px; overflow-y: auto; font-size: 0.8rem; }
+    .change-log .log-entry { padding: 0.3rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #a098d0; }
+
+    .save-indicator { font-size: 0.7rem; color: #a098d0; margin-left: 0.5rem; }
 
     @media (max-width: 768px) {
       .grimoire { padding: 1rem; }
       .stat-row { grid-template-columns: repeat(3, 1fr); }
-      h1 { font-size: 1.8rem; }
-    }
-    @media (max-width: 480px) {
-      .stat-row { grid-template-columns: repeat(2, 1fr); }
-      .tab-btn { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+      h1 { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -373,17 +312,18 @@
 <script>
   (function() {
     const db = window._db;
-    let activeListenerRef = null;
-    function detachListener() {
-      if (activeListenerRef) { activeListenerRef.off('value'); activeListenerRef = null; }
-    }
-
     const DM_PIN = "8968";
     let currentTab = 'drunken';
     let dmAuthenticated = false;
     const contentPanel = document.getElementById('contentPanel');
+    
+    // Auto-save timers
+    const autoSaveTimers = {};
+    
+    // Change log (last 10 entries)
+    let changeLog = [];
 
-    // ─── FULL CHARACTER DATA ─────────────────────────────
+    // ─── COMPLETE CHARACTER DATA ─────────────────────────
     const characterData = {
       drunken: {
         name: "Kaelen 'Kettle' Morrow",
@@ -393,11 +333,7 @@
         alignment: "Chaotic Good",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine. He moves with a deceptive grace — stumbling one moment, flowing like water the next.",
-        personality: ["I measure time in drinks, not hours.", "If I'm standing, I'm not that drunk yet.", "I remember things that never happened. Don't ask."],
-        ideal: "Memory is a cage. Forgetting is freedom — but only if you choose it, not if it's stolen.",
-        bond: "The party is my new monastery. I'll die before I let them be erased like the last one.",
-        flaw: "Sometimes I call my friends by names from my lost order. They don't exist anymore. I don't notice until they ask who I'm talking about.",
+        appearance: "Kaelen looks younger than his years, with wind-chapped skin and permanent dark circles under his eyes. His hair is unkempt, his robes are stained, and he always smells faintly of rice wine.",
         stats: {
           STR: { score: 10, mod: 0, save: 4 },
           DEX: { score: 20, mod: 5, save: 9 },
@@ -410,29 +346,27 @@
         attacks: [
           { name: "Unarmed Strike", bonus: "+9", damage: "1d6+5 bludgeoning", notes: "Magical" },
           { name: "Flurry of Blows", bonus: "+9", damage: "1d6+5 each (two attacks)", notes: "Costs 1 ki" },
-          { name: "Improvised Weapon", bonus: "+9", damage: "1d4+5 bludgeoning", notes: "Bottle, chair, etc." },
+          { name: "Improvised Weapon", bonus: "+9", damage: "1d4+5 bludgeoning", notes: "Bottle, chair" },
           { name: "Quarterstaff", bonus: "+9", damage: "1d6+5 (versatile 1d8)", notes: "Monk weapon" }
         ],
         skills: { Acrobatics: 9, Insight: 8, Perception: 8, Stealth: 9, "Sleight of Hand": 9, Athletics: 4 },
-        tools: "Brewer's supplies (you make your own terrible wine)",
-        languages: "Common, Primordial (echoes from your lost monastery)",
         features: [
-          { name: "Martial Arts (1d6)", desc: "Your unarmed strikes and monk weapons deal 1d6 damage. When you use the Attack action, you can make one unarmed strike as a bonus action.", cost: "Passive", uses: 0 },
-          { name: "Ki (10 points)", desc: "You have 10 ki points that recharge on a short rest. Ki save DC = 16.", cost: "10 points / short rest", uses: 10 },
-          { name: "Flurry of Blows", desc: "Spend 1 ki to make two unarmed strikes as a bonus action.", cost: "1 ki", uses: 10 },
-          { name: "Patient Defense", desc: "Spend 1 ki to take the Dodge action as a bonus action.", cost: "1 ki", uses: 10 },
-          { name: "Step of the Wind", desc: "Spend 1 ki to Disengage or Dash as a bonus action; jump distance doubled.", cost: "1 ki", uses: 10 },
-          { name: "Stunning Strike", desc: "Spend 1 ki when you hit; target makes CON save or is stunned until end of your next turn.", cost: "1 ki per attempt", uses: 10 },
-          { name: "Drunken Technique", desc: "When you use Flurry of Blows, gain Disengage and +10 ft. movement for the turn.", cost: "Free with Flurry", uses: 0 },
-          { name: "Tipsy Sway", desc: "Reaction when missed by melee: spend 1 ki to redirect attack to another creature within 5 ft.", cost: "1 ki (reaction)", uses: 10 },
-          { name: "Evasion", desc: "DEX save for half damage → zero on success, half on fail.", cost: "Passive", uses: 0 },
-          { name: "Stillness of Mind", desc: "Action to end one charm or fear effect on yourself.", cost: "Action", uses: 0 },
-          { name: "Purity of Body", desc: "Immune to disease and poison.", cost: "Passive", uses: 0 },
-          { name: "Slow Fall", desc: "Reaction to reduce falling damage by 50 HP (5 × monk level).", cost: "Reaction", uses: 0 }
+          { name: "Martial Arts (1d6)", desc: "Unarmed/monk weapons deal 1d6. Bonus action unarmed strike after Attack action.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Ki Points", desc: "10 ki points. Recharge on short rest. Ki save DC = 16.", cost: "10 points / short rest", uses: 10, resetOn: "short" },
+          { name: "Flurry of Blows", desc: "Spend 1 ki: two unarmed strikes as bonus action.", cost: "1 ki", uses: 10, resetOn: "short" },
+          { name: "Patient Defense", desc: "Spend 1 ki: Dodge as bonus action.", cost: "1 ki", uses: 10, resetOn: "short" },
+          { name: "Step of the Wind", desc: "Spend 1 ki: Disengage/Dash as bonus action. Jump doubled.", cost: "1 ki", uses: 10, resetOn: "short" },
+          { name: "Stunning Strike", desc: "Spend 1 ki on hit: target CON save or stunned until end of next turn.", cost: "1 ki per attempt", uses: 10, resetOn: "short" },
+          { name: "Drunken Technique", desc: "With Flurry: free Disengage + 10ft movement for the turn.", cost: "Free with Flurry", uses: 0, resetOn: "none" },
+          { name: "Tipsy Sway", desc: "Reaction when missed: spend 1 ki, redirect attack to creature within 5ft.", cost: "1 ki (reaction)", uses: 10, resetOn: "short" },
+          { name: "Evasion", desc: "DEX save for half → 0 on success, half on fail.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Stillness of Mind", desc: "Action: end one charm/frighten effect on self.", cost: "Action", uses: 0, resetOn: "none" },
+          { name: "Purity of Body", desc: "Immune to disease and poison.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Slow Fall", desc: "Reaction: reduce falling damage by 50 HP.", cost: "Reaction", uses: 0, resetOn: "none" }
         ],
         spells: [],
-        equipment: ["Quarterstaff (used as a walking stick)", "10 darts", "Explorer's pack (mostly empty bottles)", "Broken ceramic bottle (improvised weapon)", "A worn flask that never seems to empty", "Common clothes (stained)", "Belt pouch with 10 gp"],
-        backstory: "The Monastery of the Unremembered Path stood on a mountain that no longer exists, in a valley that never was. Your order believed in perfect emptiness — not void, but absence so complete it becomes presence. You trained for forty years to achieve it. You failed. You still felt joy. Still felt grief. Still loved your tea-brewing master, old Lin Wei, who called you 'Little Kettle' because you always boiled over. Then the event happened. A crack in time — caused by someone testing a piece of the Rod of Seven Parts. Your monastery didn't burn. Didn't fall. It un-happened. You survived because you were in a cave, drunk on stolen rice wine. You stumbled out to find a different mountain, different sky, different gods. Now you drink to forget — but forgetting is exactly what they took from you."
+        equipment: ["Quarterstaff", "10 darts", "Explorer's pack", "Broken ceramic bottle", "Worn flask", "Common clothes", "Belt pouch with 10 gp"],
+        backstory: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor."
       },
       chronurgy: {
         name: "Vesper Aldric",
@@ -442,11 +376,7 @@
         alignment: "True Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "Vesper carries the weight of futures that may never come. His robes are enchanted with temporal threads that shift slightly in color. His eyes hold the weariness of someone who has seen too many timelines collapse.",
-        personality: ["Time is a river, and I've learned to swim upstream.", "I always keep a backup plan. And a backup for the backup.", "Punctuality is the highest form of respect."],
-        ideal: "Knowledge is the only true currency across timelines.",
-        bond: "I've seen the end of this story. I'm here to rewrite it.",
-        flaw: "I sometimes respond to things that haven't happened yet. People find it unsettling.",
+        appearance: "Vesper carries the weight of futures that may never come. His robes are enchanted with temporal threads.",
         stats: {
           STR: { score: 8, mod: -1, save: 3 },
           DEX: { score: 14, mod: 2, save: 6 },
@@ -459,22 +389,20 @@
         attacks: [
           { name: "Chill Touch", bonus: "+9", damage: "2d8 necrotic", notes: "Prevents healing" },
           { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic (if damaged)", notes: "Wisdom save" },
-          { name: "Fire Bolt", bonus: "+9", damage: "2d10 fire", notes: "Ranged spell attack" }
+          { name: "Fire Bolt", bonus: "+9", damage: "2d10 fire", notes: "Ranged" }
         ],
         skills: { Arcana: 9, History: 9, Investigation: 9, Insight: 5, Perception: 5 },
-        tools: "Calligrapher's supplies",
-        languages: "Common, Draconic, Primordial, Celestial",
         features: [
-          { name: "Chronal Shift", desc: "Reaction: force a creature within 30 ft. to reroll an attack, check, or save.", cost: "2 uses / long rest", uses: 2 },
-          { name: "Temporal Awareness", desc: "Add INT modifier (+5) to initiative rolls.", cost: "Passive", uses: 0 },
-          { name: "Momentary Stasis", desc: "Action: Large or smaller creature within 60 ft. makes CON save or is incapacitated (speed 0) until end of your next turn or damaged.", cost: "Action, PB uses / long rest", uses: 4 },
-          { name: "Arcane Abeyance", desc: "Condense a 4th-level or lower spell into a bead. Holder can release it within 1 hour.", cost: "1 use / short rest", uses: 1 },
-          { name: "Spellcasting", desc: "10th-level wizard with dunamancy spells. Spell save DC = 17, attack modifier = +9.", cost: "See spell slots", uses: 0 }
+          { name: "Chronal Shift", desc: "Reaction: force reroll of attack/check/save within 30ft.", cost: "2 uses / long rest", uses: 2, resetOn: "long" },
+          { name: "Temporal Awareness", desc: "Add INT mod (+5) to initiative.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Momentary Stasis", desc: "Action: Large-or-smaller creature CON save or incapacitated (speed 0) until end of next turn.", cost: "PB uses / long rest", uses: 4, resetOn: "long" },
+          { name: "Arcane Abeyance", desc: "Store 4th-or-lower spell in a bead for 1 hour.", cost: "1 use / short rest", uses: 1, resetOn: "short" },
+          { name: "Spellcasting", desc: "10th-level wizard. Spell DC 17, attack +9.", cost: "See slots", uses: 0, resetOn: "none" }
         ],
         spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
         spells: ["Gift of Alacrity (1st)", "Fortune's Favor (2nd)", "Haste (3rd)", "Slow (3rd)", "Temporal Shunt (5th)", "Counterspell (3rd)", "Shield (1st)", "Misty Step (2nd)", "Dimension Door (4th)", "Wall of Force (5th)"],
-        equipment: ["Spellbook bound in temporal leather", "Component pouch", "Arcane focus (hourglass pendant)", "Scholar's pack", "A small hourglass that runs backwards", "Ink and quill", "15 gp"],
-        backstory: "Vesper was always out of step with time. As a child, he would answer questions before they were asked. The Chronurgy Academy found him and trained him to stabilize temporal anomalies. But during a routine calibration of a temporal anchor, he caught a glimpse of the end — the Rod of Seven Parts fully assembled, and the multiverse collapsing into a single, frozen moment. He's been trying to prevent that future ever since."
+        equipment: ["Spellbook (temporal leather)", "Component pouch", "Arcane focus (hourglass pendant)", "Scholar's pack", "Backwards hourglass", "Ink and quill", "15 gp"],
+        backstory: "Vesper caught a glimpse of the end — the Rod assembled and the multiverse collapsing."
       },
       grave: {
         name: "Morwen",
@@ -484,11 +412,7 @@
         alignment: "Lawful Neutral",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side. Your voice is quiet — death doesn't need to shout.",
-        personality: ["I speak to the dead. They're better listeners than the living.", "Death doesn't frighten me. What comes after? That's another matter.", "I keep a list of everyone I've buried. I've never needed a second page."],
-        ideal: "Death is a door, not a wall. My job is to make sure no one kicks it down before their time.",
-        bond: "The Raven Queen saved me. I don't know why. I intend to find out — and maybe earn my freedom.",
-        flaw: "I have no fear of death. This makes me reckless — and unnerving to my allies.",
+        appearance: "You have the stillness of a grave and the eyes of someone who has seen the other side.",
         stats: {
           STR: { score: 8, mod: -1, save: 3 },
           DEX: { score: 12, mod: 1, save: 5 },
@@ -499,27 +423,25 @@
         },
         combat: { ac: 15, hp: 82, speed: 30, initiative: 1, hitDice: "10d8", proficiency: 4 },
         attacks: [
-          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic (if damaged)", notes: "Wisdom save" },
+          { name: "Toll the Dead", bonus: "DC 17", damage: "2d12 necrotic", notes: "Wisdom save" },
           { name: "Sacred Flame", bonus: "DC 17", damage: "2d8 radiant", notes: "Ignores cover" },
           { name: "Spiritual Weapon", bonus: "+9", damage: "1d8+5 force", notes: "Bonus action" },
-          { name: "Mace + Divine Strike", bonus: "+3", damage: "1d6+1 + 1d8 necrotic", notes: "Once per turn" }
+          { name: "Mace + Divine Strike", bonus: "+3", damage: "1d6+1 + 1d8 necrotic", notes: "Once/turn" }
         ],
         skills: { Persuasion: 7, Intimidation: 7, Insight: 9, Medicine: 9, Perception: 9, Religion: 4 },
-        tools: "Herbalism Kit (funeral herbs), Calligrapher's Supplies",
-        languages: "Common, Primordial",
         features: [
-          { name: "Circle of Mortality", desc: "Healing spells at 0 HP use max dice (no roll).", cost: "Passive", uses: 0 },
-          { name: "Eyes of the Grave", desc: "Action: detect undead within 60 ft. (not behind total cover).", cost: "Action, PB uses / long rest", uses: 4 },
-          { name: "Channel Divinity: Path to the Grave", desc: "Bonus action: curse creature within 30 ft. Next attack deals double damage.", cost: "1 Channel Divinity", uses: 2 },
-          { name: "Sentinel at Death's Door", desc: "Reaction: cancel a critical hit within 30 ft. (becomes normal hit).", cost: "Reaction", uses: "∞" },
-          { name: "Divine Strike", desc: "Once per turn, add 1d8 necrotic to a weapon attack.", cost: "Free, once per turn", uses: 0 },
-          { name: "Deathless Nature (Reborn)", desc: "Advantage on death saves; no need to eat/drink/breathe; disease resistance.", cost: "Passive", uses: 0 },
-          { name: "Knowledge from a Past Life", desc: "Add 1d6 to a skill check (PB times/long rest).", cost: "PB uses / long rest", uses: 4 }
+          { name: "Circle of Mortality", desc: "Healing at 0 HP uses max dice.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Eyes of the Grave", desc: "Action: detect undead within 60ft.", cost: "PB uses / long rest", uses: 4, resetOn: "long" },
+          { name: "Path to the Grave", desc: "Bonus action: curse target. Next attack double damage.", cost: "Channel Divinity", uses: 2, resetOn: "short" },
+          { name: "Sentinel at Death's Door", desc: "Reaction: cancel crit within 30ft.", cost: "Reaction", uses: "∞", resetOn: "none" },
+          { name: "Divine Strike", desc: "Once/turn: +1d8 necrotic on weapon hit.", cost: "Free", uses: 0, resetOn: "none" },
+          { name: "Deathless Nature", desc: "Advantage on death saves; no eating/drinking/breathing; disease resistance.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Knowledge from a Past Life", desc: "Add 1d6 to skill check (PB times/long rest).", cost: "PB uses / long rest", uses: 4, resetOn: "long" }
         ],
         spellSlots: { cantrips: "∞", "1st": 4, "2nd": 3, "3rd": 3, "4th": 3, "5th": 2 },
-        spells: ["Toll the Dead (cantrip)", "Guidance (cantrip)", "Spare the Dying (cantrip)", "Bless (1st)", "Healing Word (1st)", "Spiritual Weapon (2nd)", "Enhance Ability (2nd)", "Spirit Guardians (3rd)", "Speak with Dead (3rd)", "Death Ward (4th)", "Banishment (4th)", "Greater Restoration (5th)", "Scrying (5th)"],
-        equipment: ["Breastplate (AC 14 + DEX 1)", "Holy symbol (silver raven skull on a chain)", "Mace", "Shield (optional, +2 AC)", "Explorer's pack", "Prayer book of the Raven Queen (blank pages — she writes back sometimes)", "A small bell for funeral rites", "Black feather quill", "Belt pouch with 15 gp"],
-        backstory: "You remember dying. Cold. Quiet. A long hallway with a door at the end. You were walking toward it when a hand — skeletal, elegant, impossibly old — touched your shoulder and said: 'Not yet. I have use for you.' You woke up on a stone table. The Raven Queen stood over you. She simply said: 'You will keep the balance. You will ensure things die when they should. And you will stop the Wolf-Spider from unmaking the grave itself.' That was years ago. You've served her since."
+        spells: ["Toll the Dead (cantrip)", "Guidance (cantrip)", "Spare the Dying (cantrip)", "Bless (1st)", "Healing Word (1st)", "Spiritual Weapon (2nd)", "Spirit Guardians (3rd)", "Death Ward (4th)", "Greater Restoration (5th)"],
+        equipment: ["Breastplate", "Holy symbol (raven skull)", "Mace", "Shield (optional)", "Explorer's pack", "Prayer book", "Bell", "Black quill", "15 gp"],
+        backstory: "You died. The Raven Queen saved you. You serve her now."
       },
       psi: {
         name: "Zor-Ashkev's Vessel",
@@ -529,11 +451,7 @@
         alignment: "Lawful Neutral (sliding)",
         playerName: "__________________",
         campaign: "Eve of Ruin",
-        appearance: "You have an unnerving stillness. Your eyes are a pale silver that sometimes flicker when you concentrate. You move with precision that seems almost rehearsed.",
-        personality: ["I don't remember learning half of what I know. I just... know it.", "I count things. Steps. Arrows. Lies. I don't know why.", "Sometimes I speak in a language I've never heard."],
-        ideal: "Order is a tool, not a master. (But the ghost inside disagrees.)",
-        bond: "The party is my unit. I will not sacrifice them — yet.",
-        flaw: "When stressed, I speak in the Wind Duke's voice without realizing.",
+        appearance: "You have an unnerving stillness. Your eyes are pale silver, sometimes flickering.",
         stats: {
           STR: { score: 17, mod: 3, save: 7 },
           DEX: { score: 10, mod: 0, save: 4 },
@@ -544,127 +462,162 @@
         },
         combat: { ac: 19, hp: 84, speed: 30, initiative: 0, hitDice: "10d10", proficiency: 4 },
         attacks: [
-          { name: "Longsword (1H + Dueling)", bonus: "+7", damage: "1d8+5 slashing", notes: "+2 Dueling style" },
-          { name: "Longsword + Psionic Strike", bonus: "+7", damage: "1d8+5 + 1d8+2 force", notes: "Costs 1 Psionic Die" },
+          { name: "Longsword (1H + Dueling)", bonus: "+7", damage: "1d8+5 slashing", notes: "+2 Dueling" },
+          { name: "Longsword + Psionic Strike", bonus: "+7", damage: "1d8+5 + 1d8+2 force", notes: "1 Psionic Die" },
           { name: "Heavy Crossbow", bonus: "+4", damage: "1d10 piercing", notes: "Range 100/400" }
         ],
         skills: { Athletics: 7, Perception: 4, History: 6, Investigation: 6, Insight: 4 },
-        tools: "Calligrapher's tools (geometric symbols)",
-        languages: "Common, Primordial (Wind Duke dialect)",
         features: [
-          { name: "Psionic Power (6 dice, d8+2)", desc: "6 Psionic Energy dice (d8), recharge on long rest.", cost: "6 dice / long rest", uses: 6 },
-          { name: "Protective Field", desc: "Reaction: reduce damage to self/ally within 30 ft. by 1d8+2.", cost: "1 die (reaction)", uses: 6 },
-          { name: "Psionic Strike", desc: "Once per turn, add 1d8+2 force damage to a weapon hit.", cost: "1 die (free, once/turn)", uses: 6 },
-          { name: "Telekinetic Movement", desc: "Action: move object/willing creature (Large or smaller) up to 30 ft.", cost: "1 die (action)", uses: 6 },
-          { name: "Telekinetic Shove", desc: "Bonus action: shove creature within 30 ft. (STR save DC 14) — push 5 ft. or prone.", cost: "Bonus action (free)", uses: 0 },
-          { name: "Guarded Mind", desc: "Immune to psychic damage and charmed/frightened conditions.", cost: "Passive", uses: 0 },
-          { name: "Fighting Style: Dueling", desc: "+2 damage when wielding one melee weapon and no other weapons.", cost: "Passive", uses: 0 },
-          { name: "Action Surge", desc: "Take one additional action on your turn.", cost: "1 / short rest", uses: 1 },
-          { name: "Second Wind", desc: "Bonus action: regain 1d10+10 HP.", cost: "1 / short rest", uses: 1 },
-          { name: "Indomitable", desc: "Reroll a failed saving throw (must use new roll).", cost: "1 / long rest", uses: 1 },
-          { name: "Necrotic Shroud (Aasimar)", desc: "Action: reveal ghostly silver wings. Creatures within 10 ft. CHA save (DC 11) or frightened. Once/turn, add +10 necrotic damage.", cost: "1 / long rest", uses: 1 }
+          { name: "Psionic Power (6 dice)", desc: "6 Psionic Energy dice (d8), recharge long rest.", cost: "6 dice / long rest", uses: 6, resetOn: "long" },
+          { name: "Protective Field", desc: "Reaction: reduce damage to self/ally within 30ft by 1d8+2.", cost: "1 die (reaction)", uses: 6, resetOn: "long" },
+          { name: "Psionic Strike", desc: "Once/turn: add 1d8+2 force to weapon hit.", cost: "1 die", uses: 6, resetOn: "long" },
+          { name: "Telekinetic Movement", desc: "Action: move object/creature (Large-) up to 30ft.", cost: "1 die (action)", uses: 6, resetOn: "long" },
+          { name: "Telekinetic Shove", desc: "Bonus action: shove creature 5ft or prone (STR DC 14).", cost: "Bonus action", uses: 0, resetOn: "none" },
+          { name: "Guarded Mind", desc: "Immune to psychic damage, charmed, frightened.", cost: "Passive", uses: 0, resetOn: "none" },
+          { name: "Action Surge", desc: "Take additional action on your turn.", cost: "1 / short rest", uses: 1, resetOn: "short" },
+          { name: "Second Wind", desc: "Bonus action: regain 1d10+10 HP.", cost: "1 / short rest", uses: 1, resetOn: "short" },
+          { name: "Indomitable", desc: "Reroll failed save.", cost: "1 / long rest", uses: 1, resetOn: "long" },
+          { name: "Necrotic Shroud", desc: "Action: ghostly wings. Frighten 10ft (CHA DC11). +10 necrotic once/turn.", cost: "1 / long rest", uses: 1, resetOn: "long" }
         ],
         spells: [],
-        equipment: ["Plate armor (AC 19)", "Longsword", "Shield (optional, +2 AC)", "Heavy crossbow (20 bolts)", "Dungeoneer's pack", "A small silver cube that hums when a Rod piece is near", "A journal you don't remember writing — full of geometric symbols", "Belt pouch with 15 gp"],
-        backstory: "You don't remember your childhood clearly. Not trauma — absence. You remember a field, a blue sky, and suddenly knowing how to arrange stones into a perfect geometric ward. You became a mercenary famous for impossible tactics. Your comrades called you 'the Compass.' Six months ago, you woke up with seven words carved into your forearm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
+        equipment: ["Plate armor", "Longsword", "Shield (optional)", "Heavy crossbow (20 bolts)", "Dungeoneer's pack", "Silver cube (Rod detector)", "Journal (geometric symbols)", "15 gp"],
+        backstory: "Six months ago, you woke with seven words on your arm: 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
       }
     };
 
     const dmSecrets = {
-      drunken: "The Monastery of the Unremembered Path was erased by a fragment of the Rod of Seven Parts. Kaelen is the only survivor. Old Lin Wei's spirit sometimes watches over him, invisible to all but the Raven Queen.",
-      chronurgy: "Vesper's future self is the one assembling the Rod — believing that freezing the multiverse is the only way to prevent a greater catastrophe. Vesper will have to face himself.",
-      grave: "In your previous life, you were a minor Wind Duke scholar who helped design the Rod. The Raven Queen erased those memories. She wants the Rod reassembled to control death across all planes.",
-      psi: "Embedded in your psyche is General Zor-Ashkev. You are a sleeper agent. The seven words are a psychic trigger. At the climax, you can choose to suppress the ghost."
+      drunken: "Monastery erased by Rod fragment. Kaelen is the only survivor. Lin Wei's spirit watches over him.",
+      chronurgy: "Vesper's future self is assembling the Rod to freeze the multiverse.",
+      grave: "You were a Wind Duke scholar who helped design the Rod. The Raven Queen wants it assembled.",
+      psi: "Sleeper agent for General Zor-Ashkev. Seven words are a psychic trigger."
     };
 
     // ─── HELPERS ──────────────────────────────────────────
-    function escapeHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-    function makeEditable(value, fieldKey, charKey, tag = 'span', className = '') {
-      const uniqueId = `editable-${charKey}-${fieldKey}-${Date.now()}-${Math.random().toString(36).substr(2,5)}`;
-      const escaped = escapeHtml(String(value));
-      if (tag === 'input') {
-        return `<span class="editable-field"><input type="text" id="${uniqueId}" class="editable-text ${className}" value="${escaped}" data-field="${fieldKey}" data-char="${charKey}"><button class="pencil-btn" onclick="toggleEditField('${uniqueId}')" title="Edit">✎</button></span>`;
-      }
-      return `<span class="editable-field"><span id="${uniqueId}" class="editable-text ${className}" contenteditable="false" data-field="${fieldKey}" data-char="${charKey}">${escaped}</span><button class="pencil-btn" onclick="toggleEditField('${uniqueId}')" title="Edit">✎</button></span>`;
+    function makeEditable(value, fieldKey, charKey) {
+      const id = `ed-${charKey}-${fieldKey}-${Date.now()}-${Math.random().toString(36).substr(2,4)}`;
+      return `<span class="editable-text" id="${id}" contenteditable="true" data-field="${fieldKey}" data-char="${charKey}" oninput="scheduleAutoSave('${charKey}')" onblur="saveFieldImmediate('${charKey}','${fieldKey}',this)">${escapeHtml(String(value))}</span>`;
     }
 
-    window.toggleEditField = function(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (el.contentEditable === 'true' || (el.tagName === 'INPUT' && !el.readOnly)) {
-        if (el.tagName === 'INPUT') { el.readOnly = true; el.style.border = '1px solid transparent'; }
-        else { el.contentEditable = 'false'; el.style.border = '1px solid transparent'; el.style.background = 'transparent'; }
-      } else {
-        if (el.tagName === 'INPUT') { el.readOnly = false; el.style.border = '1px solid rgba(160,140,220,0.6)'; el.focus(); }
-        else { el.contentEditable = 'true'; el.style.border = '1px solid rgba(160,140,220,0.6)'; el.style.background = 'rgba(120,100,180,0.15)'; el.focus(); }
-      }
-    };
-
-    function renderUsageCheckboxes(charKey, featureIndex, maxUses) {
-      if (maxUses === "∞" || maxUses === "Passive" || !maxUses || maxUses === 0) return '';
-      const num = parseInt(maxUses);
+    function renderUsageBoxes(charKey, featIdx, uses, resetOn) {
+      if (uses === "∞" || uses === "Passive" || !uses || uses === 0) return '';
+      const num = parseInt(uses);
       if (isNaN(num) || num <= 0 || num > 20) return '';
-      const storageKey = `uses-${charKey}-feat-${featureIndex}`;
-      let usedCount = parseInt(localStorage.getItem(storageKey) || '0');
-      if (usedCount > num) usedCount = num;
+      const key = `uses-${charKey}-feat-${featIdx}`;
+      let used = parseInt(localStorage.getItem(key) || '0');
+      if (used > num) used = num;
       let boxes = '';
       for (let i = 0; i < num; i++) {
-        boxes += `<span class="usage-checkbox${i < usedCount ? ' used' : ''}" onclick="toggleUsageCheckbox(this, '${storageKey}', ${num})" title="Use ${i+1}"></span>`;
+        boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this, '${key}', ${num})" title="Use ${i+1}"></span>`;
       }
-      return `<div class="usage-tracker"><span class="usage-label">Used:</span><div class="usage-checkboxes">${boxes}</div><button class="btn-reset-uses" onclick="resetUsage('${storageKey}', this)" title="Reset">↺</button></div>`;
+      return `<div style="margin-top:0.2rem;display:flex;align-items:center;gap:0.3rem;"><span style="font-size:0.6rem;color:#9088c0;">Used:</span>${boxes}<button class="btn-sm" onclick="resetOneUsage('${key}',this)" title="Reset">↺</button></div>`;
     }
 
-    window.toggleUsageCheckbox = function(el, storageKey, num) {
+    window.toggleUsage = function(el, key, num) {
       const all = el.parentElement.querySelectorAll('.usage-checkbox');
       const idx = Array.from(all).indexOf(el);
       if (el.classList.contains('used')) {
-        for (let i = all.length - 1; i >= idx; i--) all[i].classList.remove('used');
+        for (let i = all.length-1; i >= idx; i--) all[i].classList.remove('used');
       } else {
         for (let i = 0; i <= idx; i++) all[i].classList.add('used');
       }
       let count = 0;
       all.forEach(b => { if (b.classList.contains('used')) count++; });
-      localStorage.setItem(storageKey, count);
+      localStorage.setItem(key, count);
     };
 
-    window.resetUsage = function(storageKey, btn) {
-      localStorage.setItem(storageKey, '0');
-      btn.parentElement.querySelectorAll('.usage-checkbox').forEach(b => b.classList.remove('used'));
+    window.resetOneUsage = function(key, btn) {
+      localStorage.setItem(key, '0');
+      const container = btn.parentElement;
+      container.querySelectorAll('.usage-checkbox').forEach(b => b.classList.remove('used'));
     };
+
+    window.resetAllByType = function(charKey, type) {
+      const features = characterData[charKey]?.features || [];
+      features.forEach((f, i) => {
+        if (f.resetOn === type) {
+          localStorage.setItem(`uses-${charKey}-feat-${i}`, '0');
+        }
+      });
+      // Reset spell slots too
+      const slots = characterData[charKey]?.spellSlots;
+      if (slots && type === 'long') {
+        Object.keys(slots).forEach(level => {
+          if (level !== 'cantrips') localStorage.setItem(`uses-${charKey}-slot-${level}`, '0');
+        });
+      }
+      if (slots && type === 'short') {
+        // Only reset features on short rest, not full spell slots
+      }
+      switchTab(charKey);
+    };
+
+    // ─── AUTO-SAVE SYSTEM ─────────────────────────────────
+    function scheduleAutoSave(charKey) {
+      if (autoSaveTimers[charKey]) clearTimeout(autoSaveTimers[charKey]);
+      autoSaveTimers[charKey] = setTimeout(() => {
+        saveAllEdits(charKey, true);
+      }, 3000);
+    }
+
+    window.saveFieldImmediate = function(charKey, field, el) {
+      const value = el.textContent.trim();
+      db.ref(`characters/${charKey}/${field}`).set(value);
+      addToChangeLog(charKey, field, value);
+    };
+
+    function saveAllEdits(charKey, silent = false) {
+      const edits = {};
+      document.querySelectorAll(`[data-char="${charKey}"]`).forEach(el => {
+        edits[el.getAttribute('data-field')] = el.textContent.trim();
+      });
+      Object.entries(edits).forEach(([field, value]) => {
+        db.ref(`characters/${charKey}/${field}`).set(value);
+        addToChangeLog(charKey, field, value);
+      });
+      if (!silent) {
+        const indicator = document.getElementById(`save-indicator-${charKey}`);
+        if (indicator) { indicator.textContent = '✓ Saved'; setTimeout(() => { if (indicator) indicator.textContent = ''; }, 2000); }
+      }
+    }
+
+    function addToChangeLog(charKey, field, value) {
+      const timestamp = new Date().toLocaleTimeString();
+      const charName = characterData[charKey]?.name || charKey;
+      changeLog.unshift({ time: timestamp, char: charName, field, value: value.substring(0, 40) });
+      if (changeLog.length > 10) changeLog = changeLog.slice(0, 10);
+      // Save log to Firebase
+      db.ref('changeLog').set(changeLog);
+    }
 
     // ─── ADD/REMOVE FUNCTIONS ────────────────────────────
     window.addSpell = function(charKey) {
       const input = document.getElementById(`newSpell-${charKey}`);
-      if (!input || !input.value.trim()) return;
+      if (!input?.value.trim()) return;
       const name = input.value.trim();
       db.ref(`characters/${charKey}/spells`).once('value').then(s => {
         const cur = s.val() || [];
         cur.push(name);
         return db.ref(`characters/${charKey}/spells`).set(cur);
       }).then(() => {
-        const list = document.getElementById(`spellsList-${charKey}`);
-        const div = document.createElement('div');
-        div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
-        div.innerHTML = `<span class="editable-text" contenteditable="true" style="flex:1;">${escapeHtml(name)}</span><button class="pencil-btn" onclick="editItem(this,'${charKey}','spells')">✎</button><button class="btn-remove" onclick="removeItem(this,'${charKey}','spells','${escapeHtml(name)}')">✕</button>`;
-        list.appendChild(div);
+        addToChangeLog(charKey, 'spells', `Added: ${name}`);
+        loadDynamicLists(charKey);
         input.value = '';
       });
     };
 
     window.addEquipment = function(charKey) {
       const input = document.getElementById(`newEquip-${charKey}`);
-      if (!input || !input.value.trim()) return;
+      if (!input?.value.trim()) return;
       const name = input.value.trim();
       db.ref(`characters/${charKey}/equipment`).once('value').then(s => {
         const cur = s.val() || [];
         cur.push(name);
         return db.ref(`characters/${charKey}/equipment`).set(cur);
       }).then(() => {
-        const list = document.getElementById(`equipList-${charKey}`);
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="editable-text" contenteditable="true" style="flex:1;">✦ ${escapeHtml(name)}</span><button class="pencil-btn" onclick="editItem(this,'${charKey}','equipment')">✎</button><button class="btn-remove" onclick="removeItem(this,'${charKey}','equipment','${escapeHtml(name)}')">✕</button>`;
-        list.appendChild(li);
+        addToChangeLog(charKey, 'equipment', `Added: ${name}`);
+        loadDynamicLists(charKey);
         input.value = '';
       });
     };
@@ -673,18 +626,15 @@
       const n = document.getElementById(`newFeatName-${charKey}`);
       const d = document.getElementById(`newFeatDesc-${charKey}`);
       const u = document.getElementById(`newFeatUses-${charKey}`);
-      if (!n || !n.value.trim()) return;
-      const feat = { name: n.value.trim(), desc: d.value.trim() || 'New ability', cost: u.value.trim() || 'Passive', uses: u.value.trim() || 0 };
+      if (!n?.value.trim()) return;
+      const feat = { name: n.value.trim(), desc: d.value.trim() || 'New ability', cost: u.value.trim() || 'Passive', uses: u.value.trim() || 0, resetOn: 'none' };
       db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => {
         const cur = s.val() || [];
         cur.push(feat);
         return db.ref(`characters/${charKey}/customFeatures`).set(cur);
       }).then(() => {
-        const list = document.getElementById(`featList-${charKey}`);
-        const div = document.createElement('div');
-        div.className = 'ability-card custom-feature';
-        div.innerHTML = `<div class="ability-name"><span class="editable-text" contenteditable="true">${escapeHtml(feat.name)}</span>${feat.cost ? `<span class="ability-cost">${escapeHtml(feat.cost)}</span>` : ''}<button class="btn-remove" onclick="this.closest('.ability-card').remove();removeItem(this,'${charKey}','customFeatures','${escapeHtml(feat.name)}')">✕</button></div><div class="ability-desc"><span class="editable-text" contenteditable="true">${escapeHtml(feat.desc)}</span></div>${renderUsageCheckboxes(charKey, Date.now(), feat.uses)}`;
-        list.appendChild(div);
+        addToChangeLog(charKey, 'features', `Added: ${feat.name}`);
+        loadDynamicLists(charKey);
         n.value = ''; d.value = ''; u.value = '';
       });
     };
@@ -694,109 +644,73 @@
       db.ref(`characters/${charKey}/${category}`).once('value').then(s => {
         const items = s.val() || [];
         return db.ref(`characters/${charKey}/${category}`).set(items.filter(i => (typeof i === 'string' ? i !== name : i.name !== name)));
-      }).then(() => btn.closest('div, li').remove());
+      }).then(() => {
+        addToChangeLog(charKey, category, `Removed: ${name}`);
+        btn.closest('div, li').remove();
+      });
     };
 
-    window.editItem = function(btn, charKey, category) {
-      const span = btn.parentElement.querySelector('.editable-text');
-      if (!span) return;
-      const oldVal = span.textContent;
-      const input = document.createElement('input');
-      input.type = 'text'; input.value = oldVal;
-      input.style.cssText = 'flex:1;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.6);color:#e8e0ff;padding:0.3rem;border-radius:0.3rem;font-family:inherit;';
-      span.replaceWith(input); input.focus();
-      input.addEventListener('blur', () => {
-        const newVal = input.value.trim() || oldVal;
-        const newSpan = document.createElement('span');
-        newSpan.className = 'editable-text'; newSpan.contentEditable = 'true'; newSpan.textContent = newVal; newSpan.style.flex = '1';
-        input.replaceWith(newSpan);
+    window.editItemInline = function(el, charKey, category) {
+      const oldVal = el.textContent;
+      el.contentEditable = 'true';
+      el.focus();
+      el.addEventListener('blur', function handler() {
+        el.removeEventListener('blur', handler);
+        const newVal = el.textContent.trim() || oldVal;
+        el.textContent = newVal;
         db.ref(`characters/${charKey}/${category}`).once('value').then(s => {
           const items = s.val() || [];
           return db.ref(`characters/${charKey}/${category}`).set(items.map(i => (typeof i === 'string' && i === oldVal) ? newVal : (i.name === oldVal ? {...i, name: newVal} : i)));
         });
-      });
+        addToChangeLog(charKey, category, `Edited: ${oldVal} → ${newVal}`);
+      }, { once: true });
     };
 
-    window.saveAllEdits = function(charKey) {
-      const edits = {};
-      document.querySelectorAll(`[data-char="${charKey}"][data-field]`).forEach(el => {
-        edits[el.getAttribute('data-field')] = el.tagName === 'INPUT' ? el.value : el.textContent;
-      });
-      Object.entries(edits).forEach(([f, v]) => db.ref(`characters/${charKey}/${f}`).set(v));
-      alert('Edits saved! ✦');
-    };
-
-    // ─── KEY FIX: LOAD WITH BASE DATA FIRST ──────────────
+    // ─── LOAD DYNAMIC LISTS ──────────────────────────────
     function loadDynamicLists(charKey) {
       const c = characterData[charKey];
       if (!c) return;
 
-      // Load spells: merge base spells from characterData with Firebase additions
-      db.ref(`characters/${charKey}/spells`).once('value').then(snapshot => {
-        const fbSpells = snapshot.val();
-        // Use Firebase data if it exists, otherwise use base data
-        const spells = (fbSpells && Array.isArray(fbSpells)) ? fbSpells : (c.spells || []);
-        // If Firebase was empty, initialize it with base data
-        if (!fbSpells) {
-          db.ref(`characters/${charKey}/spells`).set(c.spells || []);
-        }
-        renderSpellsList(charKey, spells);
+      db.ref(`characters/${charKey}/spells`).once('value').then(s => {
+        const spells = s.val() || c.spells || [];
+        if (!s.val()) db.ref(`characters/${charKey}/spells`).set(c.spells || []);
+        renderList(charKey, 'spellsList', spells, false);
       });
 
-      // Load equipment: merge base equipment with Firebase additions
-      db.ref(`characters/${charKey}/equipment`).once('value').then(snapshot => {
-        const fbEquip = snapshot.val();
-        const equipment = (fbEquip && Array.isArray(fbEquip)) ? fbEquip : (c.equipment || []);
-        if (!fbEquip) {
-          db.ref(`characters/${charKey}/equipment`).set(c.equipment || []);
-        }
-        renderEquipmentList(charKey, equipment);
+      db.ref(`characters/${charKey}/equipment`).once('value').then(s => {
+        const equip = s.val() || c.equipment || [];
+        if (!s.val()) db.ref(`characters/${charKey}/equipment`).set(c.equipment || []);
+        renderList(charKey, 'equipList', equip, true);
       });
 
-      // Load custom features
-      db.ref(`characters/${charKey}/customFeatures`).once('value').then(snapshot => {
-        const feats = snapshot.val();
-        if (feats && Array.isArray(feats)) {
-          renderCustomFeatures(charKey, feats);
-        }
+      db.ref(`characters/${charKey}/customFeatures`).once('value').then(s => {
+        const feats = s.val();
+        if (feats && Array.isArray(feats)) renderCustomFeats(charKey, feats);
       });
     }
 
-    function renderSpellsList(charKey, spells) {
-      const container = document.getElementById(`spellsList-${charKey}`);
+    function renderList(charKey, containerId, items, isEquip) {
+      const container = document.getElementById(`${containerId}-${charKey}`);
       if (!container) return;
       const addForm = container.querySelector('.add-form');
       container.innerHTML = '';
-      spells.forEach(spell => {
-        const div = document.createElement('div');
-        div.style.cssText = 'display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
-        div.innerHTML = `<span class="editable-text" contenteditable="true" style="flex:1;">${escapeHtml(spell)}</span><button class="pencil-btn" onclick="editItem(this,'${charKey}','spells')">✎</button><button class="btn-remove" onclick="removeItem(this,'${charKey}','spells','${escapeHtml(spell)}')">✕</button>`;
-        container.appendChild(div);
+      items.forEach(item => {
+        const el = document.createElement(isEquip ? 'li' : 'div');
+        el.style.cssText = 'display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0;border-bottom:1px solid rgba(100,80,160,0.2);';
+        el.innerHTML = `${isEquip ? '✦ ' : ''}<span class="editable-text" contenteditable="true" onblur="editItemInline(this,'${charKey}','${isEquip ? 'equipment' : 'spells'}')">${escapeHtml(item)}</span><button class="btn-remove" onclick="removeItem(this,'${charKey}','${isEquip ? 'equipment' : 'spells'}','${escapeHtml(item)}')">✕</button>`;
+        container.appendChild(el);
       });
       if (addForm) container.appendChild(addForm);
     }
 
-    function renderEquipmentList(charKey, equipment) {
-      const container = document.getElementById(`equipList-${charKey}`);
-      if (!container) return;
-      const addForm = container.querySelector('.add-form');
-      container.innerHTML = '';
-      equipment.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="editable-text" contenteditable="true" style="flex:1;">✦ ${escapeHtml(item)}</span><button class="pencil-btn" onclick="editItem(this,'${charKey}','equipment')">✎</button><button class="btn-remove" onclick="removeItem(this,'${charKey}','equipment','${escapeHtml(item)}')">✕</button>`;
-        container.appendChild(li);
-      });
-      if (addForm) container.appendChild(addForm);
-    }
-
-    function renderCustomFeatures(charKey, feats) {
+    function renderCustomFeats(charKey, feats) {
       const container = document.getElementById(`featList-${charKey}`);
       if (!container) return;
       container.querySelectorAll('.custom-feature').forEach(el => el.remove());
       feats.forEach((f, i) => {
         const div = document.createElement('div');
         div.className = 'ability-card custom-feature';
-        div.innerHTML = `<div class="ability-name"><span class="editable-text" contenteditable="true">${escapeHtml(f.name)}</span>${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}<button class="btn-remove" onclick="this.closest('.ability-card').remove();removeItem(this,'${charKey}','customFeatures','${escapeHtml(f.name)}')">✕</button></div><div class="ability-desc"><span class="editable-text" contenteditable="true">${escapeHtml(f.desc)}</span></div>${renderUsageCheckboxes(charKey, `custom-${i}`, f.uses)}`;
+        div.innerHTML = `<div class="ability-name"><span class="editable-text" contenteditable="true">${escapeHtml(f.name)}</span>${f.cost ? `<span class="ability-cost">${escapeHtml(f.cost)}</span>` : ''}<button class="btn-remove" onclick="removeItem(this,'${charKey}','customFeatures','${escapeHtml(f.name)}')">✕</button></div><div class="ability-desc"><span class="editable-text" contenteditable="true">${escapeHtml(f.desc)}</span></div>${renderUsageBoxes(charKey, `custom-${i}`, f.uses, f.resetOn)}`;
         container.appendChild(div);
       });
     }
@@ -804,37 +718,68 @@
     // ─── RENDER CHARACTER SHEET ──────────────────────────
     function renderCharacterSheet(charKey) {
       const c = characterData[charKey];
-      if (!c) return '<p style="color:#c8b8f0;">Character not found.</p>';
+      if (!c) return '<p>Not found</p>';
 
       const statsHtml = Object.entries(c.stats).map(([name, data]) => {
         const modStr = data.mod >= 0 ? `+${data.mod}` : `${data.mod}`;
-        const saveStr = data.save >= 0 ? `+${data.save}` : `${data.save}`;
-        return `<div class="stat-box"><div class="stat-label">${name}</div><div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div><span class="stat-mod">${modStr}</span><div style="font-size:0.7rem;color:#9088c0;margin-top:0.2rem;">Save ${saveStr}</div></div>`;
+        return `<div class="stat-box"><div class="stat-label">${name}</div><div class="stat-value">${makeEditable(data.score, `stat-${name}-score`, charKey)}</div><span class="stat-mod">${modStr}</span><div style="font-size:0.6rem;color:#9088c0;">Save ${data.save >= 0 ? '+' + data.save : data.save}</div></div>`;
       }).join('');
 
-      const attacksHtml = c.attacks.map((a, i) => `<div class="attack-row"><span class="attack-name">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span><span class="attack-bonus">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span><span class="attack-damage">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span><span style="color:#a098d0;font-size:0.8rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span></div>`).join('');
+      const attacksHtml = c.attacks.map((a, i) => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:0.4rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.3rem;">
+          <span style="font-weight:bold;color:#d4c8ff;min-width:130px;">⚔️ ${makeEditable(a.name, `atk-name-${i}`, charKey)}</span>
+          <span style="color:#c8b8f0;background:rgba(60,40,120,0.4);padding:0.15rem 0.4rem;border-radius:0.4rem;">${makeEditable(a.bonus, `atk-bonus-${i}`, charKey)}</span>
+          <span style="color:#e8d8ff;">${makeEditable(a.damage, `atk-dmg-${i}`, charKey)}</span>
+          <span style="color:#a098d0;font-size:0.75rem;">${makeEditable(a.notes, `atk-notes-${i}`, charKey)}</span>
+        </div>`).join('');
 
-      const featuresHtml = c.features.map((f, i) => `<div class="ability-card"><div class="ability-name">${makeEditable(f.name, `feat-name-${i}`, charKey)}${f.cost ? `<span class="ability-cost">${makeEditable(f.cost, `feat-cost-${i}`, charKey)}</span>` : ''}</div><div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>${renderUsageCheckboxes(charKey, i, f.uses)}</div>`).join('');
+      const featuresHtml = c.features.map((f, i) => `
+        <div class="ability-card">
+          <div class="ability-name">${makeEditable(f.name, `feat-name-${i}`, charKey)}${f.cost ? `<span class="ability-cost">${makeEditable(f.cost, `feat-cost-${i}`, charKey)}</span>` : ''}</div>
+          <div class="ability-desc">${makeEditable(f.desc, `feat-desc-${i}`, charKey)}</div>
+          ${renderUsageBoxes(charKey, i, f.uses, f.resetOn)}
+        </div>`).join('');
 
-      const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => `<div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonus >= 0 ? '+' + bonus : bonus}</span></div>`).join('') : '';
+      const skillsHtml = c.skills ? Object.entries(c.skills).map(([name, bonus]) => `
+        <div class="info-item"><span class="info-label">${name}</span><span class="info-value" style="float:right;">${bonus >= 0 ? '+' + bonus : bonus}</span></div>`).join('') : '';
 
-      const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => `<div class="spell-slot"><div class="slot-level">${level}</div><div class="slot-count">${count}</div>${count !== "∞" ? renderUsageCheckboxes(charKey, `slot-${level}`, parseInt(count) || 0) : ''}</div>`).join('') : '';
+      const spellSlotsHtml = c.spellSlots ? Object.entries(c.spellSlots).map(([level, count]) => {
+        const slotUses = count !== "∞" ? parseInt(count) || 0 : 0;
+        const slotKey = `uses-${charKey}-slot-${level}`;
+        let boxes = '';
+        if (slotUses > 0 && slotUses <= 20) {
+          let used = parseInt(localStorage.getItem(slotKey) || '0');
+          for (let i = 0; i < slotUses; i++) {
+            boxes += `<span class="usage-checkbox${i < used ? ' used' : ''}" onclick="toggleUsage(this,'${slotKey}',${slotUses})"></span>`;
+          }
+        }
+        return `<div class="spell-slot"><div class="slot-level">${level}</div><div class="slot-count">${count}</div>${boxes ? `<div style="display:flex;gap:2px;justify-content:center;margin-top:2px;">${boxes}</div>` : ''}</div>`;
+      }).join('') : '';
 
       return `<div class="char-sheet">
-        <div class="sheet-section"><div class="section-header"><span>📜 ${escapeHtml(c.name)}</span></div>
+        <div class="sheet-section">
+          <div class="section-header">
+            <span>📜 ${makeEditable(c.name, 'name', charKey)}</span>
+            <div>
+              <button class="btn-rest" onclick="resetAllByType('${charKey}','short')" title="Reset short rest abilities">🌅 Short Rest</button>
+              <button class="btn-rest" onclick="resetAllByType('${charKey}','long')" title="Reset long rest abilities">🌙 Long Rest</button>
+            </div>
+          </div>
           <div class="info-grid">
             <div class="info-item"><span class="info-label">Class</span><span class="info-value">${makeEditable(c.classLevel, 'classLevel', charKey)}</span></div>
             <div class="info-item"><span class="info-label">Race</span><span class="info-value">${makeEditable(c.race, 'race', charKey)}</span></div>
-            <div class="info-item"><span class="info-label">Background</span><span class="info-value">${makeEditable(c.background, 'background', charKey)}</span></div>
-            <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey, 'input', '')}</span></div>
+            <div class="info-item"><span class="info-label">Player</span><span class="info-value">${makeEditable(c.playerName, 'playerName', charKey)}</span></div>
           </div>
         </div>
 
-        <div class="sheet-section"><div class="section-header">📊 ABILITY SCORES</div><div class="stat-row">${statsHtml}</div>
-          <div class="info-grid" style="margin-top:0.8rem;">
+        <div class="sheet-section">
+          <div class="section-header">📊 ABILITY SCORES</div>
+          <div class="stat-row">${statsHtml}</div>
+          <div class="info-grid" style="margin-top:0.6rem;">
             <div class="info-item"><span class="info-label">AC</span><span class="info-value">${makeEditable(c.combat.ac, 'ac', charKey)}</span></div>
             <div class="info-item"><span class="info-label">HP</span><span class="info-value">${makeEditable(c.combat.hp, 'hp', charKey)}</span></div>
             <div class="info-item"><span class="info-label">Speed</span><span class="info-value">${makeEditable(c.combat.speed, 'speed', charKey)} ft.</span></div>
+            <div class="info-item"><span class="info-label">Initiative</span><span class="info-value">+${c.combat.initiative}</span></div>
           </div>
         </div>
 
@@ -844,33 +789,58 @@
 
         ${spellSlotsHtml ? `<div class="sheet-section"><div class="section-header">🔮 SPELL SLOTS</div><div class="spell-slot-grid">${spellSlotsHtml}</div></div>` : ''}
 
-        <div class="sheet-section"><div class="section-header"><span>📜 SPELLS</span></div><div id="spellsList-${charKey}"><p style="color:#9088c0;">Loading spells…</p></div>
-          <div class="add-form"><input type="text" id="newSpell-${charKey}" placeholder="Spell name"><button class="btn-add" onclick="addSpell('${charKey}')">+ Add Spell</button></div>
+        <div class="sheet-section">
+          <div class="section-header">📜 SPELLS</div>
+          <div id="spellsList-${charKey}"></div>
+          <div class="add-form"><input type="text" id="newSpell-${charKey}" placeholder="Spell name"><button class="btn-add" onclick="addSpell('${charKey}')">+ Add</button></div>
         </div>
 
-        <div class="sheet-section"><div class="section-header"><span>✨ FEATURES & ABILITIES</span></div><div id="featList-${charKey}">${featuresHtml}</div>
+        <div class="sheet-section">
+          <div class="section-header">✨ FEATURES</div>
+          <div id="featList-${charKey}">${featuresHtml}</div>
           <div class="add-form">
-            <input type="text" id="newFeatName-${charKey}" placeholder="Ability name" style="flex:1;">
+            <input type="text" id="newFeatName-${charKey}" placeholder="Name" style="flex:1;">
             <input type="text" id="newFeatDesc-${charKey}" placeholder="Description" style="flex:2;">
-            <input type="text" id="newFeatUses-${charKey}" placeholder="Uses (# or ∞)" style="width:80px;">
-            <button class="btn-add" onclick="addFeature('${charKey}')">+ Add Ability</button>
+            <input type="text" id="newFeatUses-${charKey}" placeholder="Uses" style="width:60px;">
+            <button class="btn-add" onclick="addFeature('${charKey}')">+ Add</button>
           </div>
         </div>
 
-        <div class="sheet-section"><div class="section-header"><span>🎒 EQUIPMENT</span></div><ul class="equipment-list" id="equipList-${charKey}"><li style="color:#9088c0;">Loading equipment…</li></ul>
-          <div class="add-form"><input type="text" id="newEquip-${charKey}" placeholder="Item name"><button class="btn-add" onclick="addEquipment('${charKey}')">+ Add Item</button></div>
+        <div class="sheet-section">
+          <div class="section-header">🎒 EQUIPMENT</div>
+          <ul class="equipment-list" id="equipList-${charKey}"></ul>
+          <div class="add-form"><input type="text" id="newEquip-${charKey}" placeholder="Item name"><button class="btn-add" onclick="addEquipment('${charKey}')">+ Add</button></div>
         </div>
 
-        <div class="sheet-section"><div class="section-header">📖 BACKSTORY</div><div style="color:#c0b8e8;">${makeEditable(c.backstory, 'backstory', charKey)}</div></div>
+        <div class="sheet-section">
+          <div class="section-header">📖 BACKSTORY</div>
+          <div style="color:#c0b8e8;">${makeEditable(c.backstory, 'backstory', charKey)}</div>
+        </div>
 
-        <div style="text-align:center;"><button class="btn-save" onclick="saveAllEdits('${charKey}')">💾 Save Edits</button></div>
+        <div style="text-align:center;">
+          <span class="save-indicator" id="save-indicator-${charKey}"></span>
+        </div>
       </div>`;
     }
 
+    // ─── DM PAGE ──────────────────────────────────────────
     function renderDMPage() {
-      return `<div class="dm-pin-section"><h2 style="color:#d4c8ff;">🔐 DM Stargate</h2><p>Enter PIN:</p><input type="password" id="pinInput" class="dm-pin-input" maxlength="8"><br><button class="btn-save" id="pinSubmit">Unlock</button><p id="pinError" style="color:#e0a0c0;"></p><div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:2rem;"><div class="section-header" style="color:#d4c8ff;">🗝️ SECRETS</div>${Object.entries(dmSecrets).map(([k, s]) => `<div class="secret-box"><div class="secret-label">${characterData[k]?.name || k}</div><div class="secret-text">${s}</div></div>`).join('')}</div></div>`;
+      return `<div style="text-align:center;padding:1rem;">
+        <h2 style="color:#d4c8ff;">🔐 DM Stargate</h2>
+        <p style="color:#a098d0;">Enter PIN:</p>
+        <input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.5rem 1rem;border-radius:0.4rem;font-size:1.2rem;text-align:center;letter-spacing:4px;margin:0.8rem 0;" maxlength="8">
+        <br><button class="btn-rest" id="pinSubmit">Unlock</button>
+        <p id="pinError" style="color:#e0a0c0;margin-top:0.5rem;"></p>
+        <div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1.5rem;">
+          <div class="section-header" style="color:#d4c8ff;">🗝️ SECRETS</div>
+          ${Object.entries(dmSecrets).map(([k, s]) => `<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.8rem;border-radius:0.6rem;margin:0.7rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${characterData[k]?.name || k}</div><div style="color:#c8b8f0;">${s}</div></div>`).join('')}
+          <div class="section-header" style="color:#d4c8ff;margin-top:1.5rem;">📋 CHANGE LOG (Last 10)</div>
+          <div class="change-log" id="changeLogContainer"><p style="color:#9088c0;">Loading...</p></div>
+        </div>
+      </div>`;
     }
 
+    // ─── TAB SWITCHING ───────────────────────────────────
     function setActiveTab(tabId) {
       ['drunken','chronurgy','grave','psi','dm'].forEach(id => {
         const btn = document.getElementById('tab' + id.charAt(0).toUpperCase() + id.slice(1));
@@ -881,20 +851,47 @@
     }
 
     function switchTab(tabId) {
-      detachListener(); currentTab = tabId; setActiveTab(tabId);
+      // Clear pending auto-saves
+      Object.values(autoSaveTimers).forEach(t => clearTimeout(t));
+      
+      currentTab = tabId;
+      setActiveTab(tabId);
+      
       if (tabId === 'dm') {
-        dmAuthenticated = false; contentPanel.innerHTML = renderDMPage();
+        dmAuthenticated = false;
+        contentPanel.innerHTML = renderDMPage();
         document.getElementById('pinSubmit').addEventListener('click', () => {
           if (document.getElementById('pinInput').value === DM_PIN) {
             dmAuthenticated = true;
             document.getElementById('dmSecretsContainer').style.display = 'block';
-          } else { document.getElementById('pinError').innerText = 'Incorrect PIN.'; }
+            document.getElementById('pinError').innerText = '';
+            // Load change log
+            db.ref('changeLog').once('value').then(s => {
+              const log = s.val() || [];
+              changeLog = log;
+              renderChangeLog();
+            });
+          } else {
+            document.getElementById('pinError').innerText = 'Incorrect PIN';
+          }
         });
       } else {
         contentPanel.innerHTML = renderCharacterSheet(tabId);
-        setTimeout(() => loadDynamicLists(tabId), 150);
+        setTimeout(() => loadDynamicLists(tabId), 100);
         dmAuthenticated = false;
       }
+    }
+
+    function renderChangeLog() {
+      const container = document.getElementById('changeLogContainer');
+      if (!container) return;
+      if (changeLog.length === 0) {
+        container.innerHTML = '<p style="color:#9088c0;">No changes yet.</p>';
+        return;
+      }
+      container.innerHTML = changeLog.map(entry => 
+        `<div class="log-entry">[${entry.time}] <strong>${entry.char}</strong> · ${entry.field}: ${entry.value}</div>`
+      ).join('');
     }
 
     document.getElementById('tabDrunken').addEventListener('click', () => switchTab('drunken'));
@@ -902,6 +899,9 @@
     document.getElementById('tabGrave').addEventListener('click', () => switchTab('grave'));
     document.getElementById('tabPsi').addEventListener('click', () => switchTab('psi'));
     document.getElementById('tabDM').addEventListener('click', () => switchTab('dm'));
+
+    // Load change log on init
+    db.ref('changeLog').once('value').then(s => { changeLog = s.val() || []; });
 
     switchTab('drunken');
   })();
