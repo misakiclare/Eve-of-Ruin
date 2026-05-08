@@ -17,6 +17,8 @@
     .dm-lock { border: 1px dashed rgba(160, 140, 220, 0.5); color: #c8b8f0; }
     .content-panel { background: rgba(12, 10, 25, 0.75); border: 2px solid rgba(120, 100, 180, 0.35); border-radius: 1.5rem; padding: 1.5rem; background-image: linear-gradient(145deg, rgba(20, 15, 40, 0.7) 0%, rgba(8, 6, 18, 0.8) 100%); box-shadow: inset 0 0 40px rgba(0,0,0,0.5); min-height: 450px; max-height: 70vh; overflow-y: auto; }
     .content-panel::-webkit-scrollbar { width: 7px; }
+    .content-panel::-webkit-scrollbar-track { background: rgba(20, 15, 40, 0.5); }
+    .content-panel::-webkit-scrollbar-thumb { background: rgba(120, 100, 180, 0.5); }
     .char-sheet { display: flex; flex-direction: column; gap: 0.8rem; }
     .sheet-section { border: 2px solid rgba(120, 100, 180, 0.3); border-radius: 0.8rem; padding: 0.8rem; background: rgba(18, 14, 35, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
     .section-header { font-size: 1rem; color: #c8b8f0; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
@@ -43,6 +45,7 @@
     .btn-rest { background: rgba(100, 140, 200, 0.3); border: 1px solid rgba(140, 180, 220, 0.5); color: #c8d8f0; font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 0.4rem; cursor: pointer; margin: 0 0.15rem; }
     .btn-add { background: rgba(80, 140, 100, 0.3); border: 1px solid rgba(100, 200, 140, 0.5); color: #b8f0c8; font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 0.3rem; cursor: pointer; }
     .btn-remove { background: rgba(200, 80, 80, 0.3); border: 1px solid rgba(200, 100, 100, 0.5); color: #f0b8b8; font-size: 0.6rem; padding: 0.1rem 0.25rem; border-radius: 0.2rem; cursor: pointer; flex-shrink: 0; }
+    .btn-remove:hover { background: rgba(200, 80, 80, 0.5); }
     .btn-save-note { background: rgba(80, 140, 180, 0.3); border: 1px solid rgba(100, 180, 220, 0.5); color: #b8d8f0; font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 0.3rem; cursor: pointer; white-space: nowrap; }
     .add-form { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; padding: 0.5rem; background: rgba(20, 15, 40, 0.5); border-radius: 0.3rem; border: 1px dashed rgba(120, 100, 180, 0.3); }
     .add-form input, .add-form select { background: rgba(20, 15, 40, 0.7); border: 1px solid rgba(140, 120, 220, 0.4); color: #e8e0ff; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: inherit; font-size: 0.75rem; }
@@ -63,10 +66,11 @@
     .spell-detail-panel.open { display: block; }
     .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; flex-shrink: 0; }
     .future-spell { opacity: 0.7; border-left: 2px solid rgba(180, 160, 140, 0.4); }
-    .future-tag { font-size: 0.55rem; background: rgba(180, 160, 100, 0.3); color: #d8c8a0; padding: 0.05rem 0.25rem; border-radius: 0.2rem; }
+    .future-tag { font-size: 0.55rem; background: rgba(180, 160, 100, 0.3); color: #d8c8a0; padding: 0.05rem 0.25rem; border-radius: 0.2rem; flex-shrink: 0; }
     .change-log { max-height: 180px; overflow-y: auto; font-size: 0.75rem; }
     .session-note-card { border: 2px solid rgba(140, 160, 200, 0.3); border-radius: 0.6rem; padding: 0.6rem; margin: 0.5rem 0; background: linear-gradient(135deg, rgba(20, 25, 45, 0.7) 0%, rgba(12, 15, 30, 0.8) 100%); }
     .char-note-card { border: 1px solid rgba(120, 140, 180, 0.3); border-radius: 0.5rem; padding: 0.5rem; margin: 0.3rem 0; background: rgba(20, 22, 40, 0.6); display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+    @media (max-width: 768px) { .grimoire { padding: 0.8rem; } .tab-btn { font-size: 0.7rem; padding: 0.35rem 0.7rem; } }
   </style>
 </head>
 <body>
@@ -168,13 +172,71 @@
     psiwarrior:{15:["Bulwark of Force"],18:["Telekinetic Master"]}
   };
 
-  // ── CHARACTER DATA ────────────────────────────────────
+  // ── CHARACTER DATA (with actions/bonus actions) ──────
   const charData = {
-    dmpc:{name:"Sylvara 'Syv' Mosswood",classLevel:"Ranger (Gloom Stalker) 5 / Rogue (Scout) 5",race:"Wood Elf",background:"Planar Cartographer",alignment:"Neutral Good",playerName:"DM (DMPC)",stats:{STR:{score:10,mod:0,save:4},DEX:{score:20,mod:5,save:9},CON:{score:14,mod:2,save:6},INT:{score:12,mod:1,save:5},WIS:{score:14,mod:2,save:6},CHA:{score:8,mod:-1,save:3}},combat:{ac:17,hp:85,speed:35,initiative:7,hitDice:"5d10+5d8",proficiency:4,passivePerception:20,passiveInvestigation:15,passiveInsight:16},attacks:[{name:"Longbow",bonus:"+11",damage:"1d8+5"}],skills:{Stealth:13,Perception:10},features:[{name:"Favored Foe",desc:"+1d4 once/turn.",cost:"4/long rest",uses:4,resetOn:"long"}],spellSlots:{"1st":4,"2nd":2},spells:["Goodberry","Hunter's Mark","Absorb Elements","Pass Without Trace","Rope Trick","Zephyr Strike"],equipment:["Studded leather","Longbow","40 arrows"],backstory:"Cartographer for the Wind Dukes; memories erased."},
-    drunken:{name:"Kaelen 'Kettle' Morrow",classLevel:"Monk (Drunken Master) - Level 10",race:"Human (Variant)",background:"The Last of the Unremembered Path",alignment:"Chaotic Good",playerName:"__________________",stats:{STR:{score:10,mod:0,save:4},DEX:{score:20,mod:5,save:9},CON:{score:14,mod:2,save:6},INT:{score:8,mod:-1,save:3},WIS:{score:18,mod:4,save:8},CHA:{score:10,mod:0,save:4}},combat:{ac:19,hp:73,speed:50,initiative:5,hitDice:"10d8",proficiency:4,passivePerception:18,passiveInsight:18},attacks:[{name:"Unarmed Strike",bonus:"+9",damage:"1d6+5"}],skills:{Acrobatics:9,Insight:8},features:[{name:"Ki (10)",desc:"10 ki, short rest.",cost:"10/short rest",uses:10,resetOn:"short"},{name:"Stunning Strike",desc:"1 ki: CON save or stunned.",cost:"1 ki",uses:10,resetOn:"short"}],spells:[],equipment:["Quarterstaff","10 darts","Worn flask","10 gp"],backstory:"Monastery erased by a Rod fragment."},
-    chronurgy:{name:"Vesper Aldric",classLevel:"Wizard (Chronurgy) - Level 10",race:"Variant Human",background:"Temporal Archivist",alignment:"True Neutral",playerName:"__________________",stats:{STR:{score:8,mod:-1,save:3},DEX:{score:14,mod:2,save:6},CON:{score:14,mod:2,save:6},INT:{score:20,mod:5,save:9},WIS:{score:12,mod:1,save:5},CHA:{score:10,mod:0,save:4}},combat:{ac:15,hp:62,speed:30,initiative:5,hitDice:"10d6",proficiency:4,passivePerception:15,passiveInvestigation:19},attacks:[{name:"Chill Touch",bonus:"+9",damage:"2d8 necrotic"}],skills:{Arcana:9,History:9},features:[{name:"Chronal Shift",desc:"Reaction: reroll.",cost:"2/long rest",uses:2,resetOn:"long"},{name:"Arcane Abeyance",desc:"Store spell in bead.",cost:"1/short rest",uses:1,resetOn:"short"}],spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Shield","Gift of Alacrity","Misty Step","Counterspell","Haste","Slow","Dimension Door"],equipment:["Spellbook","Component pouch","Hourglass pendant","15 gp"],backstory:"Saw the Rod assembled and the multiverse collapsing."},
-    grave:{name:"Morwen",classLevel:"Cleric (Grave Domain) - Level 10",race:"Reborn",background:"Debt Collector of the Raven Queen",alignment:"Lawful Neutral",playerName:"__________________",stats:{STR:{score:8,mod:-1,save:3},DEX:{score:12,mod:1,save:5},CON:{score:14,mod:2,save:6},INT:{score:10,mod:0,save:4},WIS:{score:20,mod:5,save:9},CHA:{score:16,mod:3,save:7}},combat:{ac:15,hp:82,speed:30,initiative:1,hitDice:"10d8",proficiency:4,passivePerception:19,passiveInsight:19},attacks:[{name:"Toll the Dead",bonus:"DC 17",damage:"2d12 necrotic"}],skills:{Persuasion:7,Intimidation:7},features:[{name:"Path to the Grave",desc:"Next attack double damage.",cost:"Channel Divinity",uses:2,resetOn:"short"}],spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Bless","Healing Word","Spiritual Weapon","Spirit Guardians","Revivify","Death Ward","Banishment","Greater Restoration"],equipment:["Breastplate","Holy symbol","Mace","Prayer book","15 gp"],backstory:"Died and was saved by the Raven Queen."},
-    psi:{name:"Zor-Ashkev's Vessel",classLevel:"Fighter (Psi Warrior) - Level 10",race:"Aasimar (Fallen)",background:"Wind Duke Sleeper Agent",alignment:"Lawful Neutral",playerName:"__________________",stats:{STR:{score:17,mod:3,save:7},DEX:{score:10,mod:0,save:4},CON:{score:14,mod:2,save:6},INT:{score:15,mod:2,save:6},WIS:{score:10,mod:0,save:4},CHA:{score:8,mod:-1,save:3}},combat:{ac:19,hp:84,speed:30,initiative:0,hitDice:"10d10",proficiency:4,passivePerception:14,passiveInvestigation:16},attacks:[{name:"Longsword",bonus:"+7",damage:"1d8+5"}],skills:{Athletics:7,Perception:4},features:[{name:"Psionic Power (6)",desc:"6 dice, long rest.",cost:"6/long rest",uses:6,resetOn:"long"},{name:"Action Surge",desc:"Extra action.",cost:"1/short rest",uses:1,resetOn:"short"}],spells:[],equipment:["Plate armor","Longsword","Silver cube","15 gp"],backstory:"Woke with 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"}
+    dmpc:{
+      name:"Sylvara 'Syv' Mosswood",classLevel:"Ranger (Gloom Stalker) 5 / Rogue (Scout) 5",race:"Wood Elf",background:"Planar Cartographer",alignment:"Neutral Good",playerName:"DM (DMPC)",
+      stats:{STR:{score:10,mod:0,save:4},DEX:{score:20,mod:5,save:9},CON:{score:14,mod:2,save:6},INT:{score:12,mod:1,save:5},WIS:{score:14,mod:2,save:6},CHA:{score:8,mod:-1,save:3}},
+      combat:{ac:17,hp:85,speed:35,initiative:7,hitDice:"5d10+5d8",proficiency:4,passivePerception:20,passiveInvestigation:15,passiveInsight:16},
+      attacks:[{name:"Longbow",bonus:"+11",damage:"1d8+5",notes:"150/600 ft"},{name:"Shortsword",bonus:"+9",damage:"1d6+5",notes:"Finesse"}],
+      skills:{Stealth:13,Perception:10},
+      features:[{name:"Favored Foe",desc:"+1d4 once/turn.",cost:"4/long rest",uses:4,resetOn:"long"}],
+      spellSlots:{"1st":4,"2nd":2},spells:["Goodberry","Hunter's Mark","Absorb Elements","Pass Without Trace","Rope Trick","Zephyr Strike"],
+      equipment:["Studded leather","Longbow","40 arrows","Thieves' tools","Broken compass","Journal","20 gp"],
+      actions:[{name:"Attack (Longbow)",desc:"Ranged weapon attack"},{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"}],
+      bonusActions:[{name:"Hunter's Mark",desc:"Bonus action to cast or move mark"},{name:"Cunning Action",desc:"Dash, Disengage, or Hide"}],
+      backstory:"Cartographer for the Wind Dukes; memories erased."
+    },
+    drunken:{
+      name:"Kaelen 'Kettle' Morrow",classLevel:"Monk (Drunken Master) - Level 10",race:"Human (Variant)",background:"The Last of the Unremembered Path",alignment:"Chaotic Good",playerName:"__________________",
+      stats:{STR:{score:10,mod:0,save:4},DEX:{score:20,mod:5,save:9},CON:{score:14,mod:2,save:6},INT:{score:8,mod:-1,save:3},WIS:{score:18,mod:4,save:8},CHA:{score:10,mod:0,save:4}},
+      combat:{ac:19,hp:73,speed:50,initiative:5,hitDice:"10d8",proficiency:4,passivePerception:18,passiveInsight:18},
+      attacks:[{name:"Unarmed Strike",bonus:"+9",damage:"1d6+5",notes:"Magical"},{name:"Quarterstaff",bonus:"+9",damage:"1d6+5",notes:"Versatile (1d8)"}],
+      skills:{Acrobatics:9,Insight:8},
+      features:[{name:"Ki (10)",desc:"10 ki, short rest.",cost:"10/short rest",uses:10,resetOn:"short"},{name:"Stunning Strike",desc:"1 ki: CON save or stunned.",cost:"1 ki",uses:10,resetOn:"short"}],
+      spells:[],equipment:["Quarterstaff","10 darts","Worn flask","10 gp"],
+      actions:[{name:"Attack (Unarmed)",desc:"Melee weapon attack"},{name:"Attack (Quarterstaff)",desc:"Melee weapon attack"},{name:"Cast a Spell",desc:"(if applicable)"}],
+      bonusActions:[{name:"Flurry of Blows",desc:"1 ki: two unarmed strikes"},{name:"Patient Defense",desc:"1 ki: Dodge"},{name:"Step of the Wind",desc:"1 ki: Dash/Disengage"}],
+      backstory:"Monastery erased by a Rod fragment."
+    },
+    chronurgy:{
+      name:"Vesper Aldric",classLevel:"Wizard (Chronurgy) - Level 10",race:"Variant Human",background:"Temporal Archivist",alignment:"True Neutral",playerName:"__________________",
+      stats:{STR:{score:8,mod:-1,save:3},DEX:{score:14,mod:2,save:6},CON:{score:14,mod:2,save:6},INT:{score:20,mod:5,save:9},WIS:{score:12,mod:1,save:5},CHA:{score:10,mod:0,save:4}},
+      combat:{ac:15,hp:62,speed:30,initiative:5,hitDice:"10d6",proficiency:4,passivePerception:15,passiveInvestigation:19},
+      attacks:[{name:"Chill Touch",bonus:"+9",damage:"2d8 necrotic",notes:"Cantrip"}],
+      skills:{Arcana:9,History:9},
+      features:[{name:"Chronal Shift",desc:"Reaction: reroll.",cost:"2/long rest",uses:2,resetOn:"long"},{name:"Arcane Abeyance",desc:"Store spell in bead.",cost:"1/short rest",uses:1,resetOn:"short"}],
+      spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Shield","Gift of Alacrity","Misty Step","Counterspell","Haste","Slow","Dimension Door"],
+      equipment:["Spellbook","Component pouch","Hourglass pendant","15 gp"],
+      actions:[{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"},{name:"Chill Touch",desc:"Cantrip"},{name:"Fire Bolt",desc:"Cantrip"}],
+      bonusActions:[{name:"Misty Step",desc:"Bonus action teleport"},{name:"Arcane Abeyance (release)",desc:"Use stored spell"}],
+      backstory:"Saw the Rod assembled and the multiverse collapsing."
+    },
+    grave:{
+      name:"Morwen",classLevel:"Cleric (Grave Domain) - Level 10",race:"Reborn",background:"Debt Collector of the Raven Queen",alignment:"Lawful Neutral",playerName:"__________________",
+      stats:{STR:{score:8,mod:-1,save:3},DEX:{score:12,mod:1,save:5},CON:{score:14,mod:2,save:6},INT:{score:10,mod:0,save:4},WIS:{score:20,mod:5,save:9},CHA:{score:16,mod:3,save:7}},
+      combat:{ac:15,hp:82,speed:30,initiative:1,hitDice:"10d8",proficiency:4,passivePerception:19,passiveInsight:19},
+      attacks:[{name:"Toll the Dead",bonus:"DC 17",damage:"2d12 necrotic",notes:"Wis save"},{name:"Sacred Flame",bonus:"DC 17",damage:"2d8 radiant",notes:"Dex save"}],
+      skills:{Persuasion:7,Intimidation:7},
+      features:[{name:"Path to the Grave",desc:"Next attack double damage.",cost:"Channel Divinity",uses:2,resetOn:"short"}],
+      spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Bless","Healing Word","Spiritual Weapon","Spirit Guardians","Revivify","Death Ward","Banishment","Greater Restoration"],
+      equipment:["Breastplate","Holy symbol","Mace","Prayer book","15 gp"],
+      actions:[{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"},{name:"Toll the Dead",desc:"Cantrip"},{name:"Sacred Flame",desc:"Cantrip"}],
+      bonusActions:[{name:"Spiritual Weapon",desc:"Bonus action attack"},{name:"Healing Word",desc:"Bonus action heal"}],
+      backstory:"Died and was saved by the Raven Queen."
+    },
+    psi:{
+      name:"Zor-Ashkev's Vessel",classLevel:"Fighter (Psi Warrior) - Level 10",race:"Aasimar (Fallen)",background:"Wind Duke Sleeper Agent",alignment:"Lawful Neutral",playerName:"__________________",
+      stats:{STR:{score:17,mod:3,save:7},DEX:{score:10,mod:0,save:4},CON:{score:14,mod:2,save:6},INT:{score:15,mod:2,save:6},WIS:{score:10,mod:0,save:4},CHA:{score:8,mod:-1,save:3}},
+      combat:{ac:19,hp:84,speed:30,initiative:0,hitDice:"10d10",proficiency:4,passivePerception:14,passiveInvestigation:16},
+      attacks:[{name:"Longsword",bonus:"+7",damage:"1d8+5",notes:"+2 Dueling"},{name:"Heavy Crossbow",bonus:"+4",damage:"1d10",notes:"100/400"}],
+      skills:{Athletics:7,Perception:4},
+      features:[{name:"Psionic Power (6)",desc:"6 dice, long rest.",cost:"6/long rest",uses:6,resetOn:"long"},{name:"Action Surge",desc:"Extra action.",cost:"1/short rest",uses:1,resetOn:"short"}],
+      spells:[],equipment:["Plate armor","Longsword","Silver cube","15 gp"],
+      actions:[{name:"Attack (Longsword)",desc:"Melee weapon attack"},{name:"Attack (Crossbow)",desc:"Ranged weapon attack"},{name:"Cast a Spell",desc:"(if applicable)"}],
+      bonusActions:[{name:"Second Wind",desc:"Regain HP"},{name:"Telekinetic Shove",desc:"Bonus action shove"}],
+      backstory:"Woke with 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
+    }
   };
 
   const dmSecrets = { dmpc:"Memories taken by Raven Queen.", drunken:"Monastery erased.", chronurgy:"Future self assembling Rod.", grave:"Wind Duke scholar.", psi:"Sleeper agent." };
@@ -191,13 +253,12 @@
   function scheduleAutoSave(ck){if(autoSaveTimers[ck])clearTimeout(autoSaveTimers[ck]);autoSaveTimers[ck]=setTimeout(()=>saveAllEdits(ck),3000);}
   function saveAllEdits(ck){const e={};document.querySelectorAll(`[data-char="${ck}"]`).forEach(el=>e[el.getAttribute('data-field')]=el.textContent.trim());Object.entries(e).forEach(([f,v])=>{db.ref(`characters/${ck}/${f}`).set(v);});}
 
-  // ── SPELL DETAIL TOGGLE (ROBUST) ──────────────────────
+  // ── SPELL DETAIL TOGGLE ───────────────────────────────
   window.toggleSpellDetail = function(spellName, charKey, element) {
     const safeId = sid(spellName);
     const panel = document.getElementById(`spell-detail-${charKey}-${safeId}`);
     if (!panel) return;
     const wasOpen = panel.classList.contains('open');
-    // close all others for this character
     document.querySelectorAll(`.spell-detail-panel[data-char="${charKey}"]`).forEach(p => p.classList.remove('open'));
     document.querySelectorAll(`.spell-item-bar[data-char="${charKey}"]`).forEach(b => b.classList.remove('active'));
     if (!wasOpen) {
@@ -212,28 +273,58 @@
     }
   };
 
-  function filteredOptions(ck){
-    const allowed = classMap[ck]||[];
-    const entries = Object.entries(spellDB).filter(([_,d])=>d.cls&&d.cls.some(c=>allowed.includes(c)));
-    entries.sort((a,b)=>{const la=typeof a[1].l==='number'?a[1].l:99;const lb=typeof b[1].l==='number'?b[1].l:99;return la-lb||a[0].localeCompare(b[0]);});
-    return entries.map(([n,d])=>`<option value="${esc(n)}">${typeof d.l==='number'?'Lvl '+d.l:d.l} — ${esc(n)}</option>`).join('');
+  // ── DYNAMIC ATTACKS ────────────────────────────────────
+  window.addAttack = function(ck) {
+    const name = document.getElementById(`newAtkName-${ck}`)?.value.trim();
+    const bonus = document.getElementById(`newAtkBonus-${ck}`)?.value.trim();
+    const damage = document.getElementById(`newAtkDmg-${ck}`)?.value.trim();
+    const notes = document.getElementById(`newAtkNotes-${ck}`)?.value.trim();
+    if (!name) return;
+    const atk = { name, bonus: bonus || '+0', damage: damage || '1d4', notes: notes || '' };
+    db.ref(`characters/${ck}/attacks`).once('value').then(s => {
+      const arr = s.val() || [];
+      arr.push(atk);
+      return db.ref(`characters/${ck}/attacks`).set(arr);
+    }).then(() => {
+      loadDynamicLists(ck);
+      document.getElementById(`newAtkName-${ck}`).value = '';
+      document.getElementById(`newAtkBonus-${ck}`).value = '';
+      document.getElementById(`newAtkDmg-${ck}`).value = '';
+      document.getElementById(`newAtkNotes-${ck}`).value = '';
+    });
+  };
+
+  window.removeAttack = function(btn, ck, index) {
+    if (!confirm('Delete attack?')) return;
+    db.ref(`characters/${ck}/attacks`).once('value').then(s => {
+      const arr = s.val() || [];
+      arr.splice(index, 1);
+      return db.ref(`characters/${ck}/attacks`).set(arr);
+    }).then(() => btn.closest('.attack-row').remove());
+  };
+
+  function renderAttacks(ck, attacks) {
+    const container = document.getElementById(`attacksList-${ck}`);
+    if (!container) return;
+    const addForm = container.querySelector('.add-form');
+    container.innerHTML = '';
+    attacks.forEach((atk, i) => {
+      const div = document.createElement('div');
+      div.className = 'attack-row';
+      div.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:0.3rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.2rem;font-size:0.8rem;';
+      div.innerHTML = `
+        <span style="font-weight:bold;color:#d4c8ff;min-width:100px;">⚔️ <span class="editable-text" contenteditable="true">${esc(atk.name)}</span></span>
+        <span style="color:#c8b8f0;background:rgba(60,40,120,0.4);padding:0.15rem 0.4rem;border-radius:0.4rem;"><span class="editable-text" contenteditable="true">${esc(atk.bonus)}</span></span>
+        <span style="color:#e8d8ff;"><span class="editable-text" contenteditable="true">${esc(atk.damage)}</span></span>
+        <span style="color:#a098d0;font-size:0.75rem;"><span class="editable-text" contenteditable="true">${esc(atk.notes)}</span></span>
+        <button class="btn-remove" onclick="removeAttack(this, '${ck}', ${i})">✕</button>
+      `;
+      container.appendChild(div);
+    });
+    if (addForm) container.appendChild(addForm);
   }
 
-  window.showSpellInfo=function(ck){const s=document.getElementById(`spellSelect-${ck}`),i=document.getElementById(`spellInfo-${ck}`);if(!s||!i)return;const n=s.value;if(!n){i.style.display='none';return;}const sp=spellDB[n];i.style.display='block';i.innerHTML=sp?`<strong style="color:#d4c8ff;">${esc(n)}</strong><span class="spell-level-badge">${typeof sp.l==='number'?'Lvl '+sp.l:sp.l}</span><div style="color:#c0b8e8;margin-top:0.2rem;">${sp.desc}</div>`:'<p>No description.</p>';};
-  window.addSpellFromDropdown=function(ck){const s=document.getElementById(`spellSelect-${ck}`);if(!s?.value)return;const n=s.value;db.ref(`characters/${ck}/spells`).once('value').then(sn=>{const c=sn.val()||[];if(!c.includes(n)){c.push(n);return db.ref(`characters/${ck}/spells`).set(c);}}).then(()=>{loadDynamicLists(ck);s.value='';document.getElementById(`spellInfo-${ck}`).style.display='none';});};
-  window.addSpell=function(ck){const i=document.getElementById(`newSpell-${ck}`);if(!i?.value.trim())return;const n=i.value.trim();db.ref(`characters/${ck}/spells`).once('value').then(s=>{const c=s.val()||[];c.push(n);return db.ref(`characters/${ck}/spells`).set(c);}).then(()=>{loadDynamicLists(ck);i.value='';});};
-  window.addEquipment=function(ck){const i=document.getElementById(`newEquip-${ck}`);if(!i?.value.trim())return;const n=i.value.trim();db.ref(`characters/${ck}/equipment`).once('value').then(s=>{const c=s.val()||[];c.push(n);return db.ref(`characters/${ck}/equipment`).set(c);}).then(()=>{loadDynamicLists(ck);i.value='';});};
-  window.addFeature=function(ck){const n=document.getElementById(`newFeatName-${ck}`),d=document.getElementById(`newFeatDesc-${ck}`),u=document.getElementById(`newFeatUses-${ck}`);if(!n?.value.trim())return;const f={name:n.value.trim(),desc:d.value.trim()||'New',cost:u.value.trim()||'Passive',uses:u.value.trim()||0,resetOn:'none'};db.ref(`characters/${ck}/customFeatures`).once('value').then(s=>{const c=s.val()||[];c.push(f);return db.ref(`characters/${ck}/customFeatures`).set(c);}).then(()=>{loadDynamicLists(ck);n.value='';d.value='';u.value='';});};
-  window.removeItem=function(btn,ck,cat,name){if(!confirm('Remove?'))return;db.ref(`characters/${ck}/${cat}`).once('value').then(s=>{const i=s.val()||[];return db.ref(`characters/${ck}/${cat}`).set(i.filter(x=>(typeof x==='string'?x!==name:x.name!==name)));}).then(()=>{btn.closest('.spell-item-bar, li').remove();});};
-  window.addCharNote=function(ck){const i=document.getElementById(`charNoteInput-${ck}`);if(!i?.value.trim())return;const t=i.value.trim();db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];n.unshift({id:Date.now(),text:t,time:new Date().toLocaleString()});return db.ref(`characterNotes/${ck}`).set(n);}).then(()=>{i.value='';loadCharNotes(ck);});};
-  window.removeCharNote=function(ck,id){if(!confirm('Delete?'))return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];return db.ref(`characterNotes/${ck}`).set(n.filter(x=>x.id!==id));}).then(()=>loadCharNotes(ck));};
-  function loadCharNotes(ck){const c=document.getElementById(`charNotes-${ck}`);if(!c)return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];c.innerHTML=n.length===0?'<p style="color:#9088c0;">No notes yet.</p>':n.map(x=>`<div class="char-note-card"><div><div style="color:#c0c8e8;font-size:0.8rem;">${esc(x.text)}</div><div style="color:#9088c0;font-size:0.65rem;">${x.time}</div></div><button class="btn-remove" onclick="removeCharNote('${ck}',${x.id})">✕</button></div>`).join('');});}
-  window.addSessionNote=function(){const d=document.getElementById('sessionDate'),t=document.getElementById('sessionTitle'),n=document.getElementById('sessionNotes');if(!t?.value.trim())return;const note={id:Date.now(),date:d?.value||new Date().toISOString().split('T')[0],title:t.value.trim(),notes:n?.value.trim()||''};db.ref('sessionNotes').once('value').then(s=>{const ns=s.val()||[];ns.push(note);return db.ref('sessionNotes').set(ns);}).then(()=>{sessionNotes.push(note);renderSessionNotes();d.value='';t.value='';n.value='';});};
-  window.addBulletToForm=function(){const n=document.getElementById('sessionNotes');if(!n)return;const p=n.selectionStart;n.value=n.value.substring(0,p)+'\n• '+n.value.substring(p);n.focus();n.selectionStart=n.selectionEnd=p+3;};
-  window.removeSessionNote=function(id){if(!confirm('Delete?'))return;db.ref('sessionNotes').once('value').then(s=>{const n=s.val()||[];return db.ref('sessionNotes').set(n.filter(x=>x.id!==id));}).then(()=>{sessionNotes=sessionNotes.filter(x=>x.id!==id);renderSessionNotes();});};
-  function renderSessionNotes(){const c=document.getElementById('sessionNotesContainer');if(!c)return;let a=[...sessionNotes];if(!a.find(x=>x.id==='session0'))a.unshift(sessionZero);c.innerHTML=a.sort((a,b)=>new Date(b.date)-new Date(a.date)).map(n=>{const b=n.notes?n.notes.split('\n').filter(l=>l.trim()):[];return`<div class="session-note-card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;border-bottom:1px solid rgba(140,160,200,0.3);padding-bottom:0.3rem;margin-bottom:0.4rem;"><span style="color:#b8c8e0;font-size:0.7rem;background:rgba(60,80,140,0.4);padding:0.15rem 0.4rem;border-radius:0.4rem;">📅 ${n.date}</span><span style="color:#d4d8ff;font-weight:bold;">${esc(n.title)}</span>${n.id!=='session0'?`<button class="btn-remove" onclick="removeSessionNote(${n.id})">✕</button>`:''}</div>${b.length?'<ul style="list-style:none;padding:0;">'+b.map(l=>`<li style="padding:0.15rem 0;color:#c0c8e8;font-size:0.8rem;">• ${esc(l.replace(/^•\s*/,''))}</li>`).join('')+'</ul>':'<p style="color:#9088c0;">No details.</p>'}</div>`;}).join('');}
-
-  // ── RENDER FUNCTIONS ──────────────────────────────────
+  // ── SPELLS & EQUIPMENT RENDERING ────────────────────────
   function renderSpells(ck,spells){
     const container = document.getElementById(`spellsList-${ck}`);
     if(!container)return;
@@ -254,11 +345,9 @@
       panel.setAttribute('data-char',ck);
       container.appendChild(panel);
     });
-    // Future spells section (collapsed for brevity)
     if(dropdown)container.appendChild(dropdown);
     if(addForm)container.appendChild(addForm);
   }
-
   function renderEquipment(ck,items){
     const container = document.getElementById(`equipList-${ck}`);
     if(!container)return;
@@ -285,43 +374,77 @@
       if(!s.val()) db.ref(`characters/${ck}/equipment`).set(c.equipment || []);
       renderEquipment(ck, equip);
     });
+    db.ref(`characters/${ck}/attacks`).once('value').then(s => {
+      const att = s.val() || c.attacks || [];
+      if(!s.val()) db.ref(`characters/${ck}/attacks`).set(c.attacks || []);
+      renderAttacks(ck, att);
+    });
     loadCharNotes(ck);
   }
 
+  // ── NOTES ────────────────────────────────────────────
+  window.addCharNote=function(ck){const i=document.getElementById(`charNoteInput-${ck}`);if(!i?.value.trim())return;const t=i.value.trim();db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];n.unshift({id:Date.now(),text:t,time:new Date().toLocaleString()});return db.ref(`characterNotes/${ck}`).set(n);}).then(()=>{i.value='';loadCharNotes(ck);});};
+  window.removeCharNote=function(ck,id){if(!confirm('Delete?'))return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];return db.ref(`characterNotes/${ck}`).set(n.filter(x=>x.id!==id));}).then(()=>loadCharNotes(ck));};
+  function loadCharNotes(ck){const c=document.getElementById(`charNotes-${ck}`);if(!c)return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];c.innerHTML=n.length===0?'<p style="color:#9088c0;">No notes yet.</p>':n.map(x=>`<div class="char-note-card"><div><div style="color:#c0c8e8;font-size:0.8rem;">${esc(x.text)}</div><div style="color:#9088c0;font-size:0.65rem;">${x.time}</div></div><button class="btn-remove" onclick="removeCharNote('${ck}',${x.id})">✕</button></div>`).join('');});}
+
+  // ── SESSION NOTES ────────────────────────────────────
+  window.addSessionNote=function(){const d=document.getElementById('sessionDate'),t=document.getElementById('sessionTitle'),n=document.getElementById('sessionNotes');if(!t?.value.trim())return;const note={id:Date.now(),date:d?.value||new Date().toISOString().split('T')[0],title:t.value.trim(),notes:n?.value.trim()||''};db.ref('sessionNotes').once('value').then(s=>{const ns=s.val()||[];ns.push(note);return db.ref('sessionNotes').set(ns);}).then(()=>{sessionNotes.push(note);renderSessionNotes();d.value='';t.value='';n.value='';});};
+  window.addBulletToForm=function(){const n=document.getElementById('sessionNotes');if(!n)return;const p=n.selectionStart;n.value=n.value.substring(0,p)+'\n• '+n.value.substring(p);n.focus();n.selectionStart=n.selectionEnd=p+3;};
+  window.removeSessionNote=function(id){if(!confirm('Delete?'))return;db.ref('sessionNotes').once('value').then(s=>{const n=s.val()||[];return db.ref('sessionNotes').set(n.filter(x=>x.id!==id));}).then(()=>{sessionNotes=sessionNotes.filter(x=>x.id!==id);renderSessionNotes();});};
+  function renderSessionNotes(){const c=document.getElementById('sessionNotesContainer');if(!c)return;let a=[...sessionNotes];if(!a.find(x=>x.id==='session0'))a.unshift(sessionZero);c.innerHTML=a.sort((a,b)=>new Date(b.date)-new Date(a.date)).map(n=>{const b=n.notes?n.notes.split('\n').filter(l=>l.trim()):[];return`<div class="session-note-card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;border-bottom:1px solid rgba(140,160,200,0.3);padding-bottom:0.3rem;margin-bottom:0.4rem;"><span style="color:#b8c8e0;font-size:0.7rem;background:rgba(60,80,140,0.4);padding:0.15rem 0.4rem;border-radius:0.4rem;">📅 ${n.date}</span><span style="color:#d4d8ff;font-weight:bold;">${esc(n.title)}</span>${n.id!=='session0'?`<button class="btn-remove" onclick="removeSessionNote(${n.id})">✕</button>`:''}</div>${b.length?'<ul style="list-style:none;padding:0;">'+b.map(l=>`<li style="padding:0.15rem 0;color:#c0c8e8;font-size:0.8rem;">• ${esc(l.replace(/^•\s*/,''))}</li>`).join('')+'</ul>':'<p style="color:#9088c0;">No details.</p>'}</div>`;}).join('');}
+
+  // ── RENDER CHARACTER SHEET ────────────────────────────
   function renderCharSheet(ck){
     const c = charData[ck];
     if(!c) return '<p>Not found</p>';
     const statsHtml = Object.entries(c.stats).map(([n,d])=>`<div class="stat-box"><div class="stat-label">${n}</div><div class="stat-value">${med(d.score,`stat-${n}-score`,ck)}</div><span class="stat-mod">${d.mod>=0?'+'+d.mod:d.mod}</span></div>`).join('');
-    const attacksHtml = c.attacks.map((a,i)=>`<div style="display:flex;justify-content:space-between;padding:0.3rem;border-bottom:1px solid rgba(100,80,160,0.2);flex-wrap:wrap;gap:0.2rem;font-size:0.8rem;"><span style="font-weight:bold;color:#d4c8ff;">⚔️ ${med(a.name,`atk-name-${i}`,ck)}</span><span style="color:#c8b8f0;">${med(a.bonus,`atk-bonus-${i}`,ck)}</span><span style="color:#e8d8ff;">${med(a.damage,`atk-dmg-${i}`,ck)}</span></div>`).join('');
     const featuresHtml = c.features.map((f,i)=>`<div class="ability-card"><div class="ability-name">${med(f.name,`feat-name-${i}`,ck)}${f.cost?`<span class="ability-cost">${esc(f.cost)}</span>`:''}</div><div class="ability-desc">${med(f.desc,`feat-desc-${i}`,ck)}</div>${rbox(ck,`feat-${i}`,f.uses)}</div>`).join('');
     const skillsHtml = c.skills ? Object.entries(c.skills).map(([n,b])=>`<div class="info-item"><span class="info-label">${n}</span><span class="info-value" style="float:right;">${b>=0?'+'+b:b}</span></div>`).join('') : '';
     const spellSlotsHtml = c.spellSlots ? `<div class="spell-slot-grid">${Object.entries(c.spellSlots).map(([l,ct])=>{const su=(ct!=="∞"&&!isNaN(parseInt(ct)))?parseInt(ct):0;return`<div class="spell-slot"><div class="slot-level">${l}</div><div class="slot-count">${ct}</div>${su>0?rbox(ck,`slot-${l}`,su):''}</div>`;}).join('')}</div>` : '';
     const passiveHtml = c.combat ? `<div class="info-grid" style="margin-top:0.3rem;">${c.combat.passivePerception?`<div class="info-item"><span class="info-label">Pass. Perc.</span><span class="info-value">${c.combat.passivePerception}</span></div>`:''}${c.combat.passiveInvestigation?`<div class="info-item"><span class="info-label">Pass. Inv.</span><span class="info-value">${c.combat.passiveInvestigation}</span></div>`:''}${c.combat.passiveInsight?`<div class="info-item"><span class="info-label">Pass. Ins.</span><span class="info-value">${c.combat.passiveInsight}</span></div>`:''}</div>` : '';
+
+    // Actions & Bonus Actions rendering
+    const actionsHtml = c.actions ? c.actions.map((a,i)=>`<div class="ability-card"><div class="ability-name">${med(a.name,`action-name-${i}`,ck)}</div><div class="ability-desc">${med(a.desc,`action-desc-${i}`,ck)}</div></div>`).join('') : '';
+    const bonusHtml = c.bonusActions ? c.bonusActions.map((a,i)=>`<div class="ability-card"><div class="ability-name">${med(a.name,`bonus-name-${i}`,ck)}</div><div class="ability-desc">${med(a.desc,`bonus-desc-${i}`,ck)}</div></div>`).join('') : '';
+
     return `<div class="char-sheet">
       <div class="sheet-section"><div class="section-header"><span>📜 ${med(c.name,'name',ck)}</span><div><button class="btn-rest" onclick="resetAllByType('${ck}','short')">🌅 Short</button><button class="btn-rest" onclick="resetAllByType('${ck}','long')">🌙 Long</button></div></div>
         <div class="info-grid"><div class="info-item"><span class="info-label">Class</span><span class="info-value">${med(c.classLevel,'classLevel',ck)}</span></div><div class="info-item"><span class="info-label">Race</span><span class="info-value">${med(c.race,'race',ck)}</span></div><div class="info-item"><span class="info-label">Bg</span><span class="info-value">${med(c.background,'background',ck)}</span></div><div class="info-item"><span class="info-label">Player</span><span class="info-value">${med(c.playerName,'playerName',ck)}</span></div></div>
       </div>
       <div class="sheet-section"><div class="section-header">📊 ABILITY SCORES</div><div class="stat-row">${statsHtml}</div><div class="info-grid" style="margin-top:0.4rem;"><div class="info-item"><span class="info-label">AC</span><span class="info-value">${med(c.combat.ac,'ac',ck)}</span></div><div class="info-item"><span class="info-label">HP</span><span class="info-value">${med(c.combat.hp,'hp',ck)}</span></div><div class="info-item"><span class="info-label">Speed</span><span class="info-value">${med(c.combat.speed,'speed',ck)} ft.</span></div><div class="info-item"><span class="info-label">Init</span><span class="info-value">+${c.combat.initiative}</span></div></div>${passiveHtml}</div>
       ${skillsHtml?`<div class="sheet-section"><div class="section-header">🎯 SKILLS</div><div class="info-grid">${skillsHtml}</div></div>`:''}
-      <div class="sheet-section"><div class="section-header">⚔️ ATTACKS</div>${attacksHtml}</div>
+      <div class="sheet-section"><div class="section-header">⚔️ ATTACKS</div><div id="attacksList-${ck}"></div>
+        <div class="add-form">
+          <input type="text" id="newAtkName-${ck}" placeholder="Name" style="width:100px;">
+          <input type="text" id="newAtkBonus-${ck}" placeholder="Bonus" style="width:60px;">
+          <input type="text" id="newAtkDmg-${ck}" placeholder="Damage" style="width:80px;">
+          <input type="text" id="newAtkNotes-${ck}" placeholder="Notes" style="flex:1;">
+          <button class="btn-add" onclick="addAttack('${ck}')">+ Add Attack</button>
+        </div>
+      </div>
       ${c.spellSlots?`<div class="sheet-section"><div class="section-header">🔮 SPELL SLOTS</div>${spellSlotsHtml}</div>`:''}
       <div class="sheet-section"><div class="section-header">📜 SPELLS <span style="font-size:0.6rem;color:#9088c0;">Click name for details</span></div><div id="spellsList-${ck}"></div>
         <div class="spell-dropdown-section"><select id="spellSelect-${ck}" onchange="showSpellInfo('${ck}')"><option value="">— Browse spells —</option>${filteredOptions(ck)}</select><div id="spellInfo-${ck}" class="spell-info-popup"></div><button class="btn-add" onclick="addSpellFromDropdown('${ck}')" style="margin-top:0.3rem;">+ Add to List</button></div>
         <div class="add-form"><input type="text" id="newSpell-${ck}" placeholder="Custom spell..."><button class="btn-add" onclick="addSpell('${ck}')">+ Add</button></div>
       </div>
       <div class="sheet-section"><div class="section-header">✨ FEATURES</div><div id="featList-${ck}">${featuresHtml}</div><div class="add-form"><input type="text" id="newFeatName-${ck}" placeholder="Name" style="flex:1;"><input type="text" id="newFeatDesc-${ck}" placeholder="Desc" style="flex:2;"><input type="text" id="newFeatUses-${ck}" placeholder="Uses" style="width:50px;"><button class="btn-add" onclick="addFeature('${ck}')">+ Add</button></div></div>
+      ${actionsHtml ? `<div class="sheet-section"><div class="section-header">🎬 ACTIONS</div>${actionsHtml}</div>` : ''}
+      ${bonusHtml ? `<div class="sheet-section"><div class="section-header">⚡ BONUS ACTIONS</div>${bonusHtml}</div>` : ''}
       <div class="sheet-section"><div class="section-header">🎒 EQUIPMENT</div><ul class="equipment-list" id="equipList-${ck}"></ul><div class="add-form"><input type="text" id="newEquip-${ck}" placeholder="Item"><button class="btn-add" onclick="addEquipment('${ck}')">+ Add</button></div></div>
       <div class="sheet-section"><div class="section-header">📖 BACKSTORY</div><div style="color:#c0b8e8;line-height:1.6;font-style:italic;font-size:0.8rem;">${med(c.backstory,'backstory',ck)}</div></div>
       <div class="sheet-section"><div class="section-header">📝 PLAYER NOTES</div><div id="charNotes-${ck}"><p style="color:#9088c0;">Loading...</p></div><div class="add-form" style="flex-wrap:nowrap;"><input type="text" id="charNoteInput-${ck}" placeholder="Add a note..." style="flex:1;"><button class="btn-save-note" onclick="addCharNote('${ck}')">Save Note</button></div></div>
     </div>`;
   }
 
+  // ── DM PAGE ──────────────────────────────────────────
   function renderDMPage(){return`<div style="text-align:center;padding:0.5rem;"><h2 style="color:#d4c8ff;">🔐 DM Stargate</h2><p>PIN:</p><input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:1.1rem;text-align:center;letter-spacing:4px;margin:0.6rem 0;" maxlength="8"><br><button class="btn-rest" id="pinSubmit">Unlock</button><p id="pinError" style="color:#e0a0c0;"></p><div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1rem;"><div class="section-header" style="color:#d4c8ff;">🗝️ SECRETS</div>${Object.entries(dmSecrets).map(([k,s])=>`<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.6rem;border-radius:0.5rem;margin:0.5rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${charData[k]?.name||k}</div><div style="color:#c8b8f0;">${s}</div></div>`).join('')}<div class="section-header" style="color:#d4c8ff;">📋 CHANGE LOG</div><div class="change-log" id="changeLogContainer"></div><div class="section-header" style="color:#d4c8ff;">📝 SESSION NOTES</div><div style="border:2px dashed rgba(140,160,200,0.4);padding:0.8rem;margin:0.5rem 0;background:rgba(18,20,35,0.5);"><div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem;"><div style="flex:1;"><input type="date" id="sessionDate" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div><div style="flex:2;"><input type="text" id="sessionTitle" placeholder="Title..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div></div><div><button class="btn-sm" onclick="addBulletToForm()">• +</button><textarea id="sessionNotes" rows="4" placeholder="• Notes..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;resize:vertical;margin-top:0.2rem;"></textarea></div><button class="btn-add" onclick="addSessionNote()" style="width:100%;margin-top:0.3rem;">+ Save Note</button></div><div id="sessionNotesContainer"></div></div></div>`;}
   function renderChangeLog(){const c=document.getElementById('changeLogContainer');if(!c)return;c.innerHTML=changeLog.length===0?'<p style="color:#9088c0;">No changes.</p>':changeLog.map(e=>`<div class="log-entry">[${e.time}] <strong>${e.char}</strong> · ${e.field}: ${e.value}</div>`).join('');}
 
+  // ── NAVIGATION ────────────────────────────────────────
   function setActiveTab(id){['dmpc','drunken','chronurgy','grave','psi','dm'].forEach(x=>{const b=document.getElementById('tab'+x.charAt(0).toUpperCase()+x.slice(1));if(b)b.classList.remove('active');});const b=document.getElementById('tab'+id.charAt(0).toUpperCase()+id.slice(1));if(b)b.classList.add('active');}
   function switchTab(id){Object.values(autoSaveTimers).forEach(t=>clearTimeout(t));currentTab=id;setActiveTab(id);if(id==='dm'){dmAuth=false;panel.innerHTML=renderDMPage();document.getElementById('pinSubmit').addEventListener('click',()=>{if(document.getElementById('pinInput').value===PIN){dmAuth=true;document.getElementById('dmSecretsContainer').style.display='block';db.ref('changeLog').once('value').then(s=>{changeLog=s.val()||[];renderChangeLog();});db.ref('sessionNotes').once('value').then(s=>{sessionNotes=s.val()||[];renderSessionNotes();});}});}else{panel.innerHTML=renderCharSheet(id);setTimeout(()=>loadDynamicLists(id),150);}}
 
+  // ── INIT ──────────────────────────────────────────────
   document.getElementById('tabDmpc').addEventListener('click',()=>switchTab('dmpc'));
   document.getElementById('tabDrunken').addEventListener('click',()=>switchTab('drunken'));
   document.getElementById('tabChronurgy').addEventListener('click',()=>switchTab('chronurgy'));
