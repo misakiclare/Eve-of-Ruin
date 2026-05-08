@@ -17,8 +17,6 @@
     .dm-lock { border: 1px dashed rgba(160, 140, 220, 0.5); color: #c8b8f0; }
     .content-panel { background: rgba(12, 10, 25, 0.75); border: 2px solid rgba(120, 100, 180, 0.35); border-radius: 1.5rem; padding: 1.5rem; background-image: linear-gradient(145deg, rgba(20, 15, 40, 0.7) 0%, rgba(8, 6, 18, 0.8) 100%); box-shadow: inset 0 0 40px rgba(0,0,0,0.5); min-height: 450px; max-height: 70vh; overflow-y: auto; }
     .content-panel::-webkit-scrollbar { width: 7px; }
-    .content-panel::-webkit-scrollbar-track { background: rgba(20, 15, 40, 0.5); }
-    .content-panel::-webkit-scrollbar-thumb { background: rgba(120, 100, 180, 0.5); }
     .char-sheet { display: flex; flex-direction: column; gap: 0.8rem; }
     .sheet-section { border: 2px solid rgba(120, 100, 180, 0.3); border-radius: 0.8rem; padding: 0.8rem; background: rgba(18, 14, 35, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
     .section-header { font-size: 1rem; color: #c8b8f0; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
@@ -45,11 +43,9 @@
     .btn-rest { background: rgba(100, 140, 200, 0.3); border: 1px solid rgba(140, 180, 220, 0.5); color: #c8d8f0; font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 0.4rem; cursor: pointer; margin: 0 0.15rem; }
     .btn-add { background: rgba(80, 140, 100, 0.3); border: 1px solid rgba(100, 200, 140, 0.5); color: #b8f0c8; font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 0.3rem; cursor: pointer; }
     .btn-remove { background: rgba(200, 80, 80, 0.3); border: 1px solid rgba(200, 100, 100, 0.5); color: #f0b8b8; font-size: 0.6rem; padding: 0.1rem 0.25rem; border-radius: 0.2rem; cursor: pointer; flex-shrink: 0; }
-    .btn-remove:hover { background: rgba(200, 80, 80, 0.5); }
     .btn-save-note { background: rgba(80, 140, 180, 0.3); border: 1px solid rgba(100, 180, 220, 0.5); color: #b8d8f0; font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 0.3rem; cursor: pointer; white-space: nowrap; }
     .add-form { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; padding: 0.5rem; background: rgba(20, 15, 40, 0.5); border-radius: 0.3rem; border: 1px dashed rgba(120, 100, 180, 0.3); }
     .add-form input, .add-form select { background: rgba(20, 15, 40, 0.7); border: 1px solid rgba(140, 120, 220, 0.4); color: #e8e0ff; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: inherit; font-size: 0.75rem; }
-    .add-form select { cursor: pointer; }
     .add-form select option { background: #1a1530; color: #e8e0ff; }
     .equipment-list { list-style: none; padding: 0; }
     .equipment-list li { padding: 0.2rem 0; border-bottom: 1px solid rgba(100, 80, 160, 0.2); color: #c0b8e8; display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; }
@@ -57,20 +53,14 @@
     .spell-slot { text-align: center; border: 1px solid rgba(120, 100, 180, 0.3); padding: 0.25rem; border-radius: 0.3rem; background: rgba(20, 15, 35, 0.5); }
     .slot-level { font-size: 0.6rem; color: #9088c0; }
     .slot-count { font-size: 1rem; color: #d4c8ff; font-weight: bold; }
-    .spell-item-bar { display: flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.4rem; border-bottom: 1px solid rgba(100,80,160,0.2); font-size: 0.8rem; cursor: pointer; transition: background 0.2s; border-radius: 0.25rem; }
+    .spell-item-bar { display: flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.4rem; border-bottom: 1px solid rgba(100,80,160,0.2); font-size: 0.8rem; cursor: pointer; border-radius: 0.25rem; }
     .spell-item-bar:hover { background: rgba(120, 100, 180, 0.15); }
-    .spell-item-bar.active { background: rgba(120, 100, 180, 0.25); border-color: rgba(160, 140, 220, 0.5); }
-    .spell-item-bar .spell-content { flex: 1; display: flex; align-items: center; gap: 0.3rem; min-width: 0; }
-    .spell-item-bar .spell-actions { display: flex; align-items: center; gap: 0.2rem; flex-shrink: 0; margin-left: auto; }
+    .spell-item-bar.active { background: rgba(120, 100, 180, 0.25); }
     .spell-detail-panel { display: none; padding: 0.5rem; margin: 0.2rem 0 0.4rem 1rem; background: rgba(25, 18, 45, 0.8); border: 1px solid rgba(140, 120, 220, 0.5); border-radius: 0.4rem; color: #c0b8e8; font-size: 0.8rem; }
     .spell-detail-panel.open { display: block; }
-    .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; flex-shrink: 0; }
-    .future-spell { opacity: 0.7; border-left: 2px solid rgba(180, 160, 140, 0.4); }
-    .future-tag { font-size: 0.55rem; background: rgba(180, 160, 100, 0.3); color: #d8c8a0; padding: 0.05rem 0.25rem; border-radius: 0.2rem; flex-shrink: 0; }
-    .change-log { max-height: 180px; overflow-y: auto; font-size: 0.75rem; }
+    .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; }
     .session-note-card { border: 2px solid rgba(140, 160, 200, 0.3); border-radius: 0.6rem; padding: 0.6rem; margin: 0.5rem 0; background: linear-gradient(135deg, rgba(20, 25, 45, 0.7) 0%, rgba(12, 15, 30, 0.8) 100%); }
     .char-note-card { border: 1px solid rgba(120, 140, 180, 0.3); border-radius: 0.5rem; padding: 0.5rem; margin: 0.3rem 0; background: rgba(20, 22, 40, 0.6); display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
-    @media (max-width: 768px) { .grimoire { padding: 0.8rem; } .tab-btn { font-size: 0.7rem; padding: 0.35rem 0.7rem; } }
   </style>
 </head>
 <body>
@@ -101,93 +91,63 @@
   const panel = document.getElementById('contentPanel');
   const autoSaveTimers = {}; let changeLog = [], sessionNotes = [];
 
-  // ── SPELL DATABASE ─────────────────────────────────────
   const spellDB = {
     "Shield": {l:1,s:"Abjuration",cast:"1 reaction",rng:"Self",dur:"1 round",cls:["wizard","sorcerer"],desc:"An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile."},
     "Mage Armor": {l:1,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["wizard","sorcerer"],desc:"You touch a willing creature who isn't wearing armor. The target's base AC becomes 13 + its Dexterity modifier. The spell ends if the target dons armor."},
-    "Find Familiar": {l:1,s:"Conjuration",cast:"1 hour",rng:"10 ft",dur:"Instantaneous",cls:["wizard"],desc:"You gain the service of a familiar spirit in animal form. It acts independently but obeys your commands. You can see through its eyes as an action."},
     "Gift of Alacrity": {l:1,s:"Divination",cast:"1 minute",rng:"Touch",dur:"8 hours",cls:["wizard"],desc:"You touch a willing creature. For the duration, the target can add 1d8 to its initiative rolls."},
     "Goodberry": {l:1,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["ranger","druid"],desc:"Up to 10 berries appear. Each berry heals 1 HP and provides nourishment for a day."},
     "Hunter's Mark": {l:1,s:"Divination",cast:"1 bonus action",rng:"90 ft",dur:"Conc., up to 1 hour",cls:["ranger"],desc:"Mark a target. You deal +1d6 damage to it and have advantage on Survival checks to track it."},
     "Absorb Elements": {l:1,s:"Abjuration",cast:"1 reaction",rng:"Self",dur:"1 round",cls:["ranger","druid","wizard","sorcerer"],desc:"Gain resistance to triggering damage type. Next melee attack deals +1d6 of that type."},
-    "Entangle": {l:1,s:"Conjuration",cast:"1 action",rng:"90 ft (20-ft square)",dur:"Conc., up to 1 minute",cls:["ranger","druid"],desc:"Grasping plants restrain creatures in area (STR save). Difficult terrain."},
     "Zephyr Strike": {l:1,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger"],desc:"No opportunity attacks. Advantage on one weapon attack, +1d8 force, +30 ft speed."},
-    "Cure Wounds": {l:1,s:"Evocation",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","paladin","ranger","druid","bard"],desc:"Heal 1d8 + spellcasting modifier HP."},
-    "Speak with Animals": {l:1,s:"Divination",cast:"1 action",rng:"Self",dur:"10 minutes",cls:["ranger","druid","bard"],desc:"Gain ability to communicate with beasts."},
-    "Bless": {l:1,s:"Enchantment",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["cleric","paladin"],desc:"Up to 3 creatures add 1d4 to attack rolls and saving throws."},
-    "Healing Word": {l:1,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"Instantaneous",cls:["cleric","druid","bard"],desc:"Heal 1d4 + spellcasting modifier HP to a visible creature."},
-    "Guiding Bolt": {l:1,s:"Evocation",cast:"1 action",rng:"120 ft",dur:"1 round",cls:["cleric"],desc:"4d6 radiant damage; next attack against target has advantage."},
-    "Inflict Wounds": {l:1,s:"Necromancy",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric"],desc:"Melee spell attack: 3d10 necrotic damage."},
-    "Shield of Faith": {l:1,s:"Abjuration",cast:"1 bonus action",rng:"60 ft",dur:"Conc., up to 10 minutes",cls:["cleric","paladin"],desc:"+2 AC to a creature."},
-    "Fortune's Favor": {l:2,s:"Divination",cast:"1 minute",rng:"60 ft",dur:"1 hour",cls:["wizard"],desc:"Target can reroll one attack/check/save."},
-    "Mirror Image": {l:2,s:"Illusion",cast:"1 action",rng:"Self",dur:"1 minute",cls:["wizard","sorcerer"],desc:"3 illusory duplicates; chance to redirect attacks."},
+    "Bless": {l:1,s:"Enchantment",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["cleric"],desc:"Up to 3 creatures add 1d4 to attack rolls and saving throws."},
+    "Healing Word": {l:1,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"Instantaneous",cls:["cleric"],desc:"Heal 1d4 + spellcasting modifier HP."},
+    "Pass Without Trace": {l:2,s:"Abjuration",cast:"1 action",rng:"Self",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"+10 Stealth to all in radius, can't be tracked."},
+    "Rope Trick": {l:2,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"1 hour",cls:["wizard","ranger"],desc:"Rope rises to extradimensional safe space."},
     "Misty Step": {l:2,s:"Conjuration",cast:"1 bonus action",rng:"Self",dur:"Instantaneous",cls:["wizard","sorcerer","ranger"],desc:"Teleport up to 30 ft."},
-    "Pass Without Trace": {l:2,s:"Abjuration",cast:"1 action",rng:"Self (30-ft radius)",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"+10 Stealth to all in radius, can't be tracked."},
-    "Rope Trick": {l:2,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"1 hour",cls:["wizard","ranger"],desc:"Rope rises to extradimensional safe space for 8 creatures."},
-    "Silence": {l:2,s:"Illusion",cast:"1 action",rng:"120 ft (20-ft sphere)",dur:"Conc., up to 10 minutes",cls:["cleric","bard","ranger"],desc:"No sound inside sphere; creatures inside are deafened."},
-    "Spike Growth": {l:2,s:"Transmutation",cast:"1 action",rng:"150 ft (20-ft radius)",dur:"Conc., up to 10 minutes",cls:["ranger","druid"],desc:"Ground becomes spikes; 2d4 piercing per 5 ft."},
-    "Lesser Restoration": {l:2,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","paladin","ranger","druid","bard"],desc:"End one disease or condition (blinded, deafened, paralyzed, poisoned)."},
-    "Beast Sense": {l:2,s:"Divination",cast:"1 action",rng:"Touch",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"See/hear through a willing beast's senses."},
-    "Darkvision": {l:2,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["ranger","druid","wizard","sorcerer"],desc:"Target gains 60 ft darkvision."},
     "Spiritual Weapon": {l:2,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"1 minute",cls:["cleric"],desc:"Floating weapon deals 1d8+WIS force as bonus action."},
-    "Hold Person": {l:2,s:"Enchantment",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 minute",cls:["cleric","wizard","sorcerer","bard"],desc:"Target humanoid paralyzed (WIS save)."},
-    "Blindness/Deafness": {l:2,s:"Necromancy",cast:"1 action",rng:"30 ft",dur:"1 minute",cls:["cleric","wizard","sorcerer","bard"],desc:"Target blinded or deafened (CON save)."},
     "Counterspell": {l:3,s:"Abjuration",cast:"1 reaction",rng:"60 ft",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"Interrupt a spell. Auto‑success if 3rd or lower."},
-    "Haste": {l:3,s:"Transmutation",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"Double speed, +2 AC, extra action. Lethargy when ends."},
-    "Slow": {l:3,s:"Transmutation",cast:"1 action",rng:"120 ft (40‑ft cube)",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"Up to 6 targets: halved speed, -2 AC, limited actions."},
-    "Fireball": {l:3,s:"Evocation",cast:"1 action",rng:"150 ft (20‑ft radius)",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"8d6 fire damage, DEX save for half."},
-    "Conjure Animals": {l:3,s:"Conjuration",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"Summon fey spirits as beasts."},
-    "Lightning Arrow": {l:3,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger"],desc:"Next arrow deals 4d8 lightning; nearby creatures take 2d8."},
-    "Spirit Guardians": {l:3,s:"Conjuration",cast:"1 action",rng:"Self (15‑ft radius)",dur:"Conc., up to 10 minutes",cls:["cleric"],desc:"Spirits deal 3d8 radiant/necrotic, enemy speed halved."},
-    "Revivify": {l:3,s:"Necromancy",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","paladin"],desc:"Revive creature that died within 1 minute."},
-    "Speak with Dead": {l:3,s:"Necromancy",cast:"1 action",rng:"10 ft",dur:"10 minutes",cls:["cleric"],desc:"Ask corpse up to 5 questions."},
+    "Haste": {l:3,s:"Transmutation",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"Double speed, +2 AC, extra action."},
+    "Slow": {l:3,s:"Transmutation",cast:"1 action",rng:"120 ft",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"Up to 6 targets: halved speed, limited actions."},
+    "Spirit Guardians": {l:3,s:"Conjuration",cast:"1 action",rng:"Self",dur:"Conc., up to 10 minutes",cls:["cleric"],desc:"Spirits deal 3d8 radiant/necrotic, enemy speed halved."},
+    "Revivify": {l:3,s:"Necromancy",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric"],desc:"Revive creature that died within 1 minute."},
     "Dimension Door": {l:4,s:"Conjuration",cast:"1 action",rng:"500 ft",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"Teleport self + one willing creature up to 500 ft."},
-    "Polymorph": {l:4,s:"Transmutation",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 hour",cls:["wizard","sorcerer"],desc:"Transform creature into beast."},
-    "Guardian of Nature": {l:4,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger","druid"],desc:"Primal Beast or Great Tree form with buffs."},
-    "Death Ward": {l:4,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["cleric","paladin"],desc:"Target drops to 1 HP instead of 0; negates instant death."},
-    "Banishment": {l:4,s:"Abjuration",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 minute",cls:["cleric","paladin","wizard","sorcerer"],desc:"Target banished to demiplane (CHA save)."},
+    "Death Ward": {l:4,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["cleric"],desc:"Target drops to 1 HP instead of 0."},
+    "Banishment": {l:4,s:"Abjuration",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 minute",cls:["cleric","wizard"],desc:"Target banished to demiplane (CHA save)."},
     "Wall of Force": {l:5,s:"Evocation",cast:"1 action",rng:"120 ft",dur:"Conc., up to 10 minutes",cls:["wizard"],desc:"Invisible, impenetrable wall."},
-    "Temporal Shunt": {l:5,s:"Transmutation",cast:"1 reaction",rng:"120 ft",dur:"1 round",cls:["wizard"],desc:"Target vanishes until end of your next turn."},
-    "Steel Wind Strike": {l:5,s:"Conjuration",cast:"1 action",rng:"30 ft",dur:"Instantaneous",cls:["ranger","wizard"],desc:"Strike up to 5 creatures for 6d10 force each."},
-    "Greater Restoration": {l:5,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","druid","bard"],desc:"End petrification, curses, ability reduction, exhaustion."},
-    "Scrying": {l:5,s:"Divination",cast:"10 minutes",rng:"Self",dur:"Conc., up to 10 minutes",cls:["cleric","wizard","druid","bard"],desc:"See/hear a creature on any plane (WIS save)."},
-    "Mass Cure Wounds": {l:5,s:"Evocation",cast:"1 action",rng:"60 ft",dur:"Instantaneous",cls:["cleric","druid","bard"],desc:"Up to 6 creatures heal 3d8 + WIS mod."},
+    "Greater Restoration": {l:5,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric"],desc:"End petrification, curses, exhaustion."},
     "Stunning Strike": {l:"Ki",s:"Monk",cast:"On hit",rng:"Melee",dur:"Until end of next turn",cls:["monk"],desc:"1 ki: target CON save or stunned."},
     "Flurry of Blows": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"Instantaneous",cls:["monk"],desc:"1 ki: two unarmed strikes."},
     "Patient Defense": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"1 round",cls:["monk"],desc:"1 ki: Dodge as bonus action."},
     "Step of the Wind": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"1 turn",cls:["monk"],desc:"1 ki: Dash/Disengage, jump doubled."},
-    "Deflect Missiles": {l:"Ki",s:"Monk",cast:"1 reaction",rng:"Self",dur:"Instantaneous",cls:["monk"],desc:"Reduce ranged damage; catch and throw back (1 ki)."},
     "Psionic Strike": {l:"Psi",s:"Psi Warrior",cast:"Free (1/turn)",rng:"Self",dur:"Instantaneous",cls:["psiwarrior"],desc:"+1d8+INT force on weapon hit (1 die)."},
     "Protective Field": {l:"Psi",s:"Psi Warrior",cast:"1 reaction",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"Reduce damage to ally (1 die)."},
-    "Telekinetic Movement": {l:"Psi",s:"Psi Warrior",cast:"1 action",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"Move object/creature 30 ft (1 die)."},
-    "Telekinetic Shove": {l:"Psi",s:"Psi Warrior",cast:"1 bonus action",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"Bonus action shove (STR save)."}
+    "Telekinetic Movement": {l:"Psi",s:"Psi Warrior",cast:"1 action",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"Move object/creature 30 ft (1 die)."}
   };
 
   const classMap = { dmpc:["ranger"], drunken:["monk"], chronurgy:["wizard"], grave:["cleric"], psi:["psiwarrior"] };
 
-  // ── CHARACTER DATA (actions & bonus actions included) ──
   const charData = {
     dmpc:{
       name:"Sylvara 'Syv' Mosswood",classLevel:"Ranger (Gloom Stalker) 5 / Rogue (Scout) 5",race:"Wood Elf",background:"Planar Cartographer",alignment:"Neutral Good",playerName:"DM (DMPC)",
       stats:{STR:{score:10,mod:0,save:4},DEX:{score:20,mod:5,save:9},CON:{score:14,mod:2,save:6},INT:{score:12,mod:1,save:5},WIS:{score:14,mod:2,save:6},CHA:{score:8,mod:-1,save:3}},
-      combat:{ac:17,hp:85,speed:35,initiative:7,hitDice:"5d10+5d8",proficiency:4,passivePerception:20,passiveInvestigation:15,passiveInsight:16},
-      attacks:[{name:"Longbow",bonus:"+11",damage:"1d8+5",notes:"150/600 ft"},{name:"Shortsword",bonus:"+9",damage:"1d6+5",notes:"Finesse"}],
+      combat:{ac:17,hp:85,speed:35,initiative:7,proficiency:4,passivePerception:20,passiveInvestigation:15,passiveInsight:16},
+      attacks:[{name:"Longbow",bonus:"+11",damage:"1d8+5",notes:"150/600 ft"}],
       skills:{Stealth:13,Perception:10},
-      features:[{name:"Favored Foe",desc:"+1d4 once/turn.",cost:"4/long rest",uses:4,resetOn:"long"}],
+      features:[{name:"Favored Foe",desc:"+1d4 once/turn.",cost:"4/long",uses:4,resetOn:"long"}],
       spellSlots:{"1st":4,"2nd":2},spells:["Goodberry","Hunter's Mark","Absorb Elements","Pass Without Trace","Rope Trick","Zephyr Strike"],
-      equipment:["Studded leather","Longbow","40 arrows","Thieves' tools","Broken compass","Journal","20 gp"],
+      equipment:["Studded leather","Longbow","40 arrows"],
       actions:[{name:"Attack (Longbow)",desc:"Ranged weapon attack"},{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"}],
       bonusActions:[{name:"Hunter's Mark",desc:"Bonus action to cast or move mark"},{name:"Cunning Action",desc:"Dash, Disengage, or Hide"}],
-      backstory:"Cartographer for the Wind Dukes; memories erased."
+      backstory:"Cartographer for the Wind Dukes."
     },
     drunken:{
       name:"Kaelen 'Kettle' Morrow",classLevel:"Monk (Drunken Master) - Level 10",race:"Human (Variant)",background:"The Last of the Unremembered Path",alignment:"Chaotic Good",playerName:"__________________",
       stats:{STR:{score:10,mod:0,save:4},DEX:{score:20,mod:5,save:9},CON:{score:14,mod:2,save:6},INT:{score:8,mod:-1,save:3},WIS:{score:18,mod:4,save:8},CHA:{score:10,mod:0,save:4}},
-      combat:{ac:19,hp:73,speed:50,initiative:5,hitDice:"10d8",proficiency:4,passivePerception:18,passiveInsight:18},
-      attacks:[{name:"Unarmed Strike",bonus:"+9",damage:"1d6+5",notes:"Magical"},{name:"Quarterstaff",bonus:"+9",damage:"1d6+5",notes:"Versatile (1d8)"}],
+      combat:{ac:19,hp:73,speed:50,initiative:5,proficiency:4,passivePerception:18,passiveInsight:18},
+      attacks:[{name:"Unarmed Strike",bonus:"+9",damage:"1d6+5",notes:"Magical"}],
       skills:{Acrobatics:9,Insight:8},
-      features:[{name:"Ki (10)",desc:"10 ki, short rest.",cost:"10/short rest",uses:10,resetOn:"short"},{name:"Stunning Strike",desc:"1 ki: CON save or stunned.",cost:"1 ki",uses:10,resetOn:"short"}],
-      spells:[],equipment:["Quarterstaff","10 darts","Worn flask","10 gp"],
+      features:[{name:"Ki (10)",desc:"10 ki, short rest.",cost:"10/short",uses:10,resetOn:"short"},{name:"Stunning Strike",desc:"1 ki: CON save or stunned.",cost:"1 ki",uses:10,resetOn:"short"}],
+      spells:[],equipment:["Quarterstaff","10 darts","Worn flask"],
       actions:[{name:"Attack (Unarmed)",desc:"Melee weapon attack"},{name:"Cast a Spell",desc:"(if applicable)"}],
       bonusActions:[{name:"Flurry of Blows",desc:"1 ki: two unarmed strikes"},{name:"Patient Defense",desc:"1 ki: Dodge"},{name:"Step of the Wind",desc:"1 ki: Dash/Disengage"}],
       backstory:"Monastery erased by a Rod fragment."
@@ -195,12 +155,12 @@
     chronurgy:{
       name:"Vesper Aldric",classLevel:"Wizard (Chronurgy) - Level 10",race:"Variant Human",background:"Temporal Archivist",alignment:"True Neutral",playerName:"__________________",
       stats:{STR:{score:8,mod:-1,save:3},DEX:{score:14,mod:2,save:6},CON:{score:14,mod:2,save:6},INT:{score:20,mod:5,save:9},WIS:{score:12,mod:1,save:5},CHA:{score:10,mod:0,save:4}},
-      combat:{ac:15,hp:62,speed:30,initiative:5,hitDice:"10d6",proficiency:4,passivePerception:15,passiveInvestigation:19},
+      combat:{ac:15,hp:62,speed:30,initiative:5,proficiency:4,passivePerception:15,passiveInvestigation:19},
       attacks:[{name:"Chill Touch",bonus:"+9",damage:"2d8 necrotic",notes:"Cantrip"}],
       skills:{Arcana:9,History:9},
-      features:[{name:"Chronal Shift",desc:"Reaction: reroll.",cost:"2/long rest",uses:2,resetOn:"long"},{name:"Arcane Abeyance",desc:"Store spell in bead.",cost:"1/short rest",uses:1,resetOn:"short"}],
+      features:[{name:"Chronal Shift",desc:"Reaction: reroll.",cost:"2/long",uses:2,resetOn:"long"},{name:"Arcane Abeyance",desc:"Store spell in bead.",cost:"1/short",uses:1,resetOn:"short"}],
       spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Shield","Gift of Alacrity","Misty Step","Counterspell","Haste","Slow","Dimension Door"],
-      equipment:["Spellbook","Component pouch","Hourglass pendant","15 gp"],
+      equipment:["Spellbook","Component pouch","Hourglass pendant"],
       actions:[{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"},{name:"Chill Touch",desc:"Cantrip"}],
       bonusActions:[{name:"Misty Step",desc:"Bonus action teleport"},{name:"Arcane Abeyance (release)",desc:"Use stored spell"}],
       backstory:"Saw the Rod assembled and the multiverse collapsing."
@@ -208,12 +168,12 @@
     grave:{
       name:"Morwen",classLevel:"Cleric (Grave Domain) - Level 10",race:"Reborn",background:"Debt Collector of the Raven Queen",alignment:"Lawful Neutral",playerName:"__________________",
       stats:{STR:{score:8,mod:-1,save:3},DEX:{score:12,mod:1,save:5},CON:{score:14,mod:2,save:6},INT:{score:10,mod:0,save:4},WIS:{score:20,mod:5,save:9},CHA:{score:16,mod:3,save:7}},
-      combat:{ac:15,hp:82,speed:30,initiative:1,hitDice:"10d8",proficiency:4,passivePerception:19,passiveInsight:19},
-      attacks:[{name:"Toll the Dead",bonus:"DC 17",damage:"2d12 necrotic",notes:"Wis save"},{name:"Sacred Flame",bonus:"DC 17",damage:"2d8 radiant",notes:"Dex save"}],
+      combat:{ac:15,hp:82,speed:30,initiative:1,proficiency:4,passivePerception:19,passiveInsight:19},
+      attacks:[{name:"Toll the Dead",bonus:"DC 17",damage:"2d12 necrotic",notes:"Wis save"}],
       skills:{Persuasion:7,Intimidation:7},
       features:[{name:"Path to the Grave",desc:"Next attack double damage.",cost:"Channel Divinity",uses:2,resetOn:"short"}],
       spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Bless","Healing Word","Spiritual Weapon","Spirit Guardians","Revivify","Death Ward","Banishment","Greater Restoration"],
-      equipment:["Breastplate","Holy symbol","Mace","Prayer book","15 gp"],
+      equipment:["Breastplate","Holy symbol","Mace","Prayer book"],
       actions:[{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"},{name:"Toll the Dead",desc:"Cantrip"},{name:"Sacred Flame",desc:"Cantrip"}],
       bonusActions:[{name:"Spiritual Weapon",desc:"Bonus action attack"},{name:"Healing Word",desc:"Bonus action heal"}],
       backstory:"Died and was saved by the Raven Queen."
@@ -221,11 +181,11 @@
     psi:{
       name:"Zor-Ashkev's Vessel",classLevel:"Fighter (Psi Warrior) - Level 10",race:"Aasimar (Fallen)",background:"Wind Duke Sleeper Agent",alignment:"Lawful Neutral",playerName:"__________________",
       stats:{STR:{score:17,mod:3,save:7},DEX:{score:10,mod:0,save:4},CON:{score:14,mod:2,save:6},INT:{score:15,mod:2,save:6},WIS:{score:10,mod:0,save:4},CHA:{score:8,mod:-1,save:3}},
-      combat:{ac:19,hp:84,speed:30,initiative:0,hitDice:"10d10",proficiency:4,passivePerception:14,passiveInvestigation:16},
-      attacks:[{name:"Longsword",bonus:"+7",damage:"1d8+5",notes:"+2 Dueling"},{name:"Heavy Crossbow",bonus:"+4",damage:"1d10",notes:"100/400"}],
+      combat:{ac:19,hp:84,speed:30,initiative:0,proficiency:4,passivePerception:14,passiveInvestigation:16},
+      attacks:[{name:"Longsword",bonus:"+7",damage:"1d8+5",notes:"+2 Dueling"}],
       skills:{Athletics:7,Perception:4},
-      features:[{name:"Psionic Power (6)",desc:"6 dice, long rest.",cost:"6/long rest",uses:6,resetOn:"long"},{name:"Action Surge",desc:"Extra action.",cost:"1/short rest",uses:1,resetOn:"short"}],
-      spells:[],equipment:["Plate armor","Longsword","Silver cube","15 gp"],
+      features:[{name:"Psionic Power (6)",desc:"6 dice, long rest.",cost:"6/long",uses:6,resetOn:"long"},{name:"Action Surge",desc:"Extra action.",cost:"1/short",uses:1,resetOn:"short"}],
+      spells:[],equipment:["Plate armor","Longsword","Silver cube"],
       actions:[{name:"Attack (Longsword)",desc:"Melee weapon attack"},{name:"Attack (Crossbow)",desc:"Ranged weapon attack"}],
       bonusActions:[{name:"Second Wind",desc:"Regain HP"},{name:"Telekinetic Shove",desc:"Bonus action shove"}],
       backstory:"Woke with 'THE ROD IS NOT A WEAPON. IT IS A CAGE.'"
@@ -235,7 +195,6 @@
   const dmSecrets = { dmpc:"Memories taken by Raven Queen.", drunken:"Monastery erased.", chronurgy:"Future self assembling Rod.", grave:"Wind Duke scholar.", psi:"Sleeper agent." };
   const sessionZero = { id:"session0", date:"Session 0", title:"✦ The Gathering at the Crossroads Inn ✦", notes:"Party meets at the Crossroads Inn." };
 
-  // ── HELPERS ───────────────────────────────────────────
   const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const sid = s => s.replace(/[^a-zA-Z0-9]/g,'_');
   function med(v,fk,ck){ return `<span class="editable-text" contenteditable="true" data-field="${fk}" data-char="${ck}" oninput="scheduleAutoSave('${ck}')">${esc(String(v))}</span>`; }
@@ -246,7 +205,6 @@
   function scheduleAutoSave(ck){if(autoSaveTimers[ck])clearTimeout(autoSaveTimers[ck]);autoSaveTimers[ck]=setTimeout(()=>saveAllEdits(ck),3000);}
   function saveAllEdits(ck){const e={};document.querySelectorAll(`[data-char="${ck}"]`).forEach(el=>e[el.getAttribute('data-field')]=el.textContent.trim());Object.entries(e).forEach(([f,v])=>{db.ref(`characters/${ck}/${f}`).set(v);});}
 
-  // ── SPELL DETAIL TOGGLE ───────────────────────────────
   window.toggleSpellDetail = function(spellName, charKey, element) {
     const safeId = sid(spellName);
     const panel = document.getElementById(`spell-detail-${charKey}-${safeId}`);
@@ -266,7 +224,6 @@
     }
   };
 
-  // ── DYNAMIC ATTACKS ───────────────────────────────────
   window.addAttack = function(ck) {
     const name = document.getElementById(`newAtkName-${ck}`)?.value.trim();
     const bonus = document.getElementById(`newAtkBonus-${ck}`)?.value.trim();
@@ -317,7 +274,6 @@
     if (addForm) container.appendChild(addForm);
   }
 
-  // ── SPELLS & EQUIPMENT RENDERING ───────────────────────
   function renderSpells(ck,spells){
     const container = document.getElementById(`spellsList-${ck}`);
     if(!container)return;
@@ -341,6 +297,7 @@
     if(dropdown)container.appendChild(dropdown);
     if(addForm)container.appendChild(addForm);
   }
+
   function renderEquipment(ck,items){
     const container = document.getElementById(`equipList-${ck}`);
     if(!container)return;
@@ -354,12 +311,9 @@
     if(addForm)container.appendChild(addForm);
   }
 
-  // ── NOTES ────────────────────────────────────────────
   window.addCharNote=function(ck){const i=document.getElementById(`charNoteInput-${ck}`);if(!i?.value.trim())return;const t=i.value.trim();db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];n.unshift({id:Date.now(),text:t,time:new Date().toLocaleString()});return db.ref(`characterNotes/${ck}`).set(n);}).then(()=>{i.value='';loadCharNotes(ck);});};
   window.removeCharNote=function(ck,id){if(!confirm('Delete?'))return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];return db.ref(`characterNotes/${ck}`).set(n.filter(x=>x.id!==id));}).then(()=>loadCharNotes(ck));};
-  function loadCharNotes(ck){const c=document.getElementById(`charNotes-${ck}`);if(!c)return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];c.innerHTML=n.length===0?'<p style="color:#9088c0;">No notes yet.</p>':n.map(x=>`<div class="char-note-card"><div><div style="color:#c0c8e8;font-size:0.8rem;">${esc(x.text)}</div><div style="color:#9088c0;font-size:0.65rem;">${x.time}</div></div><button class="btn-remove" onclick="removeCharNote('${ck}',${x.id})">✕</button></div>`).join('');});}
-
-  // ── SESSION NOTES ────────────────────────────────────
+  function loadCharNotes(ck){const c=document.getElementById(`charNotes-${ck}`);if(!c)return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];c.innerHTML=n.length===0?'<p style="color:#9088c0;font-size:0.75rem;">No notes yet.</p>':n.map(x=>`<div class="char-note-card"><div><div style="color:#c0c8e8;font-size:0.8rem;">${esc(x.text)}</div><div style="color:#9088c0;font-size:0.65rem;">${x.time}</div></div><button class="btn-remove" onclick="removeCharNote('${ck}',${x.id})">✕</button></div>`).join('');});}
   window.addSessionNote=function(){const d=document.getElementById('sessionDate'),t=document.getElementById('sessionTitle'),n=document.getElementById('sessionNotes');if(!t?.value.trim())return;const note={id:Date.now(),date:d?.value||new Date().toISOString().split('T')[0],title:t.value.trim(),notes:n?.value.trim()||''};db.ref('sessionNotes').once('value').then(s=>{const ns=s.val()||[];ns.push(note);return db.ref('sessionNotes').set(ns);}).then(()=>{sessionNotes.push(note);renderSessionNotes();d.value='';t.value='';n.value='';});};
   window.addBulletToForm=function(){const n=document.getElementById('sessionNotes');if(!n)return;const p=n.selectionStart;n.value=n.value.substring(0,p)+'\n• '+n.value.substring(p);n.focus();n.selectionStart=n.selectionEnd=p+3;};
   window.removeSessionNote=function(id){if(!confirm('Delete?'))return;db.ref('sessionNotes').once('value').then(s=>{const n=s.val()||[];return db.ref('sessionNotes').set(n.filter(x=>x.id!==id));}).then(()=>{sessionNotes=sessionNotes.filter(x=>x.id!==id);renderSessionNotes();});};
@@ -368,25 +322,12 @@
   function loadDynamicLists(ck){
     const c = charData[ck];
     if(!c)return;
-    db.ref(`characters/${ck}/spells`).once('value').then(s => {
-      const spells = s.val() || c.spells || [];
-      if(!s.val()) db.ref(`characters/${ck}/spells`).set(c.spells || []);
-      renderSpells(ck, spells);
-    });
-    db.ref(`characters/${ck}/equipment`).once('value').then(s => {
-      const equip = s.val() || c.equipment || [];
-      if(!s.val()) db.ref(`characters/${ck}/equipment`).set(c.equipment || []);
-      renderEquipment(ck, equip);
-    });
-    db.ref(`characters/${ck}/attacks`).once('value').then(s => {
-      const att = s.val() || c.attacks || [];
-      if(!s.val()) db.ref(`characters/${ck}/attacks`).set(c.attacks || []);
-      renderAttacks(ck, att);
-    });
+    db.ref(`characters/${ck}/spells`).once('value').then(s => { const spells = s.val() || c.spells || []; if(!s.val()) db.ref(`characters/${ck}/spells`).set(c.spells || []); renderSpells(ck, spells); });
+    db.ref(`characters/${ck}/equipment`).once('value').then(s => { const equip = s.val() || c.equipment || []; if(!s.val()) db.ref(`characters/${ck}/equipment`).set(c.equipment || []); renderEquipment(ck, equip); });
+    db.ref(`characters/${ck}/attacks`).once('value').then(s => { const att = s.val() || c.attacks || []; if(!s.val()) db.ref(`characters/${ck}/attacks`).set(c.attacks || []); renderAttacks(ck, att); });
     loadCharNotes(ck);
   }
 
-  // ── RENDER CHARACTER SHEET ────────────────────────────
   function filteredOptions(ck){
     const allowed = classMap[ck]||[];
     const entries = Object.entries(spellDB).filter(([_,d])=>d.cls&&d.cls.some(c=>allowed.includes(c)));
@@ -440,7 +381,6 @@
     </div>`;
   }
 
-  // ── DM PAGE ──────────────────────────────────────────
   function renderDMPage(){return`<div style="text-align:center;padding:0.5rem;"><h2 style="color:#d4c8ff;">🔐 DM Stargate</h2><p>PIN:</p><input type="password" id="pinInput" style="background:rgba(20,15,40,0.7);border:2px solid rgba(140,120,220,0.5);color:#e8e0ff;padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:1.1rem;text-align:center;letter-spacing:4px;margin:0.6rem 0;" maxlength="8"><br><button class="btn-rest" id="pinSubmit">Unlock</button><p id="pinError" style="color:#e0a0c0;"></p><div id="dmSecretsContainer" style="display:none;text-align:left;margin-top:1rem;"><div class="section-header" style="color:#d4c8ff;">🗝️ SECRETS</div>${Object.entries(dmSecrets).map(([k,s])=>`<div style="border:2px dashed rgba(140,120,220,0.5);background:rgba(20,15,35,0.6);padding:0.6rem;border-radius:0.5rem;margin:0.5rem 0;"><div style="color:#d4c8ff;font-weight:bold;">${charData[k]?.name||k}</div><div style="color:#c8b8f0;">${s}</div></div>`).join('')}<div class="section-header" style="color:#d4c8ff;">📋 CHANGE LOG</div><div class="change-log" id="changeLogContainer"></div><div class="section-header" style="color:#d4c8ff;">📝 SESSION NOTES</div><div style="border:2px dashed rgba(140,160,200,0.4);padding:0.8rem;margin:0.5rem 0;background:rgba(18,20,35,0.5);"><div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem;"><div style="flex:1;"><input type="date" id="sessionDate" style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div><div style="flex:2;"><input type="text" id="sessionTitle" placeholder="Title..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.3rem;"></div></div><div><button class="btn-sm" onclick="addBulletToForm()">• +</button><textarea id="sessionNotes" rows="4" placeholder="• Notes..." style="width:100%;background:rgba(20,15,40,0.7);border:1px solid rgba(140,120,220,0.4);color:#e8e0ff;padding:0.4rem;resize:vertical;margin-top:0.2rem;"></textarea></div><button class="btn-add" onclick="addSessionNote()" style="width:100%;margin-top:0.3rem;">+ Save Note</button></div><div id="sessionNotesContainer"></div></div></div>`;}
   function renderChangeLog(){const c=document.getElementById('changeLogContainer');if(!c)return;c.innerHTML=changeLog.length===0?'<p style="color:#9088c0;">No changes.</p>':changeLog.map(e=>`<div class="log-entry">[${e.time}] <strong>${e.char}</strong> · ${e.field}: ${e.value}</div>`).join('');}
 
