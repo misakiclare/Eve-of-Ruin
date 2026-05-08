@@ -20,9 +20,9 @@
     .char-sheet { display: flex; flex-direction: column; gap: 0.8rem; }
     .sheet-section { border: 2px solid rgba(120, 100, 180, 0.3); border-radius: 0.8rem; padding: 0.8rem; background: rgba(18, 14, 35, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
     .section-header { font-size: 1rem; color: #c8b8f0; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(120, 100, 180, 0.3); padding-bottom: 0.3rem; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
-    .editable-text { background: transparent; border: 1px solid transparent; color: inherit; font-family: inherit; font-size: inherit; padding: 0.1rem 0.25rem; border-radius: 0.25rem; outline: none; transition: all 0.2s; display: inline-block; min-width: 15px; }
+    .editable-text { background: transparent; border: 1px solid transparent; color: inherit; font-family: inherit; font-size: inherit; padding: 0.1rem 0.25rem; border-radius: 0.25rem; outline: none; transition: all 0.2s; display: inline-block; min-width: 15px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .editable-text:hover { background: rgba(120, 100, 180, 0.1); border-color: rgba(120, 100, 180, 0.3); }
-    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); }
+    .editable-text:focus { background: rgba(120, 100, 180, 0.15); border-color: rgba(160, 140, 220, 0.7); white-space: normal; max-width: none; }
     .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(75px, 1fr)); gap: 0.5rem; margin: 0.5rem 0; }
     .stat-box { border: 2px solid rgba(120, 100, 180, 0.3); border-radius: 0.6rem; padding: 0.4rem; text-align: center; background: rgba(25, 18, 50, 0.6); }
     .stat-label { font-size: 0.6rem; color: #a098d0; text-transform: uppercase; }
@@ -56,9 +56,11 @@
     .spell-item-bar { display: flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.4rem; border-bottom: 1px solid rgba(100,80,160,0.2); font-size: 0.8rem; cursor: pointer; border-radius: 0.25rem; }
     .spell-item-bar:hover { background: rgba(120, 100, 180, 0.15); }
     .spell-item-bar.active { background: rgba(120, 100, 180, 0.25); }
+    .spell-content { flex: 1; min-width: 0; display: flex; align-items: center; gap: 0.3rem; }
+    .spell-actions { display: flex; align-items: center; gap: 0.2rem; flex-shrink: 0; margin-left: auto; }
     .spell-detail-panel { display: none; padding: 0.5rem; margin: 0.2rem 0 0.4rem 1rem; background: rgba(25, 18, 45, 0.8); border: 1px solid rgba(140, 120, 220, 0.5); border-radius: 0.4rem; color: #c0b8e8; font-size: 0.8rem; }
     .spell-detail-panel.open { display: block; }
-    .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; }
+    .spell-level-badge { font-size: 0.6rem; background: rgba(100, 80, 160, 0.5); color: #d4c0ff; padding: 0.1rem 0.3rem; border-radius: 0.3rem; flex-shrink: 0; }
     .session-note-card { border: 2px solid rgba(140, 160, 200, 0.3); border-radius: 0.6rem; padding: 0.6rem; margin: 0.5rem 0; background: linear-gradient(135deg, rgba(20, 25, 45, 0.7) 0%, rgba(12, 15, 30, 0.8) 100%); }
     .char-note-card { border: 1px solid rgba(120, 140, 180, 0.3); border-radius: 0.5rem; padding: 0.5rem; margin: 0.3rem 0; background: rgba(20, 22, 40, 0.6); display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
   </style>
@@ -91,37 +93,66 @@
   const panel = document.getElementById('contentPanel');
   const autoSaveTimers = {}; let changeLog = [], sessionNotes = [];
 
+  // FULL SPELL DATABASE WITH DESCRIPTIONS
   const spellDB = {
     "Shield": {l:1,s:"Abjuration",cast:"1 reaction",rng:"Self",dur:"1 round",cls:["wizard","sorcerer"],desc:"An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile."},
     "Mage Armor": {l:1,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["wizard","sorcerer"],desc:"You touch a willing creature who isn't wearing armor. The target's base AC becomes 13 + its Dexterity modifier. The spell ends if the target dons armor."},
     "Gift of Alacrity": {l:1,s:"Divination",cast:"1 minute",rng:"Touch",dur:"8 hours",cls:["wizard"],desc:"You touch a willing creature. For the duration, the target can add 1d8 to its initiative rolls."},
-    "Goodberry": {l:1,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["ranger","druid"],desc:"Up to 10 berries appear. Each berry heals 1 HP and provides nourishment for a day."},
-    "Hunter's Mark": {l:1,s:"Divination",cast:"1 bonus action",rng:"90 ft",dur:"Conc., up to 1 hour",cls:["ranger"],desc:"Mark a target. You deal +1d6 damage to it and have advantage on Survival checks to track it."},
-    "Absorb Elements": {l:1,s:"Abjuration",cast:"1 reaction",rng:"Self",dur:"1 round",cls:["ranger","druid","wizard","sorcerer"],desc:"Gain resistance to triggering damage type. Next melee attack deals +1d6 of that type."},
-    "Zephyr Strike": {l:1,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger"],desc:"No opportunity attacks. Advantage on one weapon attack, +1d8 force, +30 ft speed."},
-    "Bless": {l:1,s:"Enchantment",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["cleric"],desc:"Up to 3 creatures add 1d4 to attack rolls and saving throws."},
-    "Healing Word": {l:1,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"Instantaneous",cls:["cleric"],desc:"Heal 1d4 + spellcasting modifier HP."},
-    "Pass Without Trace": {l:2,s:"Abjuration",cast:"1 action",rng:"Self",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"+10 Stealth to all in radius, can't be tracked."},
-    "Rope Trick": {l:2,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"1 hour",cls:["wizard","ranger"],desc:"Rope rises to extradimensional safe space."},
-    "Misty Step": {l:2,s:"Conjuration",cast:"1 bonus action",rng:"Self",dur:"Instantaneous",cls:["wizard","sorcerer","ranger"],desc:"Teleport up to 30 ft."},
-    "Spiritual Weapon": {l:2,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"1 minute",cls:["cleric"],desc:"Floating weapon deals 1d8+WIS force as bonus action."},
-    "Counterspell": {l:3,s:"Abjuration",cast:"1 reaction",rng:"60 ft",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"Interrupt a spell. Auto‑success if 3rd or lower."},
-    "Haste": {l:3,s:"Transmutation",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"Double speed, +2 AC, extra action."},
-    "Slow": {l:3,s:"Transmutation",cast:"1 action",rng:"120 ft",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"Up to 6 targets: halved speed, limited actions."},
-    "Spirit Guardians": {l:3,s:"Conjuration",cast:"1 action",rng:"Self",dur:"Conc., up to 10 minutes",cls:["cleric"],desc:"Spirits deal 3d8 radiant/necrotic, enemy speed halved."},
-    "Revivify": {l:3,s:"Necromancy",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric"],desc:"Revive creature that died within 1 minute."},
-    "Dimension Door": {l:4,s:"Conjuration",cast:"1 action",rng:"500 ft",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"Teleport self + one willing creature up to 500 ft."},
-    "Death Ward": {l:4,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["cleric"],desc:"Target drops to 1 HP instead of 0."},
-    "Banishment": {l:4,s:"Abjuration",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 minute",cls:["cleric","wizard"],desc:"Target banished to demiplane (CHA save)."},
-    "Wall of Force": {l:5,s:"Evocation",cast:"1 action",rng:"120 ft",dur:"Conc., up to 10 minutes",cls:["wizard"],desc:"Invisible, impenetrable wall."},
-    "Greater Restoration": {l:5,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric"],desc:"End petrification, curses, exhaustion."},
-    "Stunning Strike": {l:"Ki",s:"Monk",cast:"On hit",rng:"Melee",dur:"Until end of next turn",cls:["monk"],desc:"1 ki: target CON save or stunned."},
-    "Flurry of Blows": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"Instantaneous",cls:["monk"],desc:"1 ki: two unarmed strikes."},
-    "Patient Defense": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"1 round",cls:["monk"],desc:"1 ki: Dodge as bonus action."},
-    "Step of the Wind": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"1 turn",cls:["monk"],desc:"1 ki: Dash/Disengage, jump doubled."},
-    "Psionic Strike": {l:"Psi",s:"Psi Warrior",cast:"Free (1/turn)",rng:"Self",dur:"Instantaneous",cls:["psiwarrior"],desc:"+1d8+INT force on weapon hit (1 die)."},
-    "Protective Field": {l:"Psi",s:"Psi Warrior",cast:"1 reaction",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"Reduce damage to ally (1 die)."},
-    "Telekinetic Movement": {l:"Psi",s:"Psi Warrior",cast:"1 action",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"Move object/creature 30 ft (1 die)."}
+    "Goodberry": {l:1,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["ranger","druid"],desc:"Up to 10 berries appear. Each berry heals 1 HP and provides nourishment for a day. The berries lose potency after 24 hours."},
+    "Hunter's Mark": {l:1,s:"Divination",cast:"1 bonus action",rng:"90 ft",dur:"Conc., up to 1 hour",cls:["ranger"],desc:"You mark a creature you can see. Until the spell ends, you deal +1d6 damage whenever you hit it with a weapon attack, and you have advantage on Wisdom (Perception) and Wisdom (Survival) checks to track it. If the target drops to 0 HP, you can use a bonus action on a later turn to mark a new creature."},
+    "Absorb Elements": {l:1,s:"Abjuration",cast:"1 reaction",rng:"Self",dur:"1 round",cls:["ranger","druid","wizard","sorcerer"],desc:"You capture some of the incoming energy. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of that type, and the spell ends."},
+    "Zephyr Strike": {l:1,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger"],desc:"You move like the wind. Until the spell ends, your movement doesn't provoke opportunity attacks. Once before the spell ends, you can give yourself advantage on one weapon attack roll. That attack deals an extra 1d8 force damage, and your walking speed increases by 30 feet until the end of that turn."},
+    "Bless": {l:1,s:"Enchantment",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["cleric","paladin"],desc:"You bless up to three creatures of your choice. Whenever a target makes an attack roll or saving throw, it can roll a d4 and add the number rolled to the result."},
+    "Healing Word": {l:1,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"Instantaneous",cls:["cleric","bard","druid"],desc:"A creature of your choice that you can see regains hit points equal to 1d4 + your spellcasting ability modifier. This spell has no effect on undead or constructs."},
+    "Guiding Bolt": {l:1,s:"Evocation",cast:"1 action",rng:"120 ft",dur:"1 round",cls:["cleric"],desc:"A flash of light streaks toward a creature. Make a ranged spell attack. On a hit, the target takes 4d6 radiant damage, and the next attack roll made against this target before the end of your next turn has advantage."},
+    "Inflict Wounds": {l:1,s:"Necromancy",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric"],desc:"Make a melee spell attack against a creature you can reach. On a hit, the target takes 3d10 necrotic damage."},
+    "Shield of Faith": {l:1,s:"Abjuration",cast:"1 bonus action",rng:"60 ft",dur:"Conc., up to 10 minutes",cls:["cleric","paladin"],desc:"A shimmering field surrounds a creature, granting a +2 bonus to AC for the duration."},
+    "Cure Wounds": {l:1,s:"Evocation",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","paladin","ranger","druid","bard"],desc:"A creature you touch regains a number of hit points equal to 1d8 + your spellcasting ability modifier. No effect on undead or constructs."},
+    "Speak with Animals": {l:1,s:"Divination",cast:"1 action",rng:"Self",dur:"10 minutes",cls:["ranger","druid","bard"],desc:"You gain the ability to comprehend and verbally communicate with beasts for the duration."},
+    "Entangle": {l:1,s:"Conjuration",cast:"1 action",rng:"90 ft (20-ft square)",dur:"Conc., up to 1 minute",cls:["ranger","druid"],desc:"Grasping plants sprout in a 20-foot square. Creatures in the area when you cast the spell must succeed on a Strength saving throw or become restrained. A restrained creature can use its action to make a Strength check to break free."},
+    "Find Familiar": {l:1,s:"Conjuration",cast:"1 hour",rng:"10 ft",dur:"Instantaneous",cls:["wizard"],desc:"You gain the service of a familiar, a spirit that takes an animal form you choose. It acts independently but obeys your commands. While it is within 100 feet, you can communicate telepathically. As an action, you can see through its eyes and hear what it hears."},
+    "Fortune's Favor": {l:2,s:"Divination",cast:"1 minute",rng:"60 ft",dur:"1 hour",cls:["wizard"],desc:"You imbue a creature with a mote of luck. Once before the spell ends, the target can use the mote to reroll an ability check, attack roll, or saving throw. The target must use the new result."},
+    "Mirror Image": {l:2,s:"Illusion",cast:"1 action",rng:"Self",dur:"1 minute",cls:["wizard","sorcerer"],desc:"Three illusory duplicates of yourself appear. Each time a creature targets you with an attack, roll a d20 to see whether the attack hits you or a duplicate. A duplicate has AC 10 + your Dexterity modifier and is destroyed if hit."},
+    "Misty Step": {l:2,s:"Conjuration",cast:"1 bonus action",rng:"Self",dur:"Instantaneous",cls:["wizard","sorcerer","ranger"],desc:"Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space you can see."},
+    "Pass Without Trace": {l:2,s:"Abjuration",cast:"1 action",rng:"Self (30-ft radius)",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"A veil of shadows and silence radiates from you, masking you and your companions. Each creature you choose within 30 feet gains a +10 bonus to Dexterity (Stealth) checks and can't be tracked except by magical means."},
+    "Rope Trick": {l:2,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"1 hour",cls:["wizard","ranger"],desc:"You touch a length of rope. One end rises into the air, forming an invisible entrance to an extradimensional space that can hold up to eight Medium or smaller creatures. The entrance closes after 1 hour."},
+    "Silence": {l:2,s:"Illusion",cast:"1 action",rng:"120 ft (20-ft sphere)",dur:"Conc., up to 10 minutes",cls:["cleric","bard","ranger"],desc:"No sound can be created within or pass through a 20-foot-radius sphere. Any creature inside is deafened and immune to thunder damage. Spells with verbal components cannot be cast inside."},
+    "Spike Growth": {l:2,s:"Transmutation",cast:"1 action",rng:"150 ft (20-ft radius)",dur:"Conc., up to 10 minutes",cls:["ranger","druid"],desc:"The ground in a 20-foot radius becomes covered in spikes and thorns, becoming difficult terrain. A creature takes 2d4 piercing damage for every 5 feet it moves through the area."},
+    "Lesser Restoration": {l:2,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","paladin","ranger","druid","bard"],desc:"You touch a creature and end one disease or one of the following conditions: blinded, deafened, paralyzed, or poisoned."},
+    "Beast Sense": {l:2,s:"Divination",cast:"1 action",rng:"Touch",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"You touch a willing beast. For the duration, you can use your action to see through its eyes and hear what it hears. You gain the benefits of any special senses it has."},
+    "Darkvision": {l:2,s:"Transmutation",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["ranger","druid","wizard","sorcerer"],desc:"You touch a willing creature, granting it darkvision to a range of 60 feet for the duration."},
+    "Spiritual Weapon": {l:2,s:"Evocation",cast:"1 bonus action",rng:"60 ft",dur:"1 minute",cls:["cleric"],desc:"You create a floating spectral weapon. When you cast it, you can make a melee spell attack against a creature within 5 feet of the weapon, dealing 1d8 + your spellcasting ability modifier force damage. As a bonus action on later turns, you can move the weapon up to 20 feet and attack again."},
+    "Hold Person": {l:2,s:"Enchantment",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 minute",cls:["cleric","wizard","sorcerer","bard"],desc:"Choose a humanoid that you can see. It must succeed on a Wisdom saving throw or be paralyzed for the duration. At the end of each of its turns, it can make another Wisdom saving throw to end the effect."},
+    "Blindness/Deafness": {l:2,s:"Necromancy",cast:"1 action",rng:"30 ft",dur:"1 minute",cls:["cleric","wizard","sorcerer","bard"],desc:"You blind or deafen one creature you can see. It makes a Constitution saving throw. On a failure, it is blinded or deafened (your choice) for the duration. It repeats the save at the end of each of its turns."},
+    "Counterspell": {l:3,s:"Abjuration",cast:"1 reaction",rng:"60 ft",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"You attempt to interrupt a creature casting a spell. If the spell is 3rd level or lower, it fails automatically. If 4th level or higher, make an ability check (DC 10 + spell level). On success, the spell fails and has no effect."},
+    "Haste": {l:3,s:"Transmutation",cast:"1 action",rng:"30 ft",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"A willing creature you choose has its speed doubled, gains +2 AC, advantage on Dexterity saving throws, and an extra action each turn (usable only to Attack [one weapon], Dash, Disengage, Hide, or Use Object). When the spell ends, the target cannot move or take actions until after its next turn."},
+    "Slow": {l:3,s:"Transmutation",cast:"1 action",rng:"120 ft (40-ft cube)",dur:"Conc., up to 1 minute",cls:["wizard","sorcerer"],desc:"You alter time around up to six creatures in a 40-foot cube. Affected targets have their speed halved, -2 penalty to AC and Dexterity saves, and can't use reactions. On their turn, they can use an action or a bonus action, not both, and only one melee or ranged attack."},
+    "Fireball": {l:3,s:"Evocation",cast:"1 action",rng:"150 ft (20-ft radius)",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"A bright streak flashes to a point and blossoms into an explosion. Each creature in a 20-foot-radius sphere takes 8d6 fire damage, or half as much on a successful Dexterity saving throw. The fire spreads around corners and ignites flammable objects."},
+    "Conjure Animals": {l:3,s:"Conjuration",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 hour",cls:["ranger","druid"],desc:"You summon fey spirits that take the form of beasts. Choose one: 1 beast of CR 2 or lower, 2 beasts of CR 1 or lower, 4 beasts of CR 1/2 or lower, or 8 beasts of CR 1/4 or lower."},
+    "Lightning Arrow": {l:3,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger"],desc:"The next time you make a ranged weapon attack during the spell, the ammunition transforms into a bolt of lightning. The target takes 4d8 lightning damage on a hit instead of the normal weapon damage. All creatures within 10 feet of the target must make a Dexterity save, taking 2d8 lightning on a failure."},
+    "Spirit Guardians": {l:3,s:"Conjuration",cast:"1 action",rng:"Self (15-ft radius)",dur:"Conc., up to 10 minutes",cls:["cleric"],desc:"Spirits swirl around you. When you cast this spell, choose radiant (if good/neutral) or necrotic (if evil) damage. Affected creatures' speed is halved. When a creature enters the area for the first time or starts its turn there, it must make a Wisdom save, taking 3d8 damage on a failure or half on success."},
+    "Revivify": {l:3,s:"Necromancy",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","paladin"],desc:"You touch a creature that has died within the last minute. It returns to life with 1 hit point. Cannot revive creatures that died of old age, and it cannot restore missing body parts. Consumes 300 gp worth of diamonds."},
+    "Speak with Dead": {l:3,s:"Necromancy",cast:"1 action",rng:"10 ft",dur:"10 minutes",cls:["cleric"],desc:"You grant a semblance of life to a corpse. It can answer up to five questions. The corpse knows only what it knew in life and may give brief, cryptic, or repetitive answers."},
+    "Dimension Door": {l:4,s:"Conjuration",cast:"1 action",rng:"500 ft",dur:"Instantaneous",cls:["wizard","sorcerer"],desc:"You teleport yourself to any spot within range. You can bring one willing creature of your size or smaller. You arrive exactly at the destination."},
+    "Polymorph": {l:4,s:"Transmutation",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 hour",cls:["wizard","sorcerer"],desc:"You transform a creature into a beast of CR equal to or less than its level/CR. Unwilling creatures make a Wisdom save to resist. The target's game statistics are replaced by the beast's. When reduced to 0 HP, it reverts with excess damage carrying over."},
+    "Guardian of Nature": {l:4,s:"Transmutation",cast:"1 bonus action",rng:"Self",dur:"Conc., up to 1 minute",cls:["ranger","druid"],desc:"Choose one: Primal Beast (darkvision 120 ft, advantage on Strength-based attack rolls, +1d6 force damage on melee hits) or Great Tree (10 temporary HP, advantage on Constitution saves, ground within 15 feet is difficult terrain for enemies)."},
+    "Death Ward": {l:4,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"8 hours",cls:["cleric","paladin"],desc:"The first time the target would drop to 0 HP, it instead drops to 1 HP. If an effect would kill the target instantly without damage, that effect is negated against the target."},
+    "Banishment": {l:4,s:"Abjuration",cast:"1 action",rng:"60 ft",dur:"Conc., up to 1 minute",cls:["cleric","paladin","wizard","sorcerer"],desc:"A creature you see must make a Charisma save or be banished to a harmless demiplane. If the target is native to a different plane, it is sent back to that plane instead."},
+    "Wall of Force": {l:5,s:"Evocation",cast:"1 action",rng:"120 ft",dur:"Conc., up to 10 minutes",cls:["wizard"],desc:"An invisible, impenetrable wall of force springs into existence. It is immune to all damage and cannot be dispelled, though a disintegrate spell destroys it instantly."},
+    "Temporal Shunt": {l:5,s:"Transmutation",cast:"1 reaction",rng:"120 ft",dur:"1 round",cls:["wizard"],desc:"You shunt a creature you see forward in time. It vanishes until the end of your next turn, when it reappears in its original space or the nearest unoccupied area."},
+    "Steel Wind Strike": {l:5,s:"Conjuration",cast:"1 action",rng:"30 ft",dur:"Instantaneous",cls:["ranger","wizard"],desc:"You flourish your weapon and vanish to strike up to five creatures. Make a melee spell attack against each, dealing 6d10 force damage on a hit. You can then teleport to an unoccupied space within 5 feet of one of the targets."},
+    "Greater Restoration": {l:5,s:"Abjuration",cast:"1 action",rng:"Touch",dur:"Instantaneous",cls:["cleric","druid","bard"],desc:"You end one effect that charmed or petrified the target, a curse (including attunement to a cursed item), any reduction to an ability score, or one effect reducing the target's hit point maximum."},
+    "Scrying": {l:5,s:"Divination",cast:"10 minutes",rng:"Self",dur:"Conc., up to 10 minutes",cls:["cleric","wizard","druid","bard"],desc:"You can see and hear a specific creature on the same plane. The target makes a Wisdom saving throw, modified by familiarity and your connection to it. On a success, you can't target it again for 24 hours."},
+    "Mass Cure Wounds": {l:5,s:"Evocation",cast:"1 action",rng:"60 ft",dur:"Instantaneous",cls:["cleric","druid","bard"],desc:"Up to six creatures of your choice in a 30-foot-radius sphere regain hit points equal to 3d8 + your spellcasting ability modifier. No effect on undead or constructs."},
+    "Stunning Strike": {l:"Ki",s:"Monk",cast:"On hit",rng:"Melee",dur:"Until end of your next turn",cls:["monk"],desc:"When you hit a creature with a melee weapon attack, you can spend 1 ki point to force it to make a Constitution saving throw. On a failure, it is stunned until the end of your next turn."},
+    "Flurry of Blows": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"Instantaneous",cls:["monk"],desc:"Immediately after taking the Attack action, you can spend 1 ki point to make two unarmed strikes as a bonus action."},
+    "Patient Defense": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"1 round",cls:["monk"],desc:"Spend 1 ki point to take the Dodge action as a bonus action on your turn."},
+    "Step of the Wind": {l:"Ki",s:"Monk",cast:"1 bonus action",rng:"Self",dur:"1 turn",cls:["monk"],desc:"Spend 1 ki point to take the Disengage or Dash action as a bonus action, and your jump distance is doubled for the turn."},
+    "Deflect Missiles": {l:"Ki",s:"Monk",cast:"1 reaction",rng:"Self",dur:"Instantaneous",cls:["monk"],desc:"When hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d10 + your Dexterity modifier + your monk level. If you reduce it to 0, you can catch the missile and spend 1 ki point to make a ranged attack with it."},
+    "Psionic Strike": {l:"Psi",s:"Psi Warrior",cast:"Free (1/turn)",rng:"Self",dur:"Instantaneous",cls:["psiwarrior"],desc:"Once per turn, when you hit with a weapon attack, expend one Psionic Energy die, roll it, and add the result plus your Intelligence modifier as force damage."},
+    "Protective Field": {l:"Psi",s:"Psi Warrior",cast:"1 reaction",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"When you or a creature you can see within 30 feet takes damage, use your reaction to expend a Psionic Energy die. Roll it and reduce the damage by the roll + your Intelligence modifier."},
+    "Telekinetic Movement": {l:"Psi",s:"Psi Warrior",cast:"1 action",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"As an action, expend a Psionic Energy die to move one willing creature or object (up to Large) up to 30 feet in any direction without provoking opportunity attacks."},
+    "Telekinetic Shove": {l:"Psi",s:"Psi Warrior",cast:"1 bonus action",rng:"30 ft",dur:"Instantaneous",cls:["psiwarrior"],desc:"As a bonus action, choose a creature within 30 feet. It must make a Strength saving throw (DC 8 + proficiency + Intelligence) or be moved 5 feet or knocked prone."}
   };
 
   const classMap = { dmpc:["ranger"], drunken:["monk"], chronurgy:["wizard"], grave:["cleric"], psi:["psiwarrior"] };
@@ -163,7 +194,7 @@
       equipment:["Spellbook","Component pouch","Hourglass pendant"],
       actions:[{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"},{name:"Chill Touch",desc:"Cantrip"}],
       bonusActions:[{name:"Misty Step",desc:"Bonus action teleport"},{name:"Arcane Abeyance (release)",desc:"Use stored spell"}],
-      backstory:"Saw the Rod assembled and the multiverse collapsing."
+      backstory:"Saw the Rod assembled and multiverse collapsing."
     },
     grave:{
       name:"Morwen",classLevel:"Cleric (Grave Domain) - Level 10",race:"Reborn",background:"Debt Collector of the Raven Queen",alignment:"Lawful Neutral",playerName:"__________________",
@@ -174,9 +205,9 @@
       features:[{name:"Path to the Grave",desc:"Next attack double damage.",cost:"Channel Divinity",uses:2,resetOn:"short"}],
       spellSlots:{cantrips:"∞","1st":4,"2nd":3,"3rd":3,"4th":3,"5th":2},spells:["Bless","Healing Word","Spiritual Weapon","Spirit Guardians","Revivify","Death Ward","Banishment","Greater Restoration"],
       equipment:["Breastplate","Holy symbol","Mace","Prayer book"],
-      actions:[{name:"Cast a Spell",desc:"Cast a spell with casting time of 1 action"},{name:"Toll the Dead",desc:"Cantrip"},{name:"Sacred Flame",desc:"Cantrip"}],
+      actions:[{name:"Cast a Spell",desc:"Cast a spell"},{name:"Toll the Dead",desc:"Cantrip"}],
       bonusActions:[{name:"Spiritual Weapon",desc:"Bonus action attack"},{name:"Healing Word",desc:"Bonus action heal"}],
-      backstory:"Died and was saved by the Raven Queen."
+      backstory:"Died and saved by the Raven Queen."
     },
     psi:{
       name:"Zor-Ashkev's Vessel",classLevel:"Fighter (Psi Warrior) - Level 10",race:"Aasimar (Fallen)",background:"Wind Duke Sleeper Agent",alignment:"Lawful Neutral",playerName:"__________________",
@@ -311,9 +342,41 @@
     if(addForm)container.appendChild(addForm);
   }
 
-  window.addCharNote=function(ck){const i=document.getElementById(`charNoteInput-${ck}`);if(!i?.value.trim())return;const t=i.value.trim();db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];n.unshift({id:Date.now(),text:t,time:new Date().toLocaleString()});return db.ref(`characterNotes/${ck}`).set(n);}).then(()=>{i.value='';loadCharNotes(ck);});};
-  window.removeCharNote=function(ck,id){if(!confirm('Delete?'))return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];return db.ref(`characterNotes/${ck}`).set(n.filter(x=>x.id!==id));}).then(()=>loadCharNotes(ck));};
-  function loadCharNotes(ck){const c=document.getElementById(`charNotes-${ck}`);if(!c)return;db.ref(`characterNotes/${ck}`).once('value').then(s=>{const n=s.val()||[];c.innerHTML=n.length===0?'<p style="color:#9088c0;font-size:0.75rem;">No notes yet.</p>':n.map(x=>`<div class="char-note-card"><div><div style="color:#c0c8e8;font-size:0.8rem;">${esc(x.text)}</div><div style="color:#9088c0;font-size:0.65rem;">${x.time}</div></div><button class="btn-remove" onclick="removeCharNote('${ck}',${x.id})">✕</button></div>`).join('');});}
+  // FIXED NOTES WITH ERROR HANDLING
+  window.addCharNote = function(ck){
+    const input = document.getElementById(`charNoteInput-${ck}`);
+    if(!input || !input.value.trim()) return;
+    const noteText = input.value.trim();
+    const noteRef = db.ref('characterNotes/' + ck);
+    noteRef.once('value').then(snapshot => {
+      const notes = snapshot.val() || [];
+      notes.unshift({ id: Date.now(), text: noteText, time: new Date().toLocaleString() });
+      return noteRef.set(notes);
+    }).then(() => {
+      input.value = '';
+      loadCharNotes(ck);
+    }).catch(err => {
+      alert('Failed to save note: ' + err.message);
+    });
+  };
+  window.removeCharNote = function(ck, id){
+    if (!confirm('Delete this note?')) return;
+    db.ref('characterNotes/' + ck).once('value').then(snapshot => {
+      const notes = snapshot.val() || [];
+      return db.ref('characterNotes/' + ck).set(notes.filter(n => n.id !== id));
+    }).then(() => loadCharNotes(ck));
+  };
+  function loadCharNotes(ck){
+    const container = document.getElementById(`charNotes-${ck}`);
+    if(!container) return;
+    db.ref('characterNotes/' + ck).once('value').then(snapshot => {
+      const notes = snapshot.val() || [];
+      container.innerHTML = notes.length === 0
+        ? '<p style="color:#9088c0;font-size:0.75rem;">No notes yet.</p>'
+        : notes.map(n => `<div class="char-note-card"><div><div style="color:#c0c8e8;font-size:0.8rem;">${esc(n.text)}</div><div style="color:#9088c0;font-size:0.65rem;">${n.time}</div></div><button class="btn-remove" onclick="removeCharNote('${ck}',${n.id})">✕</button></div>`).join('');
+    });
+  }
+
   window.addSessionNote=function(){const d=document.getElementById('sessionDate'),t=document.getElementById('sessionTitle'),n=document.getElementById('sessionNotes');if(!t?.value.trim())return;const note={id:Date.now(),date:d?.value||new Date().toISOString().split('T')[0],title:t.value.trim(),notes:n?.value.trim()||''};db.ref('sessionNotes').once('value').then(s=>{const ns=s.val()||[];ns.push(note);return db.ref('sessionNotes').set(ns);}).then(()=>{sessionNotes.push(note);renderSessionNotes();d.value='';t.value='';n.value='';});};
   window.addBulletToForm=function(){const n=document.getElementById('sessionNotes');if(!n)return;const p=n.selectionStart;n.value=n.value.substring(0,p)+'\n• '+n.value.substring(p);n.focus();n.selectionStart=n.selectionEnd=p+3;};
   window.removeSessionNote=function(id){if(!confirm('Delete?'))return;db.ref('sessionNotes').once('value').then(s=>{const n=s.val()||[];return db.ref('sessionNotes').set(n.filter(x=>x.id!==id));}).then(()=>{sessionNotes=sessionNotes.filter(x=>x.id!==id);renderSessionNotes();});};
